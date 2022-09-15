@@ -28,11 +28,38 @@ dur <- quantile(demo$duration, c(.025, .95)) |> as.numeric()
 
 # Methods {#ch:methods}
 
+## Data collection procedure and sample description
+
+For data collection, the mailing lists of the psychology and the cognitive science courses of the University of Osnabrück and the psychology mailing list of the University of Bremen have been used, as well as several social media channels like facebook groups for psychology students. Students of said courses had the opportunity to receive 0.5 participation hours as compensation and participants were required to be at least 18 years old and native german speakers. 
+
 As of writing this thesis, a total of `r nrow(demo) + nrow(exctest)` participants took part in the experiment. Applying the exclusion criteria stated in the pre-registration - appearing to have guessed in the training phase or indicating to not use their data - leaves `r nrow(demo)`. On average, participants are `r mean(demo$age, na.rm = TRUE) |> round(1)` years old (_min_ = `r min(demo$age, na.rm = TRUE)`, _max_ = `r max(demo$age, na.rm = TRUE)`, _SD_ = `r sd(demo$age, na.rm = TRUE) |> round(2)`). Median duration of participation is `r median(demo$duration, na.rm = TRUE) |> round()` seconds. There are `r demo %>% filter(duration > dur[2]) %>% nrow()` participants whose participation took more than 30 minutes (>95% quantile); without these, standard deviation is `r demo %>% filter(duration < dur[2]) %>% pull(duration) %>% sd() |> round()` seconds.^[It's assumed they didn't actually take that long but rather opened the link in their browser and only returned to the experiment after a while or something like that]
 
 
+## Experimental Setup
+
+The experiment consists of a training and a transfer phase. 
+
+In the training phase of the experiment, participants will be shown 6 squares of differing shade and size, in a trial-and-feedback procedure. Upon presentation, they have to predict whether the stimulus belongs to A or B. After making their choice, they will receive feedback on whether it was correct. The stimuli of the reduced category (marked ‘A’ in fig. 1) get displayed twice per block to "equate for category frequency" (Conaway & Kurtz, 2016), resulting in 8 trials per block across all conditions; that is, the four stimuli in the first 2 blocks / 16 trials of the blocked condition will also be shown twice per block. The training phase consists of 12 randomized blocks and therefore 96 trials in total.
+
+In a subsequent transfer phase, the full set of 49 stimuli has to be classified without feedback.
+
+The transfer phase will be repeated, the second time though participants are instructed to make a probability judgement about the stimulus category membership (e.g. 30% A, 70% B) via a slider rating ranging from 0 to 100 in steps by 1.
 
 
 ## Experimental Procedure
 
-After a greeting message establishing informed consent, participants 
+After a greeting message establishing informed consent, participants receive instructions for the experiments. These differ in their mentioning of rules based on which experimental group they got assigned to (see Appendix for respective instructions). Then folllows the training phase of 96 trials. After finishing training, a short message asks them to apply whatever they learned in the following transfer phase of 49 trials. The transfer phase will be repeated, the second time though participants are instructed to make a probability judgement about the stimulus category membership (e.g. 30% A, 70% B) via a slider rating ranging from 0 to 100 in steps by 1.
+
+At the end of the experiment, pariticipants are asked to fill out demographic information as well as a question about their strategy during transfer, all of which are voluntarily given / can be left blank.
+
+### Randomization
+
+Participants will be randomly assigned to experimental groups by _magpie3's balanced randomization functionality.
+
+For the training phase, the assignment of categories (which set of stimuli is A and which is B) will be randomized as well as the relevant dimension (size / shade) of the ‘simple rule’ trials of the blocked rule condition. Trial randomization will happen on a by-block level. For the transfer phase, randomization takes place blockwise on the full set of stimuli as a whole.
+
+### Data exclusion
+
+Participants that appear to be guessing in the training phase (the probability of correct classification on a single trial being 0.5) will be excluded. The above-chance number of correct classifications needed (based on a 5% alpha level) in the last 3 training blocks (24 trials) then is 16.
+
+Additionally, should participants answer the question about any reason to not use their data in the affirmative, those participants will be excluded as well.
