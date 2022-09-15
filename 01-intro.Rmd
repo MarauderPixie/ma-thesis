@@ -1,0 +1,25 @@
+---
+chapter: 1
+knit: "bookdown::render_book"
+---
+
+<!--
+The following line is required to re-set page numbering after preliminary material. Do not remove
+-->
+\clearpage\pagenumbering{arabic}\setcounter{page}{1}
+
+
+# Introduction {#ch:intro}
+
+Just re-read the abstract, mkay?
+
+## Hypotheses
+
+1.1 (directed) Higher number of extrapolations for the stimuli of the untrained/incomplete category in the blocked training condition, compared to the mixed training condition, in the transfer phase
+1.2 (directed) Higher number of extrapolations for the stimuli of the untrained/incomplete category in the rule instructions condition compared to the neutral instructions condition in the transfer phase
+1.3 (undirected, exploratory) Interaction of rule order and the rule instructions on the number of extrapolations within the untrained/incomplete category
+
+2.1 (directed) quicker learning of categories with rule instructions than without in the mixed rule condition
+2.2 (exploratory, undirected) Interaction of learning accuracy between training blocks (3-12) and rule instructions in the blocked rule condition
+
+

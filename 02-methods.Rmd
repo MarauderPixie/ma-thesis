@@ -1,0 +1,38 @@
+---
+chapter: 2
+knit: "bookdown::render_book"
+---
+
+```{r init_data}
+exctest <- training %>% 
+  filter(block > 9) %>% 
+  group_by(subj_id) %>% 
+  summarise(
+    n = n(),
+    k = sum(correct),
+    p = k / n
+  ) %>% 
+  filter(p < .7)
+
+demo <- demo %>% 
+  filter(!(subj_id %in% exctest$subj_id))
+training <- training %>% 
+  filter(!(subj_id %in% exctest$subj_id))
+transfer <- transfer %>% 
+  filter(!(subj_id %in% exctest$subj_id))
+stimprob <- stimprob %>% 
+  filter(!(subj_id %in% exctest$subj_id))
+
+dur <- quantile(demo$duration, c(.025, .95)) |> as.numeric()
+```
+
+# Methods {#ch:methods}
+
+As of writing this thesis, a total of `r nrow(demo) + nrow(exctest)` participants took part in the experiment. Applying the exclusion criteria stated in the pre-registration - appearing to have guessed in the training phase or indicating to not use their data - leaves `r nrow(demo)`. On average, participants are `r mean(demo$age, na.rm = TRUE) |> round(1)` years old (_min_ = `r min(demo$age, na.rm = TRUE)`, _max_ = `r max(demo$age, na.rm = TRUE)`, _SD_ = `r sd(demo$age, na.rm = TRUE) |> round(2)`). Median duration of participation is `r median(demo$duration, na.rm = TRUE) |> round()` seconds. There are `r demo %>% filter(duration > dur[2]) %>% nrow()` participants whose participation took more than 30 minutes (>95% quantile); without these, standard deviation is `r demo %>% filter(duration < dur[2]) %>% pull(duration) %>% sd() |> round()` seconds.^[It's assumed they didn't actually take that long but rather opened the link in their browser and only returned to the experiment after a while or something like that]
+
+
+
+
+## Experimental Procedure
+
+After a greeting message establishing informed consent, participants 

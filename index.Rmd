@@ -1,0 +1,80 @@
+---
+title: 'On the role of rule instructions and ordering in category learning'
+thesistype: 'Master Thesis'
+author:
+  name: 'Tobias Anton'
+  birthday: "07.10.1985"
+  birthplace: "Ankum"
+  #degree: 'B.Sc.'
+  matr: 3482423
+supervisors:
+  - Dr. René Schlegelmilch
+  - Dr. habil. Annette Hohenberger
+date: "`r Sys.Date()`"
+faculty: "Universität Osnabrück"
+institute: "Institut für Kognitionswissenschaften"
+# logo: "includes/university-logo.pdf"
+bibliography: "bib/thesis.bib"
+mainfont: 'Friz Quadrata Std'
+sansfont: 'Roboto'
+monofont: 'Rexlia'
+site: bookdown::bookdown_site
+link-citations: true
+# erklaerung: "includes/erklaerung.pdf"
+deckblatt: true
+verzeichnisse:
+  toc: true
+  figures: false
+  tables: false
+output:
+  jermd::masterthesis:
+    latex_engine: xelatex
+    dev: cairo_pdf
+    fig_caption: yes
+    fig_height: 3.8
+    fig_width: 6.3
+    keep_tex: yes
+    number_sections: yes
+    pandoc_args: [
+      "--top-level-division=chapter"
+    ]
+    citation_package: biblatex
+knit: "bookdown::render_book"
+---
+
+<!--
+Edit these lines as appropriate.
+The actual thesis content is in several Rmd files.
+
+You'll need to edit the _bookdown.yml file to set the order in which you'd like them to appear.
+-->
+
+**Notice**: This file has to be named `index.Rmd`. If you created it from the RStudio template picker thingy and gave it a filename, you'll have to rename it.
+
+Maybe I'll figure out how to fix this, sorry. 
+
+```{r data_init, message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
+library(dplyr) 
+
+knitr::opts_chunk$set(
+  cache = FALSE,
+  error = FALSE,
+  warning = FALSE,
+  message = FALSE,
+  include = FALSE,
+  # fig.width = 8,
+  fig.asp = 1/1.618,
+  fig.align = "center",
+  out.width = "90%",
+  comment = "#>",
+  tidy = FALSE # "formatR",
+  # tidy.opts = list(blank = FALSE, width.cutoff = 80)
+)
+
+
+demo <- readRDS("data/demographics.rds")
+training <- readRDS("data/trials-training.rds")
+transfer <- readRDS("data/trials-transfer.rds")
+stimprob <- readRDS("data/trials-probability.rds")
+```
+
