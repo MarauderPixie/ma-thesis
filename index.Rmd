@@ -5,8 +5,8 @@ author:
   name: 'Tobias Anton'
   birthday: "07.10.1985"
   birthplace: "Ankum"
-  #degree: 'B.Sc.'
-  matr: 3482423
+  # degree: 'B.Sc.'
+  matr: 979031
 supervisors:
   - Dr. René Schlegelmilch
   - Dr. habil. Annette Hohenberger
