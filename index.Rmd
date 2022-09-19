@@ -15,9 +15,9 @@ faculty: "Universität Osnabrück"
 institute: "Institut für Kognitionswissenschaften"
 # logo: "includes/university-logo.pdf"
 bibliography: "bib/thesis.bib"
-mainfont: 'Friz Quadrata Std'
-sansfont: 'Roboto'
-monofont: 'Rexlia'
+mainfont: 'PT Serif'
+sansfont: 'Lato'
+monofont: 'Fira Code'
 site: bookdown::bookdown_site
 link-citations: true
 # erklaerung: "includes/erklaerung.pdf"
