@@ -13,14 +13,14 @@ supervisors:
 date: "`r Sys.Date()`"
 faculty: "Universität Osnabrück"
 institute: "Institut für Kognitionswissenschaften"
-# logo: "includes/university-logo.pdf"
+# logo: "includes/LogoUniOsna.pdf"
 bibliography: "bib/thesis.bib"
 mainfont: 'Lato'
 sansfont: 'PT Serif'
 monofont: 'Fira Code'
 site: bookdown::bookdown_site
 link-citations: true
-# erklaerung: "includes/erklaerung.pdf"
+erklaerung: "includes/declaration.pdf"
 deckblatt: true
 verzeichnisse:
   toc: true
@@ -53,7 +53,7 @@ You'll need to edit the _bookdown.yml file to set the order in which you'd like 
 
 Maybe I'll figure out how to fix this, sorry. 
 
-```{r data_init, message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
+```{r init, message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
 library(dplyr) 
 
 knitr::opts_chunk$set(
