@@ -1,23 +1,26 @@
 ---
-title: 'On the role of rule instructions and ordering in category learning'
-thesistype: 'Master Thesis'
+title: 'On the role of rule instructions and ordering'
+subtitle: 'in category learning'
+thesistype: 'Masterarbeit'
 author:
-  name: 'Tobias Anton'
+  name: 'Anton, Tobias'
   birthday: "07.10.1985"
   birthplace: "Ankum"
   # degree: 'B.Sc.'
   matr: 979031
-supervisors:
-  - Dr. René Schlegelmilch
-  - Dr. habil. Annette Hohenberger
-date: "`r Sys.Date()`"
-faculty: "Universität Osnabrück"
-institute: "Institut für Kognitionswissenschaften"
+  adress: Emmastr. 281, 28213 Bremen
+supervisorA: Dr. René Schlegelmilch
+supervisorB: Dr. habil. Annette Hohenberger
+date: '`r format(Sys.Date(), "%d.%m.%Y")`'
+faculty: "8: Humanwissenschaften"
+institute: "Institut für Kognitionswissenschaft"
 # logo: "includes/LogoUniOsna.pdf"
 bibliography: "bib/thesis.bib"
 mainfont: 'Lato'
-sansfont: 'PT Serif'
+# sansfont: 'PT Serif'
+sansfont: 'Lato'
 monofont: 'Fira Code'
+mathfont: 'Asana Math'
 site: bookdown::bookdown_site
 link-citations: true
 erklaerung: "includes/declaration.pdf"
@@ -47,11 +50,11 @@ Edit these lines as appropriate.
 The actual thesis content is in several Rmd files.
 
 You'll need to edit the _bookdown.yml file to set the order in which you'd like them to appear.
--->
+
 
 **Notice**: This file has to be named `index.Rmd`. If you created it from the RStudio template picker thingy and gave it a filename, you'll have to rename it.
 
-Maybe I'll figure out how to fix this, sorry. 
+Maybe I'll figure out how to fix this, sorry. -->
 
 ```{r init, message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
 library(dplyr) 
