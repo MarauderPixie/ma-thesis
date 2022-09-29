@@ -28,14 +28,22 @@ dur <- quantile(demo$duration, c(.025, .95)) |> as.numeric()
 
 # Methods {#ch:methods}
 
+An online experiment has been conducted using the \_magpie 3 framework (source). This chapter describes the the collected sample, the experimental setup and procedure, the data preparation and the statistical models to be used for data analysis.
+
+The experiment and indeed this thesis as a whole has been pre-registered according to the guidelines of the Open Science Foundation (source). Said pre-registration can be found here: [https://osf.io/wegm9](https://osf.io/wegm9)  
+All code regarding the experiment and the data analysis can be found on the corresponding project page: [https://osf.io/gup7x/](https://osf.io/gup7x/)
+
 ## Data collection procedure and sample description
 
-For data collection, the mailing lists of the psychology and the cognitive science courses of the University of Osnabrück and the psychology mailing list of the University of Bremen have been used, as well as several social media channels like facebook groups for psychology students. Students of said courses had the opportunity to receive 0.5 participation hours as compensation and participants were required to be at least 18 years old and native german speakers. 
+For data collection, the mailing lists of the psychology and cognitive science courses of the University of Osnabrück, as well as the psychology mailing list of the University of Bremen have been used, additional to several social media channels like facebook groups for psychology students and verbal recruitment. Participation was completely anonymous, voluntary and could be withdrawn at any time before submitting results. Students of said courses had the opportunity to receive 0.5 participation hours as compensation^[In order to keep the experimental data anonymous, the necessary personal data needed to hand out VP-hours was collected in a seperate dataset which could not be tracdd back to the experimental dataset. For the same reason, participation could not be revoked after data has been submitted.] and participants were required to be at least 18 years old and native german speakers. 
 
-As of writing this thesis, a total of `r nrow(demo) + nrow(exctest)` participants took part in the experiment. Applying the exclusion criteria stated in the pre-registration - appearing to have guessed in the training phase or indicating to not use their data - leaves `r nrow(demo)`. On average, participants are `r mean(demo$age, na.rm = TRUE) |> round(1)` years old (_min_ = `r min(demo$age, na.rm = TRUE)`, _max_ = `r max(demo$age, na.rm = TRUE)`, _SD_ = `r sd(demo$age, na.rm = TRUE) |> round(2)`). Median duration of participation is `r median(demo$duration, na.rm = TRUE) |> round()` seconds. There are `r demo %>% filter(duration > dur[2]) %>% nrow()` participants whose participation took more than 30 minutes (>95% quantile); without these, standard deviation is `r demo %>% filter(duration < dur[2]) %>% pull(duration) %>% sd() |> round()` seconds.^[It's assumed they didn't actually take that long but rather opened the link in their browser and only returned to the experiment after a while or something like that]
+As of writing this thesis, a total of `r nrow(demo) + nrow(exctest)` participants took part in the experiment. Applying the exclusion criteria from the pre-registration leaves `r nrow(demo)`. On average, participants are `r mean(demo$age, na.rm = TRUE) |> round(1)` years old (_min_ = `r min(demo$age, na.rm = TRUE)`, _max_ = `r max(demo$age, na.rm = TRUE)`, _SD_ = `r sd(demo$age, na.rm = TRUE) |> round(2)`). Median duration of participation is `r median(demo$duration, na.rm = TRUE) |> round()` seconds. There are `r demo %>% filter(duration > dur[2]) %>% nrow()` participants whose participation took more than 30 minutes (>95% quantile); without these, standard deviation is `r demo %>% filter(duration < dur[2]) %>% pull(duration) %>% sd() |> round()` seconds.^[It's assumed they didn't actually take that long but rather opened the link in their browser and only returned to the experiment after a while or something like that]
 
 
 ## Experimental Setup
+
+The experimental setup is an iteration over the incomplete-XOR setup from @CK17
+
 
 The experiment consists of a training and a transfer phase. 
 
