@@ -42,23 +42,32 @@ As of writing this thesis, a total of `r nrow(demo) + nrow(exctest)` participant
 
 ## Experimental Setup
 
-The experimental setup is an iteration over the incomplete-XOR setup from @CK17
-
-
-The experiment consists of a training and a transfer phase. 
-
-In the training phase of the experiment, participants will be shown 6 squares of differing shade and size, in a trial-and-feedback procedure. Upon presentation, they have to predict whether the stimulus belongs to A or B. After making their choice, they will receive feedback on whether it was correct. The stimuli of the reduced category (marked ‘A’ in fig. 1) get displayed twice per block to "equate for category frequency" (Conaway & Kurtz, 2016), resulting in 8 trials per block across all conditions; that is, the four stimuli in the first 2 blocks / 16 trials of the blocked condition will also be shown twice per block. The training phase consists of 12 randomized blocks and therefore 96 trials in total.
+The basic experimental setup is an iteration of the incomplete-XOR task by @CK17, using the same set of stimuli (see fig X) and consisting of a training and a transfer phase. In the training phase of the experiment, participants will be shown 6 squares of differing shade and size (see fig X) in a trial-and-feedback procedure. Upon presentation, they have to predict whether the stimulus belongs to A or B. After making their choice, they will receive feedback on whether it was correct. The stimuli of the reduced category (marked ‘A’ in fig. X) get displayed twice per block to "equate for category frequency" (Conaway & Kurtz, 2016), resulting in 8 trials per block across all conditions; that is, the four stimuli in the first 2 blocks / 16 trials of the blocked condition will also be shown twice per block. The training phase consists of 12 randomized blocks and therefore 96 trials in total.
 
 In a subsequent transfer phase, the full set of 49 stimuli has to be classified without feedback.
 
 The transfer phase will be repeated, the second time though participants are instructed to make a probability judgement about the stimulus category membership (e.g. 30% A, 70% B) via a slider rating ranging from 0 to 100 in steps by 1.
 
+At the end of the experiment, pariticipants are asked to fill out demographic information as well as a question about their strategy during transfer, all of which are voluntarily given / can be left blank.
+
+In addition to @CK17 there are four different experimental groups:
+
+1. a control condition, where participants neither encounter rule language nor a simple rule at the beginning
+2. a rule instructions condition, where participants are explicitly told to look for a rule to classify stimuli
+3. a training order condition, where participants first learn a simple rule before they have to learn a more complex one
+4. a combination of 2 and 3; participants get told to look for a rule and also learn a simple rule before the more complex one
+
+This resulsts in a between subjects design with 2 factors - instructions (rule vs. neutral) and training order (blocked vs. mixed):
+
+1. Instructions: with vs. without the mentioning of rules  
+2. Training order:
+    - **Blocked:** the first two blocks of training (16 trials) consist of a 'simple rule first' (stimuli that can be differentiated along one axis (either size or shape)), thereafter stimulus presentation identical to ‘mixed’ training
+    - **Mixed:** all incomplete-xor trials at random from the beginning (mixed; in blocks of 8 trials) - see figure 1
+
 
 ## Experimental Procedure
 
-After a greeting message establishing informed consent, participants receive instructions for the experiments. These differ in their mentioning of rules based on which experimental group they got assigned to (see Appendix for respective instructions). Then folllows the training phase of 96 trials. After finishing training, a short message asks them to apply whatever they learned in the following transfer phase of 49 trials. The transfer phase will be repeated, the second time though participants are instructed to make a probability judgement about the stimulus category membership (e.g. 30% A, 70% B) via a slider rating ranging from 0 to 100 in steps by 1.
 
-At the end of the experiment, pariticipants are asked to fill out demographic information as well as a question about their strategy during transfer, all of which are voluntarily given / can be left blank.
 
 ### Randomization
 
