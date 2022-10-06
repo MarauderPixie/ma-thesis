@@ -67,13 +67,20 @@ This resulsts in a between subjects design with 2 factors - instructions (rule v
 
 ## Experimental Procedure
 
+`idk man, it's basically the above, but maybe I should split setup & procedure?`
 
 
 ### Randomization
 
 Participants will be randomly assigned to experimental groups by _magpie3's balanced randomization functionality.
 
-For the training phase, the assignment of categories (which set of stimuli is A and which is B) will be randomized as well as the relevant dimension (size / shade) of the ‘simple rule’ trials of the blocked rule condition. Trial randomization will happen on a by-block level. For the transfer phase, randomization takes place blockwise on the full set of stimuli as a whole.
+For the training phase, the assignment of categories (which set of stimuli is A and which is B) will be randomized as well as the relevant dimension (size / shade) of the ‘simple rule’ trials of the blocked rule condition. Trial randomization will happen on a by-block level. For the transfer phases, randomization takes place blockwise on the full set of stimuli as a whole.
+
+## Data preparation and analysis 
+
+In the preregistration the aimed for sample size is 40 complete and eligible observations per experimental group, resulting in a total of 160 participations. Since the analysis is rather complex in addition to being conducted with bayesian modeling, a power analysis in the classical sense is not applicable. For one, there is no way to actaully apply a plower analysis to a log-linear mixed effect model and for the other the intended use of such an analysis - being sure to not exceed a certain beta error rate given a desired effect size and alpha level - doesn't make any sense here; there simply are no such things as a Type I or II error in bayesian data analysis. Nonetheless, the practicality to estimate a desired effect size beforehand is still undisputable; after all, one still wants to be as certain as possible in their results - or, analoguos to the concept of statistical power, certain enough to draw proper conclusions. A naive power calculation for logistic regression then, assuming an odds ratio of 2, requires 34 people per group to reach a power of 80%. @Chen2010 show that this assumption translates to a rather small effect, with an OR of 1.68 being equivalent to a Cohen‘s d of 0.2. Simulations by @Chen2017 show similar results and @Brysbaert2018 also recommend a sample size of about 40 people (with eually as many stimuli), albeit on a more general basis.
+
+
 
 ### Data exclusion
 
