@@ -1,0 +1,8 @@
+---
+chapter: 4
+knit: "bookdown::render_book"
+---
+
+# Discussion
+
+For this experiment, participants were asked: "Wie hoch schätzt du die Wahrscheinichkeit ein, dass das gezeigte Beispiel entweder zu Nobz oder zu Grot gehört?" (_"How high do you estimate the probability of the shown example belonging to either Nobz or Grot?"_). Note the difference between "how high do you estimate" and the more neutral "what do you estimate": although this is common german phrasing, it might nonetheless introduce some unconscious response bias. Additionally, people have a very intuitive, but ultimately somewhat distorted (or even simply wrong) understanding of probability (literally everything Gigerenzer did since 1990 or so). For further investigations into the matther it is therefore advised to rephrase the question to: "How certain are you of the given example to belong to either Nobz or Grot?"^[which is indeed closer to what people actually have in mind when people are prompted to deal with probability] Thereby avoiding any potential bias and different perceptions/understandings of the concept of probability.
