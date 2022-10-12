@@ -76,7 +76,7 @@ Participants will be randomly assigned to experimental groups by _magpie3's bala
 
 For the training phase, the assignment of categories (which set of stimuli is A and which is B) will be randomized as well as the relevant dimension (size / shade) of the ‘simple rule’ trials of the blocked rule condition. Trial randomization will happen on a by-block level. For the transfer phases, randomization takes place blockwise on the full set of stimuli as a whole.
 
-## Data preparation and analysis 
+## Data preparation
 
 In the preregistration the aimed for sample size is 40 complete and eligible observations per experimental group, resulting in a total of 160 participations. Since the analysis is rather complex in addition to being conducted with bayesian modeling, a power analysis in the classical sense is not applicable. For one, there is no way to actaully apply a plower analysis to a log-linear mixed effect model and for the other the intended use of such an analysis - being sure to not exceed a certain beta error rate given a desired effect size and alpha level - doesn't make any sense here; there simply are no such things as a Type I or II error in bayesian data analysis. Nonetheless, the practicality to estimate a desired effect size beforehand is still undisputable; after all, one still wants to be as certain as possible in their results - or, analoguos to the concept of statistical power, certain enough to draw proper conclusions. A naive power calculation for logistic regression then, assuming an odds ratio of 2, requires 34 people per group to reach a power of 80%. @Chen2010 show that this assumption translates to a rather small effect, with an OR of 1.68 being equivalent to a Cohen‘s d of 0.2. Simulations by @Chen2017 show similar results and @Brysbaert2018 also recommend a sample size of about 40 people (with eually as many stimuli), albeit on a more general basis.
 
@@ -94,11 +94,34 @@ The dependent variables are:
 - **(transfer 2) Probability judgement:** `[0;100]` - integer depicting the numerical certainty (see the discussion on that) of the presented stimulus belonging to either one category
 - **(all) Response time:** in milliseconds from stimulus presentation to decision marked by clicking either category button
 
-
-
-
 ### Data exclusion
 
 Participants that appear to be guessing in the training phase (the probability of correct classification on a single trial being 0.5) will be excluded. The above-chance number of correct classifications needed (based on a 5% alpha level) in the last 3 training blocks (24 trials) then is 16.
 
 Additionally, should participants answer the question about any reason to not use their data in the affirmative, those participants will be excluded as well.
+
+
+## Analysis plan
+
+All analyses will be conducted using R (@R4, `r paste0(R.Version()$major, ".", R.Version()$minor, " - ", R.Version()$nickname)`). For a full list of all additionally used packages see Appendix X. All raw and prepared data as well as the corresponding R Scripts are available publicly on github.com; see Appendix X. 
+
+To investigate the hypotheses laid out in the previous chapter, several mixed-effect logistic regression models using logit-links will be computed. Since the reasonably maximal random effect structure justified by the experimental setup (see @Barr2013) is not known a-priori, model complexity will be reduced to a maximal RE structure justified by the data (see @Bates2016) following these steps:
+
+- fit model with max. RE structure
+- identify posterior parameter estimates that do not conclusively differ from 0
+- perform hierarchical Likelihood-Ratio-Tests
+
+Futhermore, all models will use weakly informative priors. @Gelman2020 recommend $student(df, mean = 0, sd = 1)$ where $3 \leq df \leq 7$, since the often used Cauchy-Distribution (that is, $student(1, mean = 0, sd = 2.5)$) has too thick tails and a strict Gaussian might be too informative in the case at hand.  
+Finally, Bayes Factors for model comparisons will be obtained via bridge sampling [@Gronau2020]. To obtain as robust BFs as possible, each model will have 4 MCMC chains with 20000 samples and 4000 warm-up samples each (see @Schad2021).
+
+**Hypotheses 1** -- The dependent variable is the number of extrapolations of the nine untrained/incomplete stimuli (_k_ extrapolations of _n_ = 9 stimuli). Hypothesized model comparisons are:
+
+- **H1.1:** $M_{instructions} > M_{null}$
+- **H1.2:** $M_{rule order} > M_{null}$
+- **H1.3:** $M_{instructions : rule order} \approx M_{instructions} \approx M_{rule order} > M_{null}$
+
+### Inference criteria
+
+BF > 10 y'all!
+
+### Divergence from and additions to the pre-registration
