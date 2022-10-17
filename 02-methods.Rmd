@@ -111,17 +111,24 @@ To investigate the hypotheses laid out in the previous chapter, several mixed-ef
 - identify posterior parameter estimates that do not conclusively differ from 0
 - perform hierarchical Likelihood-Ratio-Tests
 
-Futhermore, all models will use weakly informative priors. @Gelman2020 recommend $student(df, mean = 0, sd = 1)$ where $3 \leq df \leq 7$, since the often used Cauchy-Distribution (that is, $student(1, mean = 0, sd = 2.5)$) has too thick tails and a strict Gaussian might be too informative in the case at hand.  
-Finally, Bayes Factors for model comparisons will be obtained via bridge sampling [@Gronau2020]. To obtain as robust BFs as possible, each model will have 4 MCMC chains with 20000 samples and 4000 warm-up samples each (see @Schad2021).
+Futhermore, all models will use weakly informative priors. @Gelman2020 recommends $\operatorname{student}(df, mean = 0, sd = 1)$ where $3 \leq df \leq 7$, since the often used Cauchy-Distribution (that is, $\operatorname{student}(1, 0, 2.5)$) has too thick tails and a strict Gaussian might be too informative in the case at hand. Finally, Bayes Factors for model comparisons will be obtained via bridge sampling [@Gronau2020]. To obtain as robust BFs as possible, each model will have 4 MCMC chains with 20000 samples and 4000 warm-up samples each [for details, see @Schad2021].
 
-**Hypotheses 1** -- The dependent variable is the number of extrapolations of the nine untrained/incomplete stimuli (_k_ extrapolations of _n_ = 9 stimuli). Hypothesized model comparisons are:
+**Hypotheses 1** -- The dependent variable is the number of extrapolations of the nine untrained/incomplete stimuli (_k_ extrapolations of _n_ = 9 stimuli); independent variable is the experimental group assignment (instructions yes/no, blocked yes/no) Model comparisons for testint the hypotheses are therefore:
 
 - **H1.1:** $M_{instructions} > M_{null}$
-- **H1.2:** $M_{rule order} > M_{null}$
-- **H1.3:** $M_{instructions : rule order} \approx M_{instructions} \approx M_{rule order} > M_{null}$
+- **H1.2:** $M_{\text{rule order}} > M_{null}$
+- **H1.3:** $M_{\text{instructions : rule order}} \approx M_{instructions} \approx M_{\text{rule order}} > M_{null}$
+
+**Hypotheses 2** -- Depedent variable is the blockwise categorisation accuracy of the stimuli in the training phase, independent variable again is group assignment (instructions only) as well as the training block. Model comparsisons are therefore:
+
+- **H2.1:** $M_{instructions} > M_{null}$
+- **H2.2:** $M_{\text{instructions : block}} > M_{instructions} > M_{null}$
+
+
 
 ### Inference criteria
 
-BF > 10 y'all!
+Hypotheses will be evaluated with Bayes Factors according to @Andras2014^[adjusted from Jeffreys, 1961 -- better double check that!], that is: $BF > 3$ costitutes moderate evidence for model A over model B (or vice versa when $BF < 1/3$) and $BF > 10$ (or $BF < 1/10$) will be interpreted as strong evidence respectively.
+
 
 ### Divergence from and additions to the pre-registration
