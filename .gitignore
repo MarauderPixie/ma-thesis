@@ -4,6 +4,7 @@
 .Ruserdata
 
 data/
+models/
 _thesis/
 thesis.log
 includes/LogoUniOsna.jpg
