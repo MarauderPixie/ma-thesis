@@ -3,6 +3,33 @@ chapter: 3
 knit: "bookdown::render_book"
 ---
 
+```{r ch3-models-and-bayes-factors, cache=TRUE}
+h1_null    <- readRDS("models/h1_null_min.rds")
+h1_blocked <- readRDS("models/h1_blocked_min.rds")
+h1_instructions <- readRDS("models/h1_rules_min.rds")
+h1_both    <- readRDS("models/h1_both_min.rds")
+
+h2_null  <- readRDS("models/h2_null.rds")
+h2_rules <- readRDS("models/h2_rules.rds")
+h2_interaction <- readRDS("models/h2_inter.rds")
+
+bf_h11  <- bayes_factor(h1_blocked, h1_null)
+bf_h12  <- bayes_factor(h1_instructions, h1_null)
+bf_h131 <- bayes_factor(h1_both, h1_blocked)
+bf_h132 <- bayes_factor(h1_both, h1_instructions)
+bf_h133 <- bayes_factor(h1_both, h1_null)
+
+bf_h21  <- bayes_factor(h2_rules, h2_null)
+bf_h221 <- bayes_factor(h2_interaction, h2_rules)
+bf_h222 <- bayes_factor(h2_interaction, h2_null)
+```
+
 # Results {#ch:results}
 
-None. Yet.
+## H1: Extrapolations in Transfer Phase
+
+bli bla lubb
+
+### H1.1: Effect of blocked rules
+
+BF of $M_1$ over $M_{Null}$: `r round(bf_h11$bf, 2)`.

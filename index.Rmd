@@ -58,6 +58,7 @@ Maybe I'll figure out how to fix this, sorry. -->
 
 ```{r init, message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
 library(dplyr) 
+library(bridgesampling)
 
 knitr::opts_chunk$set(
   cache = FALSE,

@@ -40,7 +40,7 @@ For data collection, the mailing lists of the psychology and cognitive science c
 As of writing this thesis, a total of `r nrow(demo) + nrow(exctest)` participants took part in the experiment. Applying the exclusion criteria from the pre-registration leaves `r nrow(demo)`. On average, participants are `r mean(demo$age, na.rm = TRUE) |> round(1)` years old (_min_ = `r min(demo$age, na.rm = TRUE)`, _max_ = `r max(demo$age, na.rm = TRUE)`, _SD_ = `r sd(demo$age, na.rm = TRUE) |> round(2)`). Median duration of participation is `r median(demo$duration, na.rm = TRUE) |> round()` seconds. There are `r demo %>% filter(duration > dur[2]) %>% nrow()` participants whose participation took more than 30 minutes (>95% quantile); without these, standard deviation is `r demo %>% filter(duration < dur[2]) %>% pull(duration) %>% sd() |> round()` seconds.^[It's assumed they didn't actually take that long but rather opened the link in their browser and only returned to the experiment after a while or something like that]
 
 
-## Experimental Setup
+## Experimental setup & procedure
 
 The basic experimental setup is an iteration of the incomplete-XOR task by @CK17, using the same set of stimuli (see fig X) and consisting of a training and a transfer phase. In the training phase of the experiment, participants will be shown 6 squares of differing shade and size (see fig X) in a trial-and-feedback procedure. Upon presentation, they have to predict whether the stimulus belongs to A or B. After making their choice, they will receive feedback on whether it was correct. The stimuli of the reduced category (marked ‘A’ in fig. X) get displayed twice per block to "equate for category frequency" (Conaway & Kurtz, 2016), resulting in 8 trials per block across all conditions; that is, the four stimuli in the first 2 blocks / 16 trials of the blocked condition will also be shown twice per block. The training phase consists of 12 randomized blocks and therefore 96 trials in total.
 
@@ -52,7 +52,7 @@ At the end of the experiment, pariticipants are asked to fill out demographic in
 
 In addition to @CK17 there are four different experimental groups:
 
-1. a control condition, where participants neither encounter rule language nor a simple rule at the beginning
+1. a control condition, where participants neither encounter instructions mentioning rules nor a simple rule at the beginning
 2. a rule instructions condition, where participants are explicitly told to look for a rule to classify stimuli
 3. a training order condition, where participants first learn a simple rule before they have to learn a more complex one
 4. a combination of 2 and 3; participants get told to look for a rule and also learn a simple rule before the more complex one
@@ -65,9 +65,9 @@ This resulsts in a between subjects design with 2 factors - instructions (rule v
     - **Mixed:** all incomplete-xor trials at random from the beginning (mixed; in blocks of 8 trials) - see figure 1
 
 
-## Experimental Procedure
+<!-- ## Experimental Procedure
 
-`idk man, it's basically the above, but maybe I should split setup & procedure?`
+`idk man, it's basically the above, but maybe I should split setup & procedure?` -->
 
 
 ### Randomization
