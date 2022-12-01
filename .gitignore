@@ -6,6 +6,7 @@
 data/
 models/
 _thesis/
+_bookdown_files/
 thesis.log
 includes/LogoUniOsna.jpg
 includes/LogoUniOsna.pdf
