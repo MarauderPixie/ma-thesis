@@ -29,7 +29,7 @@ h1_inter <- readRDS("models/h1_transfer/h132.rds")
 
 ## H1: Extrapolations in Transfer Phase
 
-```{r h1_tbl_summary}
+```{r h1-tbl-summary}
 beobachtet <- extra_binom %>% 
   group_by(rules, blocked) %>% 
   summarise(
@@ -46,18 +46,18 @@ beobachtet %>%
     transmute(
         Group = case_when(
             rules == "no" & blocked == "no" ~ "No Treatment",
-            rules == "yes" & blocked == "no" ~ "Rule Instructions",
             rules == "no" & blocked == "yes" ~ "Blocked Rules",
-            rules == "yes" & blocked == "yes" ~ "Rule Instructions & Blocked Rules",
+            rules == "yes" & blocked == "no" ~ "Rule Instructions",
+            rules == "yes" & blocked == "yes" ~ "Blocked + Instructions",
         ),
-        "Mean % (SD)" = paste0(round(mean_p * 100, 2), " (", round(sd_p * 100, 2), ")"),
-        "% Extrapolators"   = round(mean_ckab6 * 100)
+        "Mean (SD)" = paste0(round(mean_p * 100, 2), "% (", round(sd_p * 100, 2), ")"),
+        "Extrapolators"   = paste0(round(mean_ckab6 * 100), "%")
     ) %>% 
-  kbl(booktabs = TRUE, align = "l") %>%
-  kable_styling(full_width = "FALSE")
+  kbl(booktabs = TRUE, caption = "Mean proportion of extrapolated stimuli per person and proportion of extrapolators (k>6)") %>%
+  kable_styling(full_width = FALSE, position = "left")
 ```
 
-```{r h1_plots_hist}
+```{r h1-plots-hist, fig.cap="Number of extrapolated stimuli per person and condition"}
 transfer %>% 
   filter(item == "transfer") %>% 
   group_by(subj_id, condition) %>% 
@@ -66,14 +66,13 @@ transfer %>%
     facet_wrap(~condition) +
     geom_histogram(binwidth = 1) +
     scale_x_continuous(breaks = scales::pretty_breaks(n = 10), labels = c("", 0:9, "")) +
-    labs(title = "Number of extrapolated stimuli per person and condition",
-         x = "Extrapolations", y = "people")
+    labs(x = "Extrapolations", y = "people")
 ```
 
-The main interest of this study was to find out whether it is possible to increase the number of extrapolations and thereby the learning of a full XOR category structure via the use of rule instructions, the ordering of rules to learn and to look into a possible interaction of both. Table 2 shows the mean percentage of extrapolated stimuli per person by experimental condition as well as the percentage of extrapolators, that is people who extrapolated more than six of the nine critical stimuli. Figure 12 shows the number of extrapolations per person overall as well as between experimental groups. Fig x on the other hand shows decision gradients for all stimuli across the conditions.
+The main interest of this study was to find out whether it is possible to increase the number of extrapolations and thereby the learning of a full XOR category structure via the use of rule instructions, the ordering of rules to learn and to look into a possible interaction of both. Table \@ref(tab:h1-tbl-summary) shows the mean percentage of extrapolated stimuli per person by experimental condition as well as the percentage of extrapolators, that is people who extrapolated more than six of the nine critical stimuli. Figure \@ref(fig:h1-plots-hist) shows the number of extrapolations per person overall as well as between experimental groups. Figure \@ref(fig:h1-plots-gradient) on the other hand shows decision gradients for all stimuli across the conditions^[see fig. \@ref(fig:appA-transfer-plot) in appendix for an overview of individual responses.].
 
 
-```{r h1_plots_grad}
+```{r h1-plots-gradient, fig.asp=1/1, fig.cap="Gradient of category decisions in the transfer phase"}
 transfer %>% 
   count(condition, img_x, img_y, response) %>% 
   spread(response, n) %>% 
@@ -88,67 +87,29 @@ transfer %>%
     facet_wrap(~condition) +
     geom_tile(size = 1) +
     scale_fill_viridis_c() +
-    theme_subjects +
-    theme(legend.position = NULL)
+    theme_transfer +
+    theme(legend.position = "none")
 ```
 
-### H1.1: Effect of blocked rules
+## Model comparisons
 
-In order to quantify evidence for or against an effect of rule structuring, we fitted an intercept-only model predicting the number of extrapolated stimuli per person and a model including a fixed effect of the blocked rule condition. 
+In order to quantify evidence for or against an effect of rule structuring, we fitted several Bayesian logistic models (estimated using MCMC sampling with 4 chains of 12000 iterations and a warmup of 2000) to predict the number of extrapolated stimulus responses per person. Priors over parameters for all models were set as:
+
+- $student\_t(df = 3, location = -1, scale = 1)$ for the intercept, assuming about 30% extrapolators as reported by @CK17
+- $student\_t(df = 3, location = 0.5, scale = 1)$ for all slopes, assuming an approximately 7% increase in extrapolations in any group over the one receiving no treatment.
+
+The final model was fit on aggregated data with fixed effects for the blocked rule condition, the rule instructions condition and their interaction. Convergence and stability of the Bayesian sampling has been assessed using R-hat, which should be below 1.01 [@Vehtari2021], and Effective Sample Size (ESS), which should be greater than 1000 [@Buerkner2017], which again can be confirmed or all parameters. Bayes Factors for all model comparisons were obtained via bridge sampling and are shown in table \@ref(tab:h1-tbl-bfs). 
+
+```{r h1-tbl-bfs}
+readr::read_csv("models/BFs.csv") %>% 
+  kbl(booktabs = TRUE, caption = "Bayes Factors of Model Comparisons") %>% 
+  kable_styling(full_width = TRUE) %>% 
+  add_header_above(c(" ", "BF of left hand model over:" = 4)) %>% 
+  column_spec(1, width = "5cm")
+```
+
 
 
 ## H2: Learning with Rule Instructions
 
 A similar approach as under Section 1.1 was taken to investigate a possible advantageous effect of instructions mentioning rules on learning the category structure. 
-
-
-
-## `report` output for `h1_inter`
-
-```
-Warnmeldungen:
-1: Response residuals not available to calculate mean square error. (R)MSE is probably not reliable. 
-2: Response residuals not available to calculate mean square error. (R)MSE is probably not reliable. 
-```
-
-We fitted a Bayesian logistic model (estimated using MCMC sampling with 4 chains of 12000 iterations and a warmup of 2000) to predict exab6 with blocked (formula: exab6 ~ blocked + rules + blocked:rules). Priors over parameters were all set as student_t (location = 0.00, scale = 1.00) distributions. The model's explanatory power is weak (R2 = 0.03, 95% CI [2.62e-04, 0.08]).  Within this model:
-
-  - The effect of b Intercept (Median = -2.73, 95% CI [-3.84, -1.86]) has a 100.00% probability of being negative (< 0), 100.00% of being significant (< -0.09), and 100.00% of being large (< -0.54). The estimation successfully converged (Rhat = 1.000) and the indices are reliable (ESS = 18372)
-  - The effect of b blockedyes (Median = 0.94, 95% CI [-0.10, 2.16]) has a 96.08% probability of being positive (> 0), 94.32% of being significant (> 0.09), and 76.47% of being large (> 0.54). The estimation successfully converged (Rhat = 1.000) and the indices are reliable (ESS = 17127)
-  - The effect of b rulesyes (Median = 0.58, 95% CI [-0.45, 1.75]) has a 86.39% probability of being positive (> 0), 82.13% of being significant (> 0.09), and 52.52% of being large (> 0.54). The estimation successfully converged (Rhat = 1.000) and the indices are reliable (ESS = 18220)
-  - The interaction effect of rulesyes on b blockedyes (Median = -0.16, 95% CI [-1.50, 1.03]) has a 60.77% probability of being negative (< 0), 54.81% of being significant (< -0.09), and 27.44% of being large (< -0.54). The estimation successfully converged (Rhat = 1.000) and the indices are reliable (ESS = 18895)
-
-Following the Sequential Effect eXistence and sIgnificance Testing (SEXIT) framework, we report the median of the posterior distribution and its 95% CI (Highest Density Interval), along the probability of direction (pd), the probability of significance and the probability of being large. The thresholds beyond which the effect is considered as significant (i.e., non-negligible) and large are |0.09| and |0.54|. Convergence and stability of the Bayesian sampling has been assessed using R-hat, which should be below 1.01 (Vehtari et al., 2019), and Effective Sample Size (ESS), which should be greater than 1000 (Burkner, 2017). and We fitted a Bayesian logistic model (estimated using MCMC sampling with 4 chains of 12000 iterations and a warmup of 2000) to predict exab6 with rules (formula: exab6 ~ blocked + rules + blocked:rules).
-Priors over parameters were all set as student_t (location = 0.00, scale = 1.00) distributions. The model's explanatory power is weak (R2 = 0.03, 95% CI [2.62e-04, 0.08]).  Within this model:
-
-  - The effect of b Intercept (Median = -2.73, 95% CI [-3.84, -1.86]) has a 100.00% probability of being negative (< 0), 100.00% of being significant (< -0.09), and 100.00% of being large (< -0.54). The estimation successfully converged (Rhat = 1.000) and the indices are reliable (ESS = 18372)
-  - The effect of b blockedyes (Median = 0.94, 95% CI [-0.10, 2.16]) has a 96.08% probability of being positive (> 0), 94.32% of being significant (> 0.09), and 76.47% of being large (> 0.54). The estimation successfully converged (Rhat = 1.000) and the indices are reliable (ESS = 17127)
-  - The effect of b rulesyes (Median = 0.58, 95% CI [-0.45, 1.75]) has a 86.39% probability of being positive (> 0), 82.13% of being significant (> 0.09), and 52.52% of being large (> 0.54). The estimation successfully converged (Rhat = 1.000) and the indices are reliable (ESS = 18220)
-  - The interaction effect of rulesyes on b blockedyes (Median = -0.16, 95% CI [-1.50, 1.03]) has a 60.77% probability of being negative (< 0), 54.81% of being significant (< -0.09), and 27.44% of being large (< -0.54). The estimation successfully converged (Rhat = 1.000) and the indices are reliable (ESS = 18895)
-
-Following the Sequential Effect eXistence and sIgnificance Testing (SEXIT) framework, we report the median of the posterior distribution and its 95% CI (Highest Density Interval), along the probability of direction (pd), the probability of significance and the probability of being large. The thresholds beyond which the effect is considered as significant (i.e., non-negligible) and large are |0.09| and |0.54|. Convergence and stability of the Bayesian sampling has been assessed using R-hat, which should be below 1.01 (Vehtari et al., 2019), and Effective Sample Size (ESS), which should be greater than 1000 (Burkner, 2017).
-
-
-## `report` output for `ck_inter_ab6`
-
-```
-Warnmeldungen:
-1: Response residuals not available to calculate mean square error. (R)MSE is probably not reliable. 
-2: Response residuals not available to calculate mean square error. (R)MSE is probably not reliable. 
-```
-
-We fitted a Bayesian logistic model (estimated using MCMC sampling with 4 chains of 12000 iterations and a warmup of 2000) to predict exab6 with blocked (formula: exab6 ~ blocked + rules + blocked:rules). Priors over parameters were all set as student_t (location = 0.00, scale = 1.00) distributions. The model's explanatory power is weak (R2 = 0.03, 95% CI [2.62e-04, 0.08]).  Within this model:
-
-  - The effect of b Intercept (Median = -2.73, 95% CI [-3.84, -1.86]) has a 100.00% probability of being negative (< 0), 100.00% of being significant (< -0.09), and 100.00% of being large (< -0.54). The estimation successfully converged (Rhat = 1.000) and the indices are reliable (ESS = 18372)
-  - The effect of b blockedyes (Median = 0.94, 95% CI [-0.10, 2.16]) has a 96.08% probability of being positive (> 0), 94.32% of being significant (> 0.09), and 76.47% of being large (> 0.54). The estimation successfully converged (Rhat = 1.000) and the indices are reliable (ESS = 17127)
-  - The effect of b rulesyes (Median = 0.58, 95% CI [-0.45, 1.75]) has a 86.39% probability of being positive (> 0), 82.13% of being significant (> 0.09), and 52.52% of being large (> 0.54). The estimation successfully converged (Rhat = 1.000) and the indices are reliable (ESS = 18220)
-  - The interaction effect of rulesyes on b blockedyes (Median = -0.16, 95% CI [-1.50, 1.03]) has a 60.77% probability of being negative (< 0), 54.81% of being significant (< -0.09), and 27.44% of being large (< -0.54). The estimation successfully converged (Rhat = 1.000) and the indices are reliable (ESS = 18895)
-
-Following the Sequential Effect eXistence and sIgnificance Testing (SEXIT) framework, we report the median of the posterior distribution and its 95% CI (Highest Density Interval), along the probability of direction (pd), the probability of significance and the probability of being large. The thresholds beyond which the effect is considered as significant (i.e., non-negligible) and large are |0.09| and |0.54|. Convergence and stability of the Bayesian sampling has been assessed using R-hat, which should be below 1.01 (Vehtari et al., 2019), and Effective Sample Size (ESS), which should be greater than 1000 (Burkner, 2017). and We fitted a Bayesian logistic model (estimated using MCMC sampling with 4 chains of 12000 iterations and a warmup of 2000) to predict exab6 with rules (formula: exab6 ~ blocked + rules + blocked:rules). Priors over parameters were all set as student_t (location = 0.00, scale = 1.00) distributions. The model's explanatory power is weak (R2 = 0.03, 95% CI [2.62e-04, 0.08]).  Within this model:
-
-  - The effect of b Intercept (Median = -2.73, 95% CI [-3.84, -1.86]) has a 100.00% probability of being negative (< 0), 100.00% of being significant (< -0.09), and 100.00% of being large (< -0.54). The estimation successfully converged (Rhat = 1.000) and the indices are reliable (ESS = 18372)
-  - The effect of b blockedyes (Median = 0.94, 95% CI [-0.10, 2.16]) has a 96.08% probability of being positive (> 0), 94.32% of being significant (> 0.09), and 76.47% of being large (> 0.54). The estimation successfully converged (Rhat = 1.000) and the indices are reliable (ESS = 17127)
-  - The effect of b rulesyes (Median = 0.58, 95% CI [-0.45, 1.75]) has a 86.39% probability of being positive (> 0), 82.13% of being significant (> 0.09), and 52.52% of being large (> 0.54). The estimation successfully converged (Rhat = 1.000) and the indices are reliable (ESS = 18220)
-  - The interaction effect of rulesyes on b blockedyes (Median = -0.16, 95% CI [-1.50, 1.03]) has a 60.77% probability of being negative (< 0), 54.81% of being significant (< -0.09), and 27.44% of being large (< -0.54). The estimation successfully converged (Rhat = 1.000) and the indices are reliable (ESS = 18895)
-
-Following the Sequential Effect eXistence and sIgnificance Testing (SEXIT) framework, we report the median of the posterior distribution and its 95% CI (Highest Density Interval), along the probability of direction (pd), the probability of significance and the probability of being large. The thresholds beyond which the effect is considered as significant (i.e., non-negligible) and large are |0.09| and |0.54|. Convergence and stability of the Bayesian sampling has been assessed using R-hat, which should be below 1.01 (Vehtari et al., 2019), and Effective Sample Size (ESS), which should be greater than 1000 (Burkner, 2017).

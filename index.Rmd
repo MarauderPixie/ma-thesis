@@ -61,9 +61,10 @@ library(dplyr)
 library(tidyr)
 library(bridgesampling)
 library(effectsize)
-library(kableExtra)
 library(ggplot2)
+library(kableExtra)
 
+options(knitr.table.format = "latex")
 knitr::opts_chunk$set(
   cache = FALSE,
   error = FALSE,
@@ -99,7 +100,7 @@ theme_subjects <- theme(legend.position = "top",
                         panel.grid.minor = element_blank(),
                         # panel.border = element_rect(fill = NA),
                         panel.spacing = unit(5, "pt"),
-                        strip.text = element_text(size = 6))
+                        strip.text = element_text(size = 10))
 
 update_geom_defaults("point", list(colour = "#ac0634"))
 update_geom_defaults("line", list(colour = "#ac0634"))
@@ -118,6 +119,7 @@ update_geom_defaults("text", list(colour = "#ac0634"))
 
 ```{r init_data}
 demo <- readRDS("data/demographics.rds")
+excluded <- readRDS("data/trials-excluded.rds")
 training <- readRDS("data/trials-training.rds")
 transfer <- readRDS("data/trials-transfer.rds")
 stimprob <- readRDS("data/trials-probability.rds")

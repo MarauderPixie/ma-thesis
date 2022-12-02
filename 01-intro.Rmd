@@ -11,11 +11,19 @@ The following line is required to re-set page numbering after preliminary materi
 
 # Introduction {#ch:intro}
 
-The gold standard in the research of human concept and category learning are the six problem types introduced by @Shepard1961. In their seminal work they were able to show a set of foundational rules and/or category structures (see fig. 1) which are increasingly difficult to learn by human subjects - mostly independent of the items to learn, be it simple eometric shapes, musical instruments or everyday kitchen tools.   
 
-![Exemplary Structure of the Six SHJ Problem Types; figure taken from the original paper: "Six different classifications of the same set of eight stimuli. (Within each box the four stimuli on the left belong in one class and the four stimuli on the right in the other class.)" [@Shepard1961]](figures/six_problems.png)  
 
-In the following years (decades even!), one major consistent finding was a learning advantage in human subjects of the Type II category structure over the Type IV one. This in turn, however, proved to be a major problem (inconsistency?) in cogntive models trying to explain this learning process. 
+The gold standard in the research of human concept and category learning are the six problem types introduced by @Shepard1961. In their seminal work they were able to show a set of foundational rules and category structures (see fig. \@ref(fig:01-shj)) which are increasingly difficult to learn by human subjects - mostly independent of the items to learn, be it simple eometric shapes, musical instruments or everyday kitchen tools.   
+
+<!-- ![Exemplary Structure of the Six SHJ Problem Types; figure taken from the original paper: "Six different classifications of the same set of eight stimuli. (Within each box the four stimuli on the left belong in one class and the four stimuli on the right in the other class.)" [@Shepard1961]](figures/six_problems.png) -->
+
+(ref:01-shj) Exemplary Structure of the Six SHJ Problem Types; figure taken from the original paper: "Six different classifications of the same set of eight stimuli. (Within each box the four stimuli on the left belong in one class and the four stimuli on the right in the other class.)" [@Shepard1961].
+
+```{r 01-shj, fig.cap='(ref:01-shj)', out.height="30%", out.width="50%"}
+knitr::include_graphics("figures/six_problems.png")
+```
+
+In the following years and decades, one major consistent finding was a learning advantage in human subjects of the Type II category structure over the Type IV one. This in turn, however, proved to be a major problem in cogntive models trying to explain this learning process. 
 
 More recent researched based on their seminal work showed a major influence of rule-related language having an effect in subject's performance on those problems [@Kurtz2013]: the long held learning advantage in solving Type II category structures over Type IV structures disappears when experimental instructions don't use the mentioning of rules.
 

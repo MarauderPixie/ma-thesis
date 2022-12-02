@@ -4,25 +4,6 @@ knit: "bookdown::render_book"
 ---
 
 ```{r demo_data}
-exctest <- training %>% 
-  filter(block > 9) %>% 
-  group_by(subj_id) %>% 
-  summarise(
-    n = n(),
-    k = sum(correct),
-    p = k / n
-  ) %>% 
-  filter(p < .7)
-
-demo <- demo %>% 
-  filter(!(subj_id %in% exctest$subj_id))
-training <- training %>% 
-  filter(!(subj_id %in% exctest$subj_id))
-transfer <- transfer %>% 
-  filter(!(subj_id %in% exctest$subj_id))
-stimprob <- stimprob %>% 
-  filter(!(subj_id %in% exctest$subj_id))
-
 dur <- quantile(demo$duration, c(.025, .95)) |> as.numeric()
 ```
 
@@ -37,7 +18,7 @@ All code regarding the experiment and the data analysis can be found on the corr
 
 For data collection, the mailing lists of the psychology and cognitive science courses of the University of Osnabrück, as well as the psychology mailing list of the University of Bremen have been used, additional to several social media channels like facebook groups for psychology students and verbal recruitment. Participation was completely anonymous, voluntary and could be withdrawn at any time before submitting results. Students of said courses had the opportunity to receive 0.5 participation hours as compensation^[In order to keep the experimental data anonymous, the necessary personal data needed to hand out VP-hours was collected in a seperate dataset which could not be tracdd back to the experimental dataset. For the same reason, participation could not be revoked after data has been submitted.] and participants were required to be at least 18 years old and native german speakers. 
 
-As of writing this thesis, a total of `r nrow(demo) + nrow(exctest)` participants took part in the experiment. Applying the exclusion criteria from the pre-registration leaves `r nrow(demo)`. On average, participants are `r mean(demo$age, na.rm = TRUE) |> round(1)` years old (_min_ = `r min(demo$age, na.rm = TRUE)`, _max_ = `r max(demo$age, na.rm = TRUE)`, _SD_ = `r sd(demo$age, na.rm = TRUE) |> round(2)`). Median duration of participation is `r median(demo$duration, na.rm = TRUE) |> round()` seconds. There are `r demo %>% filter(duration > dur[2]) %>% nrow()` participants whose participation took more than 30 minutes (>95% quantile); without these, standard deviation is `r demo %>% filter(duration < dur[2]) %>% pull(duration) %>% sd() |> round()` seconds.^[It's assumed they didn't actually take that long but rather opened the link in their browser and only returned to the experiment after a while or something like that]
+A total of `r nrow(demo) + length(unique(excluded$subj_id))` participants took part in the experiment, `r nrow(demo)` after exclusion. On average, participants are `r mean(demo$age, na.rm = TRUE) |> round(1)` years old (_min_ = `r min(demo$age, na.rm = TRUE)`, _max_ = `r max(demo$age, na.rm = TRUE)`, _SD_ = `r sd(demo$age, na.rm = TRUE) |> round(2)`). Median duration of participation is `r median(demo$duration, na.rm = TRUE) |> round()` seconds. There are `r demo %>% filter(duration > dur[2]) %>% nrow()` participants whose participation took more than 30 minutes (>95% quantile); without these, standard deviation is `r demo %>% filter(duration < dur[2]) %>% pull(duration) %>% sd() |> round()` seconds.^[It's assumed they didn't actually take that long but rather opened the link in their browser and only returned to the experiment after a while or something like that]
 
 
 ## Experimental setup & procedure
@@ -105,7 +86,7 @@ Additionally, should participants answer the question about any reason to not us
 
 All analyses will be conducted using R (@R4, `r paste0(R.Version()$major, ".", R.Version()$minor, " - ", R.Version()$nickname)`). For a full list of all additionally used packages see Appendix X. All raw and prepared data as well as the corresponding R Scripts are available publicly on github.com; see Appendix X. 
 
-To investigate the hypotheses laid out in the previous chapter, several mixed-effect logistic regression models using logit-links will be computed. Since the reasonably maximal random effect structure justified by the experimental setup (see @Barr2013) is not known a-priori, model complexity will be reduced to a maximal RE structure justified by the data (see @Bates2016) following these steps:
+To investigate the hypotheses laid out in the previous chapter, several mixed-effect logistic regression models using logit-links will be computed. Since the reasonably maximal random effect structure justified by the experimental setup (see @Barr2013) is not known a-priori, model complexity will be reduced to a maximal RE structure justified by the data (see @Bates2015) following these steps:
 
 - fit model with max. RE structure
 - identify posterior parameter estimates that do not conclusively differ from 0
@@ -134,3 +115,28 @@ Hypotheses will be evaluated with Bayes Factors according to @Andras2014^[adjust
 ### Divergence from and additions to the pre-registration
 
 1. **Data exclusion:** Upon closer inspection of the actual data it was deemed necessary to change the data exclusion criterion from a minimum accuracy over all trials in the last three blocks of training to a minimum on a by-stimulus basis in the last three blocks. This is due to some participants seemingly having classified the stimuli along one dimension only, leading to extreme cases of 0% accuracy on the stimuli on which they had to apply the XOR rule (see fig. x for all participants affected by the change).
+
+(ref:ch2-plot-exclusions) Response accuracy for excluded participants on the last 3 blocks of training.
+
+```{r ch2-plot-exclusions, fig.cap="(ref:ch2-plot-exclusions)"}
+excluded <- transfer %>%
+  select(image, img_x, img_y) %>% 
+  right_join(excluded, by = "image")
+
+excluded %>% 
+  filter(block > 9) %>% 
+  group_by(subj_id, img_x, img_y) %>% 
+  summarise(
+    p_correct = round(mean(correct) * 100, 1),
+    img_x = ifelse(img_x > 2, img_x - 2, img_x),
+    img_y = ifelse(img_y > 2, img_y - 2, img_y),
+    .groups = "drop"
+  ) %>%
+  ggplot(aes(img_x, img_y, fill = p_correct)) +
+    facet_wrap(~subj_id) +
+    geom_tile(size = .5) +
+    scale_fill_viridis_c() +
+    labs(fill = "Accuracy") +
+    theme_subjects +
+    theme(panel.border = element_rect(color = "#4d4d4d", fill = NA))
+```
