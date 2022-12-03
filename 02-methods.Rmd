@@ -109,7 +109,7 @@ Futhermore, all models will use weakly informative priors. @Gelman2020 recommend
 
 ### Inference criteria
 
-Hypotheses will be evaluated with Bayes Factors according to @Andras2014^[adjusted from Jeffreys, 1961 -- better double check that!], that is: $BF > 3$ costitutes moderate evidence for model A over model B (or vice versa when $BF < 1/3$) and $BF > 10$ (or $BF < 1/10$) will be interpreted as strong evidence respectively.
+Hypotheses will be evaluated with Bayes Factors according to @Andras2014^[adjusted from Jeffreys, 1961], that is: $BF > 3$ costitutes moderate evidence for model A over model B (or vice versa when $BF < 1/3$) and $BF > 10$ (or $BF < 1/10$) will be interpreted as strong evidence respectively.
 
 
 ### Divergence from and additions to the pre-registration

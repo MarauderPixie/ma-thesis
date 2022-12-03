@@ -4,7 +4,7 @@ knit: "bookdown::render_book"
 
 # (APPENDIX) Appendix {-}
 
-# Individual plots
+## Individual plots
 
 ```{r appA-transfer-plot, fig.cap="Individual responses in transfer phase", out.width="100%", out.height="95%", cache=TRUE}
 transfer %>% 
@@ -17,3 +17,12 @@ transfer %>%
         strip.text = element_blank(),
         panel.spacing = unit(2, "pt"))
 ```
+
+## Model comparisons - fixed effects only
+
+In order to quantify evidence for or against an effect of rule structuring, we fitted several Bayesian logistic models (estimated using MCMC sampling with 4 chains of 12000 iterations and a warmup of 2000) to predict the number of extrapolated stimulus responses per person. Priors over parameters for all models were set as:
+
+- $student\_t(df = 3, location = -1, scale = 1)$ for the intercept, assuming about 30% extrapolators as reported by @CK17
+- $student\_t(df = 3, location = 0.5, scale = 1)$ for all slopes, assuming an approximately 7% increase in extrapolations in any group over the one receiving no treatment.
+
+The final model was fit on aggregated data with fixed effects for the blocked rule condition, the rule instructions condition and their interaction. Convergence and stability of the Bayesian sampling has been assessed using R-hat, which should be below 1.01 [@Vehtari2021], and Effective Sample Size (ESS), which should be greater than 1000 [@Buerkner2017], which again can be confirmed or all parameters. Bayes Factors for all model comparisons were obtained via bridge sampling and are shown in table \@ref(tab:h1-tbl-bfs). 

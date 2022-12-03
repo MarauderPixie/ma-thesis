@@ -124,6 +124,8 @@ training <- readRDS("data/trials-training.rds")
 transfer <- readRDS("data/trials-transfer.rds")
 stimprob <- readRDS("data/trials-probability.rds")
 
+h1_bfs <- readr::read_csv("models/BFs.csv")
+
 extra_binom <- transfer %>% 
   filter(item == "transfer") %>% 
   group_by(subj_id, rules, blocked) %>% 

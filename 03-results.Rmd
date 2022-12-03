@@ -4,25 +4,11 @@ knit: "bookdown::render_book"
 ---
 
 ```{r ch3-models-and-bayes-factors, cache=TRUE}
-h1_null  <- readRDS("models/h1_transfer/h10.rds")
-h1_block <- readRDS("models/h1_transfer/h11.rds")
-h1_instr <- readRDS("models/h1_transfer/h12.rds")
-h1_both  <- readRDS("models/h1_transfer/h131.rds")
-h1_inter <- readRDS("models/h1_transfer/h132.rds")
-
-# h2_null  <- readRDS("models/h2_training/h2_null.rds")
-# h2_rules <- readRDS("models/h2_training/h2_rules.rds")
-# h2_inter <- readRDS("models/h2_training/h2_inter.rds")
-
-# bf_h11  <- bayes_factor(h1_blocked, h1_null)
-# bf_h12  <- bayes_factor(h1_instructions, h1_null)
-# bf_h131 <- bayes_factor(h1_both, h1_blocked)
-# bf_h132 <- bayes_factor(h1_both, h1_instructions)
-# bf_h133 <- bayes_factor(h1_both, h1_null)
-
-# bf_h21  <- bayes_factor(h2_rules, h2_null)
-# bf_h221 <- bayes_factor(h2_interaction, h2_rules)
-# bf_h222 <- bayes_factor(h2_interaction, h2_null)
+# h1_null  <- readRDS("models/h1_transfer/h10.rds")
+# h1_block <- readRDS("models/h1_transfer/h11.rds")
+# h1_instr <- readRDS("models/h1_transfer/h12.rds")
+# h1_both  <- readRDS("models/h1_transfer/h131.rds")
+# h1_inter <- readRDS("models/h1_transfer/h132.rds")
 ```
 
 # Results {#ch:results}
@@ -54,25 +40,25 @@ beobachtet %>%
         "Extrapolators"   = paste0(round(mean_ckab6 * 100), "%")
     ) %>% 
   kbl(booktabs = TRUE, caption = "Mean proportion of extrapolated stimuli per person and proportion of extrapolators (k>6)") %>%
-  kable_styling(full_width = FALSE, position = "left")
+  kable_styling(full_width = FALSE, position = "center")
 ```
 
-```{r h1-plots-hist, fig.cap="Number of extrapolated stimuli per person and condition"}
+```{r h1-plots-hist, fig.cap="Number of extrapolated stimuli per person and condition", fig.asp=1/3}
 transfer %>% 
   filter(item == "transfer") %>% 
   group_by(subj_id, condition) %>% 
   summarise(ext = sum(extrapolation)) %>% 
   ggplot(aes(ext)) +
-    facet_wrap(~condition) +
+    facet_wrap(~condition, nrow = 1) +
     geom_histogram(binwidth = 1) +
     scale_x_continuous(breaks = scales::pretty_breaks(n = 10), labels = c("", 0:9, "")) +
-    labs(x = "Extrapolations", y = "people")
+    labs(x = "Extrapolations", y = "n")
 ```
 
-The main interest of this study was to find out whether it is possible to increase the number of extrapolations and thereby the learning of a full XOR category structure via the use of rule instructions, the ordering of rules to learn and to look into a possible interaction of both. Table \@ref(tab:h1-tbl-summary) shows the mean percentage of extrapolated stimuli per person by experimental condition as well as the percentage of extrapolators, that is people who extrapolated more than six of the nine critical stimuli. Figure \@ref(fig:h1-plots-hist) shows the number of extrapolations per person overall as well as between experimental groups. Figure \@ref(fig:h1-plots-gradient) on the other hand shows decision gradients for all stimuli across the conditions^[see fig. \@ref(fig:appA-transfer-plot) in appendix for an overview of individual responses.].
+The main interest of this study was to find out whether it is possible to increase the number of extrapolations and thereby the learning of a full XOR category structure via the use of rule instructions, the ordering of rules to learn and a possible interaction of both. Table \@ref(tab:h1-tbl-summary) shows the mean percentage of extrapolated stimuli per person by experimental condition as well as the percentage of extrapolators, that is, people who extrapolated more than six of the nine critical stimuli. Figure \@ref(fig:h1-plots-hist) shows the number of extrapolations per person overall as well as between experimental groups. Figure \@ref(fig:h1-plots-gradient) on the other hand shows decision gradients for all stimuli across the conditions^[see fig. \@ref(fig:appA-transfer-plot) in appendix for an overview of individual responses.].
 
 
-```{r h1-plots-gradient, fig.asp=1/1, fig.cap="Gradient of category decisions in the transfer phase"}
+```{r h1-plots-gradient, fig.cap="Gradient of category decisions in the transfer phase", fig.asp=1/4}
 transfer %>% 
   count(condition, img_x, img_y, response) %>% 
   spread(response, n) %>% 
@@ -84,32 +70,44 @@ transfer %>%
     p_Grot = (Grot / n * 100) |> round(2)
   ) %>% 
   ggplot(aes(img_x, img_y, fill = p_Grot)) +
-    facet_wrap(~condition) +
+    facet_wrap(~condition, nrow = 1) +
     geom_tile(size = 1) +
     scale_fill_viridis_c() +
     theme_transfer +
     theme(legend.position = "none")
 ```
 
-## Model comparisons
+### Model comparisons
 
-In order to quantify evidence for or against an effect of rule structuring, we fitted several Bayesian logistic models (estimated using MCMC sampling with 4 chains of 12000 iterations and a warmup of 2000) to predict the number of extrapolated stimulus responses per person. Priors over parameters for all models were set as:
+In order to quantify evidence for or against an effect of rule structuring and rule instructions, we fitted several Bayesian logistic models (estimated using MCMC sampling with 4 chains of 12000 iterations and a warmup of 2000) to predict the extrapolation of stimulus responses. Priors over parameters for all models were set as:
 
-- $student\_t(df = 3, location = -1, scale = 1)$ for the intercept, assuming about 30% extrapolators as reported by @CK17
+- $student\_t(df = 3, location = -1.4, scale = 1)$ for the intercept, assuming about 30% of the participants extrapolating at least 6 out ouf 9 trials as reported by @CK17
 - $student\_t(df = 3, location = 0.5, scale = 1)$ for all slopes, assuming an approximately 7% increase in extrapolations in any group over the one receiving no treatment.
+- $student\_t(df = 3, location = 2.2, scale = 1)$ with a lower bound of 0 and an upper bound of 5 for random intercepts per participant
 
-The final model was fit on aggregated data with fixed effects for the blocked rule condition, the rule instructions condition and their interaction. Convergence and stability of the Bayesian sampling has been assessed using R-hat, which should be below 1.01 [@Vehtari2021], and Effective Sample Size (ESS), which should be greater than 1000 [@Buerkner2017], which again can be confirmed or all parameters. Bayes Factors for all model comparisons were obtained via bridge sampling and are shown in table \@ref(tab:h1-tbl-bfs). 
+The final model was fit with fixed effects for the blocked rule condition, the rule instructions condition and their interaction, as well as random intercepts per participant. Convergence and stability of the Bayesian sampling has been assessed using R-hat, which should be below 1.01 [@Vehtari2021], and Effective Sample Size (ESS), which should be greater than 1000 [@Buerkner2017], which again can be confirmed for all parameters. Bayes Factors for all model comparisons were obtained by comparing marginal likelihoods via bridge sampling and are shown in table \@ref(tab:h1-tbl-bfs). 
+Compared to the intercept only model (the least supported model), we found strong evidence (_BF_ = `r h1_bfs[1,2]`) in favour of the Blockd Rule model; anecdotal evidence (_BF_ = `r h1_bfs[2,2]`) in favour of the Rule Instructions model; strong evidence (_BF_ = `r h1_bfs[3,2]`) in favour of the model including both terms (the most supported model) and strong evidence (_BF_ = `r h1_bfs[4,2]`) in favour of the model including both terms and their interaction. The apparent advantage of the models including both terms over the intercept only model is diminished when compared directly to the Blocked Rule model (_BF_ = `r h1_bfs[3,3]` and `r h1_bfs[3,4]` for both terms and both terms plus interaction respectively).
+
+(ref:h1-tbl-bfs) Model comparison for effects of rule instruction, blocked rules and their interaction; Bayes Factors for $M_1$ over $M_2$ obtained via bridge sampling.
 
 ```{r h1-tbl-bfs}
-readr::read_csv("models/BFs.csv") %>% 
-  kbl(booktabs = TRUE, caption = "Bayes Factors of Model Comparisons") %>% 
+h1_bfs %>% 
+  kbl(booktabs = TRUE, escape = FALSE, 
+      caption = "(ref:h1-tbl-bfs)", align = "l") %>% 
   kable_styling(full_width = TRUE) %>% 
-  add_header_above(c(" ", "BF of left hand model over:" = 4)) %>% 
+  add_header_above(c(" ", "$M_2$" = 4), escape = FALSE) %>% 
   column_spec(1, width = "5cm")
 ```
 
 
 
-## H2: Learning with Rule Instructions
+## H2: Learning Accuracy with Rule Instructions
 
-A similar approach as under Section 1.1 was taken to investigate a possible advantageous effect of instructions mentioning rules on learning the category structure. 
+A similar approach as under Section 1.1 was taken to investigate a possible advantageous effect of instructions mentioning rules on learning the category structure. Two Bayesian 
+logistic models were fitted (estimated using MCMC sampling with 4 chains of 12000 iterations and a warmup of 2000) to predict correct classification of training stimuli. Priors over parameters were set as:
+
+- $student\_t(df = 3, location = 2, scale = 1)$ for the intercept, assuming an average 88% learning accuracy
+- $student\_t(df = 3, location = 0, scale = 1)$ for the slope of the rule instructions condition, assuming no difference.
+- $student\_t(df = 3, location = 2.2, scale = 1)$ with a lower bound of 0 and an upper bound of 5 for all random effects
+
+The first (intercept-only) model assumes random intercepts for participants with a by-participant random effect for training blocks. The second model assumes the same but adds the rule instructions condition as a fixed effect. Convergence and stability of the Bayesian sampling has again been assessed using R-hat and Effective Sample Size (ESS), which again can be confirmed for all parameters. Model comparison via bridge sampling yields anecdotal evidence against an effect of Rule Instructions ($BF_{21}$ = .677).
