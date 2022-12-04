@@ -9,13 +9,13 @@ knit: "bookdown::render_book"
 ```{r appA-transfer-plot, fig.cap="Individual responses in transfer phase", out.width="100%", out.height="95%", cache=TRUE}
 transfer %>% 
   ggplot(aes(img_x, img_y, fill = response)) +
-  facet_wrap(~subj_id) +
-  geom_tile(size = .2, color = "white") +
-  scale_fill_brewer(palette = "Set1") +
-  theme_subjects +
-  theme(legend.position = "none",
-        strip.text = element_blank(),
-        panel.spacing = unit(2, "pt"))
+    facet_wrap(~subj_id) +
+    geom_tile(size = .2, color = "white") +
+    scale_fill_brewer(palette = "Set1") +
+    theme_subjects +
+    theme(legend.position = "none",
+          strip.text = element_blank(),
+          panel.spacing = unit(2, "pt"))
 ```
 
 ## Model comparisons - fixed effects only

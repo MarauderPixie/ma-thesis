@@ -16,6 +16,7 @@ faculty: "8: Humanwissenschaften"
 institute: "Institut für Kognitionswissenschaft"
 # logo: "includes/LogoUniOsna.pdf"
 bibliography: "bib/thesis.bib"
+# csl: bib/apa.csl
 mainfont: 'Lato'
 # sansfont: 'PT Serif'
 sansfont: 'Lato'
@@ -34,8 +35,8 @@ output:
     latex_engine: xelatex
     dev: cairo_pdf
     fig_caption: yes
-    fig_height: 3.8
-    fig_width: 6.3
+    fig_height: 3
+    fig_width: 5
     keep_tex: yes
     number_sections: yes
     pandoc_args: [
@@ -62,9 +63,12 @@ library(tidyr)
 library(bridgesampling)
 library(effectsize)
 library(ggplot2)
+library(patchwork)
+# library(xtable)
 library(kableExtra)
 
-options(knitr.table.format = "latex")
+options(knitr.table.format = "latex",
+        tinytex.verbose = TRUE)
 knitr::opts_chunk$set(
   cache = FALSE,
   error = FALSE,
@@ -80,7 +84,11 @@ knitr::opts_chunk$set(
   # tidy.opts = list(blank = FALSE, width.cutoff = 80)
 )
 
-theme_set(hrbrthemes::theme_ipsum_ps(plot_margin = margin(2, 2, 2, 2)))
+theme_set(hrbrthemes::theme_ipsum_ps(
+    plot_margin = margin(2, 2, 2, 2),
+    strip_text_size = 8
+  )
+)
 
 
 theme_transfer <- theme(legend.text = element_blank(),
@@ -99,8 +107,7 @@ theme_subjects <- theme(legend.position = "top",
                         panel.grid.major = element_blank(),
                         panel.grid.minor = element_blank(),
                         # panel.border = element_rect(fill = NA),
-                        panel.spacing = unit(5, "pt"),
-                        strip.text = element_text(size = 10))
+                        panel.spacing = unit(5, "pt"))
 
 update_geom_defaults("point", list(colour = "#ac0634"))
 update_geom_defaults("line", list(colour = "#ac0634"))
@@ -119,12 +126,13 @@ update_geom_defaults("text", list(colour = "#ac0634"))
 
 ```{r init_data}
 demo <- readRDS("data/demographics.rds")
-excluded <- readRDS("data/trials-excluded.rds")
 training <- readRDS("data/trials-training.rds")
 transfer <- readRDS("data/trials-transfer.rds")
 stimprob <- readRDS("data/trials-probability.rds")
 
 h1_bfs <- readr::read_csv("models/BFs.csv")
+exclud_train <- readRDS("data/exclusions_training.rds")
+exclud_trans <- readRDS("data/exclusions_transfer.rds")
 
 extra_binom <- transfer %>% 
   filter(item == "transfer") %>% 

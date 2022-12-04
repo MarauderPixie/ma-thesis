@@ -5,65 +5,62 @@ knit: "bookdown::render_book"
 
 ```{r demo_data}
 dur <- quantile(demo$duration, c(.025, .95)) |> as.numeric()
+exc_id <- unique(exclud_trans$subj_id)
 ```
 
 # Methods {#ch:methods}
 
-An online experiment has been conducted using the \_magpie 3 framework (source). This chapter describes the the collected sample, the experimental setup and procedure, the data preparation and the statistical models to be used for data analysis.
-
-The experiment and indeed this thesis as a whole has been pre-registered according to the guidelines of the Open Science Foundation (source). Said pre-registration can be found here: [https://osf.io/wegm9](https://osf.io/wegm9)  
-All code regarding the experiment and the data analysis can be found on the corresponding project page: [https://osf.io/gup7x/](https://osf.io/gup7x/)
+An online experiment has been conducted using the \_magpie 3 framework (https://magpie-ea.github.io/magpie-site/). This chapter describes the collected sample, the experimental setup and procedure, the data preparation and the statistical methods to be used for data analysis. The experiment has been pre-registered according to the guidelines of the Open Science Foundation (https://osf.io/)^[Link to the pre-registration: [https://osf.io/wegm9](https://osf.io/wegm9)]. All code regarding the experiment and the data analysis can be found on the corresponding project page^[Link to the project: [https://osf.io/gup7x/](https://osf.io/gup7x/)].
 
 ## Data collection procedure and sample description
 
-For data collection, the mailing lists of the psychology and cognitive science courses of the University of Osnabrück, as well as the psychology mailing list of the University of Bremen have been used, additional to several social media channels like facebook groups for psychology students and verbal recruitment. Participation was completely anonymous, voluntary and could be withdrawn at any time before submitting results. Students of said courses had the opportunity to receive 0.5 participation hours as compensation^[In order to keep the experimental data anonymous, the necessary personal data needed to hand out VP-hours was collected in a seperate dataset which could not be tracdd back to the experimental dataset. For the same reason, participation could not be revoked after data has been submitted.] and participants were required to be at least 18 years old and native german speakers. 
+For data collection, the mailing lists of the psychology and cognitive science courses of the University of Osnabrück, as well as the psychology mailing list of the University of Bremen have been used, additional to several social media channels like facebook groups for psychology students and verbal recruitment. Participation was completely anonymous, voluntary and could be withdrawn at any time before submitting results. Students of said courses had the opportunity to receive 0.5 participation hours as compensation^[In order to keep the experimental data anonymous, the necessary personal data needed to hand out VP-hours was collected in a seperate dataset which could not be traced back to the experimental dataset. For the same reason, participation could not be revoked after data has been submitted.] and participants were required to be at least 18 years old and native german speakers. 
 
-A total of `r nrow(demo) + length(unique(excluded$subj_id))` participants took part in the experiment, `r nrow(demo)` after exclusion. On average, participants are `r mean(demo$age, na.rm = TRUE) |> round(1)` years old (_min_ = `r min(demo$age, na.rm = TRUE)`, _max_ = `r max(demo$age, na.rm = TRUE)`, _SD_ = `r sd(demo$age, na.rm = TRUE) |> round(2)`). Median duration of participation is `r median(demo$duration, na.rm = TRUE) |> round()` seconds. There are `r demo %>% filter(duration > dur[2]) %>% nrow()` participants whose participation took more than 30 minutes (>95% quantile); without these, standard deviation is `r demo %>% filter(duration < dur[2]) %>% pull(duration) %>% sd() |> round()` seconds.^[It's assumed they didn't actually take that long but rather opened the link in their browser and only returned to the experiment after a while or something like that]
+A total of `r nrow(demo) + length(exc_id)` participants took part in the experiment, of which `r nrow(demo)` are eligible after exclusion. Average age of participants is `r mean(demo$age, na.rm = TRUE) |> round(1)` years (_min_ = `r min(demo$age, na.rm = TRUE)`, _max_ = `r max(demo$age, na.rm = TRUE)`, _SD_ = `r sd(demo$age, na.rm = TRUE) |> round(2)`) and median duration of participation is `r median(demo$duration, na.rm = TRUE) |> round()` seconds. There are `r demo %>% filter(duration > dur[2]) %>% nrow()` participants whose participation took more than 30 minutes (>95% quantile); without these, standard deviation is `r demo %>% filter(duration < dur[2]) %>% pull(duration) %>% sd() |> round()` seconds.
 
 
 ## Experimental setup & procedure
 
-The basic experimental setup is an iteration of the incomplete-XOR task by @CK17, using the same set of stimuli (see fig X) and consisting of a training and a transfer phase. In the training phase of the experiment, participants will be shown 6 squares of differing shade and size (see fig X) in a trial-and-feedback procedure. Upon presentation, they have to predict whether the stimulus belongs to A or B. After making their choice, they will receive feedback on whether it was correct. The stimuli of the reduced category (marked ‘A’ in fig. X) get displayed twice per block to "equate for category frequency" (Conaway & Kurtz, 2016), resulting in 8 trials per block across all conditions; that is, the four stimuli in the first 2 blocks / 16 trials of the blocked condition will also be shown twice per block. The training phase consists of 12 randomized blocks and therefore 96 trials in total.
+The basic experimental setup is an iteration of the incomplete-XOR task by @CK17, using the same set of stimuli (see fig X) and consisting of a training and a transfer phase. In the training phase of the experiment, participants will be shown 6 squares of differing shade and size (see fig X) in a trial-and-feedback procedure. Upon presentation, they have to predict whether the stimulus belongs to category "Nobz" or "Grot". After making their choice, they will receive feedback on whether they were correct. The stimuli of the reduced category (marked ‘A’ in fig. X) get displayed twice per block to "equate for category frequency" (@CK17), resulting in 8 trials per block across all conditions; that is, all stimuli in the first 2 blocks / 16 trials of the blocked condition will also be shown twice per block. The training phase consists of 12 randomized blocks and therefore 96 trials in total.
 
-In a subsequent transfer phase, the full set of 49 stimuli has to be classified without feedback.
+In a subsequent transfer phase, the full set of 49 stimuli has to be classified without feedback. Afterwards, the transfer phase will be repeated, the second time though participants are instructed to make a probability judgement about the stimulus category membership (e.g. 30% Nobz, 70% Grot) via a slider rating ranging from 0 to 100 in steps by 1.
 
-The transfer phase will be repeated, the second time though participants are instructed to make a probability judgement about the stimulus category membership (e.g. 30% A, 70% B) via a slider rating ranging from 0 to 100 in steps by 1.
+At the end of the experiment, pariticipants are asked to fill out demographic information as well as to answer a question about their strategy during transfer, all of which are voluntarily given / can be left blank.
 
-At the end of the experiment, pariticipants are asked to fill out demographic information as well as a question about their strategy during transfer, all of which are voluntarily given / can be left blank.
+### Experimental manipulation
 
-In addition to @CK17 there are four different experimental groups:
+In addition to the basic setup of @CK17 there are four different experimental groups:
 
 1. a control condition, where participants neither encounter instructions mentioning rules nor a simple rule at the beginning
 2. a rule instructions condition, where participants are explicitly told to look for a rule to classify stimuli
 3. a training order condition, where participants first learn a simple rule before they have to learn a more complex one
-4. a combination of 2 and 3; participants get told to look for a rule and also learn a simple rule before the more complex one
+4. a combination of 2 and 3; participants are told to look for a rule and also learn a simple rule before the more complex one
 
-This resulsts in a between subjects design with 2 factors - instructions (rule vs. neutral) and training order (blocked vs. mixed):
+This results in a between subjects design with 2 factors - instructions (rule vs. neutral) and training order (blocked vs. mixed). In more detail, the differences are:
 
-1. Instructions: with vs. without the mentioning of rules  
+1. Instructions:^[although the study was conducted in German, the translation is rather direct; see Appendix x for the full instructions.] 
+    - **without mentioning rules:** "\[You'll be shown] geometric shapes that differ in color and size. Your task is to learn, whether a figure belongs to category **Nobz** or category **Grot** \[...\] Do your best to master the categories Nobz and Grot!"
+    - **mentioning rules:** "Your task is to learn a rule on the basis of color and size by which you can decide whether a fugure belongs to **Nobz** or **Grot** \[...\] Do your best to master the rule for catgories Nobz and Grot!"
 2. Training order:
-    - **Blocked:** the first two blocks of training (16 trials) consist of a 'simple rule first' (stimuli that can be differentiated along one axis (either size or shape)), thereafter stimulus presentation identical to ‘mixed’ training
-    - **Mixed:** all incomplete-xor trials at random from the beginning (mixed; in blocks of 8 trials) - see figure 1
-
+    - **Blocked:** the first two blocks of training (16 trials) consist of a 'simple rule first' (stimuli that can be differentiated along one axis (either size or shape)), thereafter stimulus presentation is identical to ‘mixed’ training
+    - **Mixed:** all training trials - that is, the more complicated category structure - at random from the beginning (in blocks of 8 trials) - see figure x
 
 <!-- ## Experimental Procedure
-
 `idk man, it's basically the above, but maybe I should split setup & procedure?` -->
-
 
 ### Randomization
 
-Participants will be randomly assigned to experimental groups by _magpie3's balanced randomization functionality.
+Participants are randomly assigned to experimental groups by _magpie3's balanced randomization functionality. For the training phase, the assignment of categories (which set of stimuli is Nobz and which is Grot) is randomized as well as the relevant dimension (size / shade) of the ‘simple rule’ trials of the blocked rule condition. Trial randomization happens on a by-block level. For the transfer phases, the full set of stimuli is randomized blockwise as a whole. 
 
-For the training phase, the assignment of categories (which set of stimuli is A and which is B) will be randomized as well as the relevant dimension (size / shade) of the ‘simple rule’ trials of the blocked rule condition. Trial randomization will happen on a by-block level. For the transfer phases, randomization takes place blockwise on the full set of stimuli as a whole.
 
 ## Data preparation
 
-In the preregistration the aimed for sample size is 40 complete and eligible observations per experimental group, resulting in a total of 160 participations. Since the analysis is rather complex in addition to being conducted with bayesian modeling, a power analysis in the classical sense is not applicable. For one, there is no way to actaully apply a plower analysis to a log-linear mixed effect model and for the other the intended use of such an analysis - being sure to not exceed a certain beta error rate given a desired effect size and alpha level - doesn't make any sense here; there simply are no such things as a Type I or II error in bayesian data analysis. Nonetheless, the practicality to estimate a desired effect size beforehand is still undisputable; after all, one still wants to be as certain as possible in their results - or, analoguos to the concept of statistical power, certain enough to draw proper conclusions. A naive power calculation for logistic regression then, assuming an odds ratio of 2, requires 34 people per group to reach a power of 80%. @Chen2010 show that this assumption translates to a rather small effect, with an OR of 1.68 being equivalent to a Cohen‘s d of 0.2. Simulations by @Chen2017 show similar results and @Brysbaert2018 also recommend a sample size of about 40 people (with eually as many stimuli), albeit on a more general basis.
+A sample size of 40 complete and eligible observations (after exclusion) per experimental group was preregistered, resulting in a total of 160 participations required. Since the analysis is rather complex in addition to being conducted with bayesian modeling, a full power analysis in the classical sense is beyond the scope of this thesis. For one, there is no way to actaully apply a power analysis to a log-linear mixed effect model - or is it? A naive power calculation for a simple logistic regression however, assuming an odds ratio of 2, requires 34 people per group to reach a power of 80%. @Chen2010 show that this assumption translates to a rather small effect, with an OR of 1.68 being equivalent to a Cohen‘s d of 0.2. Simulations by @Chen2017 show similar results and @Brysbaert2018 also recommend a sample size of about 40 people (with equally as many stimuli), albeit on a more general basis. 
+
 
 ### Variables, indices and aggregation
 
-Resulting from the 2x2 factorial design there are two manipulated/independent variables with two levels each:
+Resulting from the 2x2 factorial design described above there are two manipulated/independent variables with two levels each:
 
 - **IV 1: Instructions** - explicitly introducting participants to look for rules and neutral language without any mentioning of rules  
 - **IV 2: Rule order** - blocked stimulus presentation and mixed stimulus presentation
@@ -77,9 +74,46 @@ The dependent variables are:
 
 ### Data exclusion
 
-Participants that appear to be guessing in the training phase (the probability of correct classification on a single trial being 0.5) will be excluded. The above-chance number of correct classifications needed (based on a 5% alpha level) in the last 3 training blocks (24 trials) then is 16.
+Participants that appear to be guessing in the training phase (the probability of correct classification on a single trial being 0.5) will be excluded. The above-chance number of correct classifications needed (based on a 5% alpha level) in the last 3 training blocks (24 trials) then is 16. Additionally, should participants answer the question about any reason to not use their data in the affirmative, those participants will be excluded as well. 
 
-Additionally, should participants answer the question about any reason to not use their data in the affirmative, those participants will be excluded as well.
+While two people haven been identified in that way, after data collection and upon closer inspection, three additional participants have been identified that clearly didn't learn the category strucure. Two classified stimuli solely along one stimulus dimension only, which lead to 18 perfectly classified stimuli and 6 errors, thereby passing the threshold and one barely passed but didn't give sensible responses in the transfer phase. Figure \@ref(fig:ch2-plot-exclusions) shows the accuracy of the last three training blocks and the responses in the transfer phase.
+
+(ref:ch2-plot-exclusions) Response accuracy the for excluded participants on the last 3 blocks of training and respective responses of the transfer phase.
+
+```{r ch2-plot-exclusions, fig.cap="(ref:ch2-plot-exclusions)", out.height="33%"}
+plex_train <- exclud_train %>% 
+  left_join(distinct(select(exclud_trans, image, img_x, img_y)), by = "image") %>% 
+  filter(block > 9) %>% 
+  group_by(subj_id, img_x, img_y) %>% 
+  summarise(
+    p_correct = round(mean(correct) * 100, 1),
+    img_x = ifelse(img_x > 2, img_x - 2, img_x),
+    img_y = ifelse(img_y > 2, img_y - 2, img_y),
+    .groups = "drop"
+  ) %>%
+  ggplot(aes(img_x, img_y, fill = p_correct)) +
+    facet_wrap(~subj_id, nrow = 1) +
+    geom_tile(size = .5) +
+    scale_fill_viridis_c() +
+    labs(fill = "Acc.") +
+    theme_subjects +
+    theme(panel.border = element_rect(color = "#3c3c3c", fill = NA),
+          legend.text  = element_text(size = 6),
+          legend.position = "right"
+    )
+
+plex_trans <- ggplot(exclud_trans, aes(img_x, img_y, fill = response)) +
+  facet_wrap(~subj_id, nrow = 1) +
+  geom_tile(size = .5, color = "white") +
+  scale_fill_manual(values = c("#ac0634", "#525252")) +
+  theme_subjects +
+  theme(panel.border = element_rect(color = "#525252", fill = NA),
+        legend.text  = element_text(size = 6),
+        legend.position = "none"
+  )
+
+plex_train / plex_trans
+```
 
 
 ## Analysis plan
@@ -110,33 +144,3 @@ Futhermore, all models will use weakly informative priors. @Gelman2020 recommend
 ### Inference criteria
 
 Hypotheses will be evaluated with Bayes Factors according to @Andras2014^[adjusted from Jeffreys, 1961], that is: $BF > 3$ costitutes moderate evidence for model A over model B (or vice versa when $BF < 1/3$) and $BF > 10$ (or $BF < 1/10$) will be interpreted as strong evidence respectively.
-
-
-### Divergence from and additions to the pre-registration
-
-1. **Data exclusion:** Upon closer inspection of the actual data it was deemed necessary to change the data exclusion criterion from a minimum accuracy over all trials in the last three blocks of training to a minimum on a by-stimulus basis in the last three blocks. This is due to some participants seemingly having classified the stimuli along one dimension only, leading to extreme cases of 0% accuracy on the stimuli on which they had to apply the XOR rule (see fig. x for all participants affected by the change).
-
-(ref:ch2-plot-exclusions) Response accuracy for excluded participants on the last 3 blocks of training.
-
-```{r ch2-plot-exclusions, fig.cap="(ref:ch2-plot-exclusions)"}
-excluded <- transfer %>%
-  select(image, img_x, img_y) %>% 
-  right_join(excluded, by = "image")
-
-excluded %>% 
-  filter(block > 9) %>% 
-  group_by(subj_id, img_x, img_y) %>% 
-  summarise(
-    p_correct = round(mean(correct) * 100, 1),
-    img_x = ifelse(img_x > 2, img_x - 2, img_x),
-    img_y = ifelse(img_y > 2, img_y - 2, img_y),
-    .groups = "drop"
-  ) %>%
-  ggplot(aes(img_x, img_y, fill = p_correct)) +
-    facet_wrap(~subj_id) +
-    geom_tile(size = .5) +
-    scale_fill_viridis_c() +
-    labs(fill = "Accuracy") +
-    theme_subjects +
-    theme(panel.border = element_rect(color = "#4d4d4d", fill = NA))
-```

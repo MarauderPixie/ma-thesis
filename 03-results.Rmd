@@ -15,10 +15,13 @@ knit: "bookdown::render_book"
 
 ## H1: Extrapolations in Transfer Phase
 
+(ref:h1-tbl-summary) Mean proportion of extrapolated stimuli per person and proportion of extrapolators (k>6)
+
 ```{r h1-tbl-summary}
 beobachtet <- extra_binom %>% 
   group_by(rules, blocked) %>% 
   summarise(
+    n = n(),
     mean_p = mean(p),
     sd_p   = sd(p),
     mean_k = mean(k),
@@ -36,11 +39,17 @@ beobachtet %>%
             rules == "yes" & blocked == "no" ~ "Rule Instructions",
             rules == "yes" & blocked == "yes" ~ "Blocked + Instructions",
         ),
-        "Mean (SD)" = paste0(round(mean_p * 100, 2), "% (", round(sd_p * 100, 2), ")"),
-        "Extrapolators"   = paste0(round(mean_ckab6 * 100), "%")
+        "n" = n,
+        "Extrapolators"   = paste0(round(mean_ckab6 * 100), "%"),
+        "Mean" = paste0(round(mean_p * 100, 2), "%"),
+        "SD"   = round(sd_p * 100, 2)
     ) %>% 
-  kbl(booktabs = TRUE, caption = "Mean proportion of extrapolated stimuli per person and proportion of extrapolators (k>6)") %>%
-  kable_styling(full_width = FALSE, position = "center")
+  # xtable(booktabs = TRUE, caption = "(ref:h1-tbl-summary)") %>%
+  # xtable2kable() %>%
+  kbl(booktabs = TRUE, caption = "(ref:h1-tbl-summary)") %>%
+  kable_styling(full_width = FALSE, font_size = 10, 
+                position = "center") %>% # "float_right") %>% 
+  add_header_above(c(" " = 3, "XOR Extrapolations" = 2))
 ```
 
 ```{r h1-plots-hist, fig.cap="Number of extrapolated stimuli per person and condition", fig.asp=1/3}
@@ -51,8 +60,9 @@ transfer %>%
   ggplot(aes(ext)) +
     facet_wrap(~condition, nrow = 1) +
     geom_histogram(binwidth = 1) +
-    scale_x_continuous(breaks = scales::pretty_breaks(n = 10), labels = c("", 0:9, "")) +
-    labs(x = "Extrapolations", y = "n")
+    scale_x_continuous(breaks = scales::pretty_breaks(n = 10), 
+                       labels = c("", 0:9, "")) +
+    labs(x = "Extrapolations", y = "n") 
 ```
 
 The main interest of this study was to find out whether it is possible to increase the number of extrapolations and thereby the learning of a full XOR category structure via the use of rule instructions, the ordering of rules to learn and a possible interaction of both. Table \@ref(tab:h1-tbl-summary) shows the mean percentage of extrapolated stimuli per person by experimental condition as well as the percentage of extrapolators, that is, people who extrapolated more than six of the nine critical stimuli. Figure \@ref(fig:h1-plots-hist) shows the number of extrapolations per person overall as well as between experimental groups. Figure \@ref(fig:h1-plots-gradient) on the other hand shows decision gradients for all stimuli across the conditions^[see fig. \@ref(fig:appA-transfer-plot) in appendix for an overview of individual responses.].
