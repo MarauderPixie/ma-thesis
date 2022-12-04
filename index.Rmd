@@ -84,9 +84,9 @@ knitr::opts_chunk$set(
   # tidy.opts = list(blank = FALSE, width.cutoff = 80)
 )
 
-theme_set(hrbrthemes::theme_ipsum_ps(
+theme_set(hrbrthemes::theme_ipsum_rc(
     plot_margin = margin(2, 2, 2, 2),
-    strip_text_size = 8
+    base_size = 10, strip_text_size = 8
   )
 )
 

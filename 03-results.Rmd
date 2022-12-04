@@ -48,9 +48,11 @@ beobachtet %>%
   # xtable2kable() %>%
   kbl(booktabs = TRUE, caption = "(ref:h1-tbl-summary)") %>%
   kable_styling(full_width = FALSE, font_size = 10, 
-                position = "center") %>% # "float_right") %>% 
+                position = "center", latex_options = "hold_position") %>% # "float_right") %>% 
   add_header_above(c(" " = 3, "XOR Extrapolations" = 2))
 ```
+
+The main interest of this study is to find out whether an increase in the number of XOR extrapolations and thereby the learning of a full XOR category structure is facilitated by the use of rule instructions, the ordering of rules during learning and a possible interaction of both. Table \@ref(tab:h1-tbl-summary) shows the final group sizes, the average percentage of extrapolated stimuli per person by experimental condition as well as the percentage of extrapolators, that is, people who extrapolated more than six of the nine critical stimuli. Figure \@ref(fig:h1-plots-hist) shows the number of extrapolations per person overall as well as between experimental groups. Figure \@ref(fig:h1-plots-gradient) on the other hand shows decision gradients for all stimuli across the conditions^[see fig. \@ref(fig:appA-transfer-plot) in appendix for an overview of responses by every individual.].
 
 ```{r h1-plots-hist, fig.cap="Number of extrapolated stimuli per person and condition", fig.asp=1/3}
 transfer %>% 
@@ -62,11 +64,13 @@ transfer %>%
     geom_histogram(binwidth = 1) +
     scale_x_continuous(breaks = scales::pretty_breaks(n = 10), 
                        labels = c("", 0:9, "")) +
-    labs(x = "Extrapolations", y = "n") 
+    labs(x = "Extrapolations", y = "n") +
+    theme(panel.spacing.x = unit(5, "pt"),
+          panel.grid.minor.x = element_blank(),
+          panel.grid.major.x = element_blank())
 ```
 
-The main interest of this study was to find out whether it is possible to increase the number of extrapolations and thereby the learning of a full XOR category structure via the use of rule instructions, the ordering of rules to learn and a possible interaction of both. Table \@ref(tab:h1-tbl-summary) shows the mean percentage of extrapolated stimuli per person by experimental condition as well as the percentage of extrapolators, that is, people who extrapolated more than six of the nine critical stimuli. Figure \@ref(fig:h1-plots-hist) shows the number of extrapolations per person overall as well as between experimental groups. Figure \@ref(fig:h1-plots-gradient) on the other hand shows decision gradients for all stimuli across the conditions^[see fig. \@ref(fig:appA-transfer-plot) in appendix for an overview of individual responses.].
-
+### Model comparisons
 
 ```{r h1-plots-gradient, fig.cap="Gradient of category decisions in the transfer phase", fig.asp=1/4}
 transfer %>% 
@@ -81,22 +85,20 @@ transfer %>%
   ) %>% 
   ggplot(aes(img_x, img_y, fill = p_Grot)) +
     facet_wrap(~condition, nrow = 1) +
-    geom_tile(size = 1) +
+    geom_tile(size = .1, color = "white") +
     scale_fill_viridis_c() +
     theme_transfer +
     theme(legend.position = "none")
 ```
 
-### Model comparisons
-
 In order to quantify evidence for or against an effect of rule structuring and rule instructions, we fitted several Bayesian logistic models (estimated using MCMC sampling with 4 chains of 12000 iterations and a warmup of 2000) to predict the extrapolation of stimulus responses. Priors over parameters for all models were set as:
 
 - $student\_t(df = 3, location = -1.4, scale = 1)$ for the intercept, assuming about 30% of the participants extrapolating at least 6 out ouf 9 trials as reported by @CK17
-- $student\_t(df = 3, location = 0.5, scale = 1)$ for all slopes, assuming an approximately 7% increase in extrapolations in any group over the one receiving no treatment.
+- $student\_t(df = 3, location = 0.5, scale = 1)$ for all slopes, assuming an approximately 10% increase in extrapolations in any group over the one receiving no treatment.
 - $student\_t(df = 3, location = 2.2, scale = 1)$ with a lower bound of 0 and an upper bound of 5 for random intercepts per participant
 
-The final model was fit with fixed effects for the blocked rule condition, the rule instructions condition and their interaction, as well as random intercepts per participant. Convergence and stability of the Bayesian sampling has been assessed using R-hat, which should be below 1.01 [@Vehtari2021], and Effective Sample Size (ESS), which should be greater than 1000 [@Buerkner2017], which again can be confirmed for all parameters. Bayes Factors for all model comparisons were obtained by comparing marginal likelihoods via bridge sampling and are shown in table \@ref(tab:h1-tbl-bfs). 
-Compared to the intercept only model (the least supported model), we found strong evidence (_BF_ = `r h1_bfs[1,2]`) in favour of the Blockd Rule model; anecdotal evidence (_BF_ = `r h1_bfs[2,2]`) in favour of the Rule Instructions model; strong evidence (_BF_ = `r h1_bfs[3,2]`) in favour of the model including both terms (the most supported model) and strong evidence (_BF_ = `r h1_bfs[4,2]`) in favour of the model including both terms and their interaction. The apparent advantage of the models including both terms over the intercept only model is diminished when compared directly to the Blocked Rule model (_BF_ = `r h1_bfs[3,3]` and `r h1_bfs[3,4]` for both terms and both terms plus interaction respectively).
+The final model was fit with fixed effects for the blocked rule condition, the rule instructions condition and their interaction, as well as random intercepts per participant. Convergence and stability of the Bayesian sampling has been assessed using R-hat, which should be below 1.01 [@Vehtari2021], and Effective Sample Size (ESS), which should be greater than 1000 [@Buerkner2017], which in turn can be confirmed for all parameters of all models. Bayes Factors for all model comparisons were obtained by comparing marginal likelihoods via bridge sampling and are shown in table \@ref(tab:h1-tbl-bfs).
+Compared to the intercept only model, we found moderate evidence (_BF_ = `r h1_bfs[1,2]`) in favour of the Blockd Rule model; no evidence (_BF_ = `r h1_bfs[2,2]`) against the Rule Instructions model (the least supported model); moderate evidence (_BF_ = `r h1_bfs[3,2]`) in favour of the model including both terms (the most supported model) and moderate evidence (_BF_ = `r h1_bfs[4,2]`) in favour of the model including both terms and their interaction. The apparent advantage of the models including both terms over the intercept only model is diminished when compared directly to the Blocked Rule model (_BF_ = `r h1_bfs[3,3]` and `r h1_bfs[3,4]` for both terms and both terms plus interaction respectively). Since the model including both terms but no interaction is the most supported one, with an substantial explanatory power of $R^2 = 0.67$ (_CI_ = [0.64, 0.69]), those models posterior estimates are reported in table \@ref(tab:model-summary). 
 
 (ref:h1-tbl-bfs) Model comparison for effects of rule instruction, blocked rules and their interaction; Bayes Factors for $M_1$ over $M_2$ obtained via bridge sampling.
 
@@ -114,10 +116,10 @@ h1_bfs %>%
 ## H2: Learning Accuracy with Rule Instructions
 
 A similar approach as under Section 1.1 was taken to investigate a possible advantageous effect of instructions mentioning rules on learning the category structure. Two Bayesian 
-logistic models were fitted (estimated using MCMC sampling with 4 chains of 12000 iterations and a warmup of 2000) to predict correct classification of training stimuli. Priors over parameters were set as:
+logistic mixed models were fitted (estimated using MCMC sampling with 4 chains of 12000 iterations and a warmup of 2000) to predict correct classification of training stimuli. Priors over parameters were set as:
 
 - $student\_t(df = 3, location = 2, scale = 1)$ for the intercept, assuming an average 88% learning accuracy
 - $student\_t(df = 3, location = 0, scale = 1)$ for the slope of the rule instructions condition, assuming no difference.
 - $student\_t(df = 3, location = 2.2, scale = 1)$ with a lower bound of 0 and an upper bound of 5 for all random effects
 
-The first (intercept-only) model assumes random intercepts for participants with a by-participant random effect for training blocks. The second model assumes the same but adds the rule instructions condition as a fixed effect. Convergence and stability of the Bayesian sampling has again been assessed using R-hat and Effective Sample Size (ESS), which again can be confirmed for all parameters. Model comparison via bridge sampling yields anecdotal evidence against an effect of Rule Instructions ($BF_{21}$ = .677).
+The first (intercept-only) model assumes random intercepts for participants with a by-participant random effect for training blocks. The second model assumes the same but adds the rule instructions condition as a fixed effect. Convergence and stability of the Bayesian sampling has again been assessed using R-hat and Effective Sample Size (ESS), which again can be confirmed for all parameters. Model comparison via bridge sampling yields no meaningful evidence against an effect of Rule Instructions ($BF_{21}$ = .565), even though the rule instructions model has substantial explanatory power ($R^2$ = 0.48, _CI_ = [0.43, 0.53]) and the rule effect has a 98.22% probability of being positive (_Median_ = 0.40, _95% HDI_= [0.03, 0.77]). 

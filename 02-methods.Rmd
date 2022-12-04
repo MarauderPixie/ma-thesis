@@ -39,8 +39,8 @@ In addition to the basic setup of @CK17 there are four different experimental gr
 This results in a between subjects design with 2 factors - instructions (rule vs. neutral) and training order (blocked vs. mixed). In more detail, the differences are:
 
 1. Instructions:^[although the study was conducted in German, the translation is rather direct; see Appendix x for the full instructions.] 
-    - **without mentioning rules:** "\[You'll be shown] geometric shapes that differ in color and size. Your task is to learn, whether a figure belongs to category **Nobz** or category **Grot** \[...\] Do your best to master the categories Nobz and Grot!"
-    - **mentioning rules:** "Your task is to learn a rule on the basis of color and size by which you can decide whether a fugure belongs to **Nobz** or **Grot** \[...\] Do your best to master the rule for catgories Nobz and Grot!"
+    - **without mentioning rules:** "\\[You'll be shown\\] geometric shapes that differ in color and size. Your task is to learn, whether a figure belongs to category **Nobz** or category **Grot** \\[...\\] Do your best to master the categories Nobz and Grot!"
+    - **mentioning rules:** "Your task is to learn a rule on the basis of color and size by which you can decide whether a fugure belongs to **Nobz** or **Grot** \\[...\\] Do your best to master the rule for catgories Nobz and Grot!"
 2. Training order:
     - **Blocked:** the first two blocks of training (16 trials) consist of a 'simple rule first' (stimuli that can be differentiated along one axis (either size or shape)), thereafter stimulus presentation is identical to ‘mixed’ training
     - **Mixed:** all training trials - that is, the more complicated category structure - at random from the beginning (in blocks of 8 trials) - see figure x
@@ -62,7 +62,7 @@ A sample size of 40 complete and eligible observations (after exclusion) per exp
 
 Resulting from the 2x2 factorial design described above there are two manipulated/independent variables with two levels each:
 
-- **IV 1: Instructions** - explicitly introducting participants to look for rules and neutral language without any mentioning of rules  
+- **IV 1: Instructions** - explicitly introducting participants to look for rules and neutral language without any mentioning of rules
 - **IV 2: Rule order** - blocked stimulus presentation and mixed stimulus presentation
 
 The dependent variables are:
@@ -80,7 +80,7 @@ While two people haven been identified in that way, after data collection and up
 
 (ref:ch2-plot-exclusions) Response accuracy the for excluded participants on the last 3 blocks of training and respective responses of the transfer phase.
 
-```{r ch2-plot-exclusions, fig.cap="(ref:ch2-plot-exclusions)", out.height="33%"}
+```{r ch2-plot-exclusions, fig.cap="(ref:ch2-plot-exclusions)", out.height="30%"}
 plex_train <- exclud_train %>% 
   left_join(distinct(select(exclud_trans, image, img_x, img_y)), by = "image") %>% 
   filter(block > 9) %>% 
@@ -118,29 +118,29 @@ plex_train / plex_trans
 
 ## Analysis plan
 
-All analyses will be conducted using R (@R4, `r paste0(R.Version()$major, ".", R.Version()$minor, " - ", R.Version()$nickname)`). For a full list of all additionally used packages see Appendix X. All raw and prepared data as well as the corresponding R Scripts are available publicly on github.com; see Appendix X. 
+All analyses will be conducted using R (@R4, v`r paste0(R.Version()$major, ".", R.Version()$minor, " - ", R.Version()$nickname)`). For a full list of all additionally used packages see Appendix X. As already mentioned, all raw and prepared data as well as the corresponding analysis scripts are available in the osf repository^[Again, for convenience, the link to the project: [https://osf.io/gup7x/](https://osf.io/gup7x/)]. 
 
 To investigate the hypotheses laid out in the previous chapter, several mixed-effect logistic regression models using logit-links will be computed. Since the reasonably maximal random effect structure justified by the experimental setup (see @Barr2013) is not known a-priori, model complexity will be reduced to a maximal RE structure justified by the data (see @Bates2015) following these steps:
 
 - fit model with max. RE structure
 - identify posterior parameter estimates that do not conclusively differ from 0
-- perform hierarchical Likelihood-Ratio-Tests
+- perform hierarchical Likelihood-Ratio-Tests; should the difference in elpd scorces calculated via leave-one-out cross validation exceed the standard deviation in differences, the model with the lower score will be selected
 
-Futhermore, all models will use weakly informative priors. @Gelman2020 recommends $\operatorname{student}(df, mean = 0, sd = 1)$ where $3 \leq df \leq 7$, since the often used Cauchy-Distribution (that is, $\operatorname{student}(1, 0, 2.5)$) has too thick tails and a strict Gaussian might be too informative in the case at hand. Finally, Bayes Factors for model comparisons will be obtained via bridge sampling [@Gronau2020]. To obtain as robust BFs as possible, each model will have 4 MCMC chains with 12000 samples and 2000 warm-up samples each, resulting in 40000 posterior samples drawn per model [for details, see @Schad2021].
+Futhermore, all models will use only weakly informative priors. @Gelman2020 recommends $\operatorname{student}(df, mean = 0, sd = 1)$ where $3 \leq df \leq 7$, since the often used Cauchy-Distribution (that is, $\operatorname{student}(1, 0, 2.5)$) has too thick tails and a strict Gaussian might be too informative in the case at hand. Finally, Bayes Factors for model comparisons will be obtained by computing marginal likelihooods via bridge sampling [@Gronau2020]. Since that method requries a rather high amount of posterior samples to obtain robust bayes factors, each model will have 4 MCMC chains with 12000 samples and 2000 warm-up samples each, resulting in 40000 posterior samples drawn per model [for details, see @Schad2021].
 
-**Hypotheses 1** -- The dependent variable is the number of extrapolations of the nine untrained/incomplete stimuli (_k_ extrapolations of _n_ = 9 stimuli); independent variable is the experimental group assignment (instructions yes/no, blocked yes/no) Model comparisons for testint the hypotheses are therefore:
+### Model comparisons in detail
+
+**Hypotheses 1** -- The dependent variable is whether a stimulus of the nine untrained/incomplete stimuli has been extrapolated; independent variable is the experimental group assignment (instructions yes/no, blocked yes/no) Model comparisons for testing the hypotheses are therefore:
 
 - **H1.1:** $M_{instructions} > M_{null}$
-- **H1.2:** $M_{\text{rule order}} > M_{null}$
-- **H1.3:** $M_{\text{instructions : rule order}} \approx M_{instructions} \approx M_{\text{rule order}} > M_{null}$
+- **H1.2:** $M_{blocked} > M_{null}$
+- **H1.3:** $M_{{instructions + blocked + interaction}} \approx M_{{instructions + blocked}} \approx M_{instructions} \approx M_{blocked} > M_{null}$
 
 **Hypotheses 2** -- Depedent variable is the blockwise categorisation accuracy of the stimuli in the training phase, independent variable again is group assignment (instructions only) as well as the training block. Model comparsisons are therefore:
 
 - **H2.1:** $M_{instructions} > M_{null}$
-- **H2.2:** $M_{\text{instructions : block}} > M_{instructions} > M_{null}$
-
-
+- **H2.2:** $M_{{instructions + block + interaction}} > M_{instructions} > M_{null}$
 
 ### Inference criteria
 
-Hypotheses will be evaluated with Bayes Factors according to @Andras2014^[adjusted from Jeffreys, 1961], that is: $BF > 3$ costitutes moderate evidence for model A over model B (or vice versa when $BF < 1/3$) and $BF > 10$ (or $BF < 1/10$) will be interpreted as strong evidence respectively.
+Hypotheses will be evaluated with Bayes Factors according to @Andras2014^[adjusted from Jeffreys, 1961], that is: $BF_{12} > 3$ constitutes moderate evidence for $M_1$ over $M_2$ (or vice versa when $BF_{12} < 1/3$) and $BF_{12} > 10$ (or $BF_{12} < 1/10$) will be interpreted as strong evidence respectively. Bayes Factors between 1/3 and 3 are treated as no meaningful evidence in favor of either model.

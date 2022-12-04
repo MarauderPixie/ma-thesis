@@ -11,7 +11,7 @@ transfer %>%
   ggplot(aes(img_x, img_y, fill = response)) +
     facet_wrap(~subj_id) +
     geom_tile(size = .2, color = "white") +
-    scale_fill_brewer(palette = "Set1") +
+    scale_fill_manual(values = c("#ac0634", "#525252")) +
     theme_subjects +
     theme(legend.position = "none",
           strip.text = element_blank(),

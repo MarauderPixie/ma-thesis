@@ -5,7 +5,7 @@ knit: "bookdown::render_book"
 
 # Discussion
 
-As predicted by hypothesis 1.1, we found strong evidence for a main effect of a blocked rule on the number of extrapolations. This in turn fortifies the assumption that this effect can be explained by contextual modulation as proposed by CAL. However, while descriptively it seems like rule language does indeed facilitate XOR extrapolation as predicted by Hypothesis 1.2 - with 7.5% more extrapolated stimuli on average and 10% more persons classified as having learned a full XOR solution (see table \@ref(tab:h1-tbl-summary)) - such an effect can not be confirmed by the conducted analyses. Furthermore, an effect of rule instructions on the learning of (XOR) rules predicted by hypothesis 2.1 could also not be found. 
+As predicted by hypothesis 1.1, we found moderate evidence for a main effect of a blocked rule on the number of extrapolations. This in turn fortifies the assumption that this effect can be explained by contextual modulation as proposed by CAL. However, while descriptively it seems like rule language does indeed facilitate XOR extrapolation as predicted by Hypothesis 1.2 - with 7.5% more extrapolated stimuli on average and 10% more persons classified as having learned a full XOR solution (see table \@ref(tab:h1-tbl-summary)) - such an effect can not be confirmed by the conducted analyses. Furthermore, an effect of rule instructions on the learning of (XOR) rules predicted by hypothesis 2.1 can also not be found. An explanation might but lie in CAL nonetheless, namely in it's generalization parameter (?):
 
 
 During planning the experiment and actual data collection
