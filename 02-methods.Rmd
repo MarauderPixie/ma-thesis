@@ -21,7 +21,7 @@ A total of `r nrow(demo) + length(exc_id)` participants took part in the experim
 
 ## Experimental setup & procedure
 
-The basic experimental setup is an iteration of the incomplete-XOR task by @CK17, using the same set of stimuli (see figure \@ref(fig:ch2-stimuli)) and consisting of a training and a transfer phase. In the training phase of the experiment, participants will be shown 6 squares of differing shade and size in a trial-and-feedback procedure. Upon presentation, they have to predict whether the stimulus belongs to category "Nobz" or "Grot". After making their choice, they will receive feedback on whether they were correct. The stimuli of the incomplete category get displayed twice per block to "equate for category frequency" [@CK17], resulting in 8 trials per block across all conditions; that is, all stimuli in the first 2 blocks / 16 trials of the blocked condition will also be shown twice per block. The training phase consists of 12 randomized blocks and therefore 96 trials in total.
+The basic experimental setup is an iteration of the incomplete-XOR task by @CK17, using the same set of stimuli (see figure \@ref(fig:ch2-stimuli)) and consisting of a training and a transfer phase. In the training phase of the experiment, participants will be shown 6 squares of differing shade and size in a trial-and-feedback procedure. Upon presentation, they have to predict whether the given stimulus belongs to fictionally labeled categories "Nobz" or "Grot". After making their choice, participants will receive feedback on whether they were correct. The stimuli of the incomplete category get displayed twice per block to "equate for category frequency" [@CK17], resulting in 8 trials per block across all conditions; that is, all stimuli in the first 2 blocks / 16 trials of the blocked condition will also be shown twice per block. The training phase consists of 12 randomized blocks and therefore 96 trials in total.
 
 (ref:ch2-stimuli) (Left) Full set of stimuli to be used during the transfer phases, taken from @CK17. During the experiment, only one square was shown at a time. (Right) Subset of stimuli used during training and unobserved subset of interest for extrapolation (marked X).
 
@@ -30,9 +30,9 @@ knitr::include_graphics(c("figures/all-stimuli-arranged.png",
                           "figures/stimuli-trainfer.png"))
 ```
 
-In a subsequent transfer phase, the full set of 49 stimuli has to be classified without feedback. Afterwards, the transfer phase will be repeated, the second time though participants are instructed to make a probability judgement about the stimulus category membership (e.g. 30% Nobz, 70% Grot) via a slider rating ranging from 0 to 100 in steps by 1.
+In a subsequent transfer phase, the full set of 49 stimuli has to be classified without feedback, but otherwise remains the same. After that, the transfer phase will be repeated, the second time though participants are instructed to make a probability judgement about the stimulus category membership (e.g. 30% Nobz, 70% Grot) via a slider rating ranging from 0 to 100 in steps by 1.
 
-At the end of the experiment, pariticipants are asked to fill out demographic information as well as to answer a question about their strategy during transfer, all of which are voluntarily given / can be left blank.
+At the end of the experiment, pariticipants are asked to fill out basic demographic information as well as to answer a question about their strategy during transfer, all of which are voluntarily given and can be left blank. 
 
 ### Experimental manipulation
 
@@ -47,22 +47,22 @@ This results in a between subjects design with 2 factors - instructions (rule vs
 
 1. Instructions:^[although the study was conducted in German, the translation is rather direct; see Appendix x for the full instructions.] 
     - **without mentioning rules:** "[You'll be shown] geometric shapes that differ in color and size. Your task is to learn, whether a figure belongs to category **Nobz** or category **Grot** [...] Do your best to master the categories Nobz and Grot!"
-    - **mentioning rules:** "Your task is to learn a rule on the basis of color and size by which you can decide whether a fugure belongs to **Nobz** or **Grot** [...] Do your best to master the rule for catgories Nobz and Grot!"
+    - **mentioning rules:** "Your task is to learn a rule on the basis of color and size by which you can decide whether a figure belongs to category **Nobz** or category **Grot** [...] Do your best to master the rule for categories Nobz and Grot!"
 2. Training order:
-    - **Blocked:** the first two blocks of training (16 trials) consist of a 'simple rule first' (stimuli that can be differentiated along one axis (either size or shape)), thereafter stimulus presentation is identical to ‘mixed’ training
-    - **Mixed:** all training trials - that is, the more complicated category structure - at random from the beginning (in blocks of 8 trials) - see figure x
+    - **Blocked:** the first two blocks of training (16 trials) consist of a 'simple rule first' - stimuli that can be differentiated along one axis (either size or shape) - and thereafter stimulus presentation is identical to the ‘mixed’ training
+    - **Mixed:** all training trials - that is, the more complicated category structure - at random from the beginning (in blocks of 8 trials)
 
 <!-- ## Experimental Procedure
 `idk man, it's basically the above, but maybe I should split setup & procedure?` -->
 
 ### Randomization
 
-Participants are randomly assigned to experimental groups by _magpie3's balanced randomization functionality. For the training phase, the assignment of categories (which set of stimuli is Nobz and which is Grot) is randomized as well as the relevant dimension (size / shade) of the ‘simple rule’ trials of the blocked rule condition. Trial randomization happens on a by-block level. For the transfer phases, the full set of stimuli is randomized blockwise as a whole. 
+Participants are randomly assigned to experimental groups by _magpie3's balanced randomization functionality upon opening the link to the experiment. For the training phase, the assignment of categories (which set of stimuli corresponds to Nobz and which to Grot) is randomized as well as the relevant dimension (size / shade) of the ‘simple rule’ trials in the blocked rule condition. Trial randomization happens on a by-block level. For the transfer phases, the full set of stimuli is randomized blockwise as a whole. 
 
 
 ## Data preparation
 
-A sample size of 40 complete and eligible observations (after exclusion) per experimental group was preregistered, resulting in a total of 160 participations required. Since the analysis is rather complex in addition to being conducted with bayesian modeling, a full power analysis in the classical sense is beyond the scope of this thesis. For one, there is no way to actaully apply a power analysis to a log-linear mixed effect model - or is it? A naive power calculation for a simple logistic regression however, assuming an odds ratio of 2, requires 34 people per group to reach a power of 80%. @Chen2010 show that this assumption translates to a rather small effect, with an OR of 1.68 being equivalent to a Cohen‘s d of 0.2. Simulations by @Chen2017 show similar results and @Brysbaert2018 also recommend a sample size of about 40 people (with equally as many stimuli), albeit on a more general basis. 
+A sample size of 40 complete and eligible observations (after exclusion) per experimental group was preregistered, resulting in a total of 160 participations required. A naive power calculation (or estimation, rather) for a simple logistic regression assuming an odds ratio of 2, requires 34 people per group to reach a power of 80%^[Since the analysis is rather complex in addition to being conducted with bayesian modeling, a full power analysis in the classical sense was deemed beyond the scope of this thesis.]. @Chen2010 show that this assumption translates to a rather small effect, with an OR of 1.68 being equivalent to a Cohen‘s d of 0.2. Simulations by @Chen2017 show similar results and @Brysbaert2018 also recommend a sample size of about 40 people (with equally as many stimuli), albeit on a more general basis. 
 
 
 ### Variables, indices and aggregation
@@ -74,20 +74,20 @@ Resulting from the 2x2 factorial design described above there are two manipulate
 
 The dependent variables are:
 
-- **(training) Decision accuracy:** `0` or `1` - whether the presented stimulus has been correctly classified (aggregated counts _k_ of _n_ on subject and block level)
-- **(transfer 1) Chosen category:** `Nobz` or `Grot` on the full set of stimuli; of special relevance to the research question are the nine stimuli not shown (and learned) during the training phase (see. fig X)
-- **(transfer 2) Probability judgement:** `[0;100]` - integer depicting the numerical certainty (see the discussion on that) of the presented stimulus belonging to either one category
-- **(all) Response time:** in milliseconds from stimulus presentation to decision marked by clicking either category button
+- **(training) Decision accuracy:** `0` or `1` - whether the presented stimulus has been correctly classified (aggregated successes _k_ of _n_ trials on subject and block level)
+- **(transfer 1) Chosen category:** `Nobz` or `Grot` on the full set of stimuli; of special relevance to the research question are the nine stimuli not shown (and learned) during the training phase (see. fig. \@(ref:ch2-stimuli))
+- **(transfer 2) Probability judgement:** `[0;100]` - integer depicting the numerical certainty (see the discussion on that) of the presented stimulus belonging to either one Category
+
 
 ### Data exclusion
 
 Participants that appear to be guessing in the training phase (the probability of correct classification on a single trial being 0.5) will be excluded. The above-chance number of correct classifications needed (based on a 5% alpha level) in the last 3 training blocks (24 trials) then is 16. Additionally, should participants answer the question about any reason to not use their data in the affirmative, those participants will be excluded as well. 
 
-While two people haven been identified in that way, after data collection and upon closer inspection, three additional participants have been identified that clearly didn't learn the category strucure. Two classified stimuli solely along one stimulus dimension only (and ignoring the second), which lead to 18 perfectly classified stimuli and 6 errors, thereby passing the threshold and one barely passed but didn't give sensible responses in the transfer phase. Figure \@ref(fig:ch2-plot-exclusions) shows the accuracy of the last three training blocks and the responses in the transfer phase.
+While two people haven been identified in that way, after data collection and upon closer inspection, three additional participants have been identified that clearly didn't learn the category strucure. Two classified stimuli solely along one stimulus dimension only (and ignoring the second), which lead to 18 perfectly classified stimuli and 6 errors, thereby passing the threshold and one barely passed but didn't give sensible responses in the transfer phase. Figure \@ref(fig:ch2-plot-exclusions) shows the accuracy of the last three training blocks and the responses in the transfer phase. Lastly, no participant indicated to be excluded from the analysis.
 
 (ref:ch2-plot-exclusions) Response accuracy the for excluded participants on the last 3 blocks of training and respective responses of the transfer phase.
 
-```{r ch2-plot-exclusions, fig.cap="(ref:ch2-plot-exclusions)", out.height="30%"}
+```{r ch2-plot-exclusions, fig.cap="(ref:ch2-plot-exclusions)", out.height="25%"}
 plex_train <- exclud_train %>% 
   left_join(distinct(select(exclud_trans, image, img_x, img_y)), by = "image") %>% 
   filter(block > 9) %>% 
@@ -125,29 +125,30 @@ plex_train / plex_trans
 
 ## Analysis plan
 
-All analyses will be conducted using R (@R4, v`r paste0(R.Version()$major, ".", R.Version()$minor, " - ", R.Version()$nickname)`). For a full list of all additionally used packages see Appendix X. As already mentioned, all raw and prepared data as well as the corresponding analysis scripts are available in the osf repository^[Again, for convenience, the link to the project: [https://osf.io/gup7x/](https://osf.io/gup7x/)]. 
+All analyses will be conducted using R (@R4, v`r paste0(R.Version()$major, ".", R.Version()$minor, " - ", R.Version()$nickname)`). For a full list of all additionally used packages see Appendix X. As already mentioned, all raw and prepared data as well as the corresponding analysis scripts are available via the osf repository^[Again, the link to the project for convenience: [https://osf.io/gup7x/](https://osf.io/gup7x/)]. 
 
-To investigate the hypotheses laid out in the previous chapter, several mixed-effect logistic regression models using logit-links will be computed. Since the reasonably maximal random effect structure justified by the experimental setup (see @Barr2013) is not known a-priori, model complexity will be reduced to a maximal RE structure justified by the data (see @Bates2015) following these steps:
+To investigate the hypotheses laid out in the previous chapter, several mixed-effect logistic regression models using logit-links are computed. Since the reasonably maximal random effect structure justified by the experimental setup (see @Barr2013) is not known a-priori, model complexity will be reduced to a maximal RE structure justified by the data [see @Bates2015] following these steps:
 
 - fit model with max. RE structure
 - identify posterior parameter estimates that do not conclusively differ from 0
-- perform hierarchical Likelihood-Ratio-Tests; should the difference in elpd scorces calculated via leave-one-out cross validation exceed the standard deviation in differences, the model with the lower score will be selected
+- perform hierarchical Likelihood-Ratio-Tests; should the difference in elpd scorces calculated via leave-one-out cross validation exceed the standard deviation in differences, the model with the lower score is selected
 
-Futhermore, all models will use only weakly informative priors. @Gelman2020 recommends $\operatorname{student}(df, mean = 0, sd = 1)$ where $3 \leq df \leq 7$, since the often used Cauchy-Distribution (that is, $\operatorname{student}(1, 0, 2.5)$) has too thick tails and a strict Gaussian might be too informative in the case at hand. Finally, Bayes Factors for model comparisons will be obtained by computing marginal likelihooods via bridge sampling [@Gronau2020]. Since that method requries a rather high amount of posterior samples to obtain robust bayes factors, each model will have 4 MCMC chains with 12000 samples and 2000 warm-up samples each, resulting in 40000 posterior samples drawn per model [for details, see @Schad2021].
+Futhermore, all models use only weakly informative priors. @Gelman2020 recommends $\operatorname{student}(df, mean = 0, sd = 1)$ where $3 \leq df \leq 7$, since the often used Cauchy-Distribution (that is, $\operatorname{student}(1, 0, 2.5)$) has too thick tails and a strict Gaussian might be too informative in the case at hand. Finally, Bayes Factors for model comparisons are obtained by computing marginal likelihooods via bridge sampling [@Gronau2020]. Since that method requries a rather high amount of posterior samples to obtain robust bayes factors, each model will have 4 MCMC chains with 12000 samples and 2000 warm-up samples each, resulting in 40000 posterior samples drawn per model [for details, see @Schad2021].
 
 ### Model comparisons in detail
 
-**Hypotheses 1** -- The dependent variable is whether a stimulus of the nine untrained/incomplete stimuli has been extrapolated; independent variable is the experimental group assignment (instructions yes/no, blocked yes/no) Model comparisons for testing the hypotheses are therefore:
+**Hypotheses 1** -- The dependent variable is whether a stimulus of the nine untrained/incomplete stimuli has been extrapolated; the independent variable is the experimental group assignment (instructions yes/no, blocked yes/no). Model comparisons for testing the hypotheses are therefore:
 
 - **H1.1:** $M_{instructions} > M_{null}$
 - **H1.2:** $M_{blocked} > M_{null}$
 - **H1.3:** $M_{{instructions + blocked + interaction}} \approx M_{{instructions + blocked}} \approx M_{instructions} \approx M_{blocked} > M_{null}$
 
-**Hypotheses 2** -- Depedent variable is the blockwise categorisation accuracy of the stimuli in the training phase, independent variable again is group assignment (instructions only) as well as the training block. Model comparsisons are therefore:
+**Hypotheses 2** -- The dependent variable is the blockwise categorisation accuracy of the stimuli in the training phase and independent variable is whether or not the instructions mention rules. The models to compare are therefore:
 
-- **H2.1:** $M_{instructions} > M_{null}$
-- **H2.2:** $M_{{instructions + block + interaction}} > M_{instructions} > M_{null}$
+- **H2:** $M_{instructions} > M_{null}$
+
+In any case, $M_{null}$ denotes an intercept-only model that is otherwise identical to the models tested against.
 
 ### Inference criteria
 
-Hypotheses will be evaluated with Bayes Factors according to @Andras2014^[adjusted from Jeffreys, 1961], that is: $BF_{12} > 3$ constitutes moderate evidence for $M_1$ over $M_2$ (or vice versa when $BF_{12} < 1/3$) and $BF_{12} > 10$ (or $BF_{12} < 1/10$) will be interpreted as strong evidence respectively. Bayes Factors between 1/3 and 3 are treated as no meaningful evidence in favor of either model.
+Hypotheses are evaluated with Bayes Factors according to @Andras2014^[adjusted from Jeffreys, 1961]: $BF_{12} > 3$ constitutes moderate evidence for $M_1$ over $M_2$ (or vice versa when $BF_{12} < 1/3$) and $BF_{12} > 10$ (or $BF_{12} < 1/10$) will be interpreted as strong evidence respectively. Bayes Factors between 1/3 and 3 are treated as no meaningful evidence in favor of either model.
