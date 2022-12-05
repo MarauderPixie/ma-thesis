@@ -109,6 +109,19 @@ h1_bfs %>%
   column_spec(1, width = "5cm")
 ```
 
+Table: (\#tab:model-summary) ugly and absolutely unformatted, incomplete and rather convoluted model summary table.
+
+Parameter      Median          95% CI     Rhat      ESS               95% CI       Fit
+-------------  ------  ---------------   -----  -------  -------------------  --------
+(Intercept)     -5.67  [-7.13, -4.42]    1.001  9427.00       [-7.14, -4.40]          
+blockedyes       1.48  [ 0.28,  2.88]    1.001  7064.00       [ 0.26,  2.86]          
+rulesyes         0.75  [-0.40,  1.97]    1.001  8583.00       [-0.39,  1.97]          
+ELPD                                                                           -316.67
+LOOIC                                                                           633.34
+WAIC                                                                            613.95
+R2                                                                                0.66
+Sigma                                                                             1.81
+Log_loss                                                                          0.14
 
 
 ## H2: Learning Accuracy with Rule Instructions
@@ -172,5 +185,6 @@ transp %>%
           axis.title.x  = element_blank(),
           axis.title.y  = element_blank(),
           panel.grid.minor   = element_blank(),
-          panel.grid.major.x = element_blank())
+          panel.grid.major.x = element_blank(),
+          panel.border = element_rect(color = "#3c3c3c", fill = NA))
 ```

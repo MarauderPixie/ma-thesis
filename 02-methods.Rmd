@@ -21,7 +21,14 @@ A total of `r nrow(demo) + length(exc_id)` participants took part in the experim
 
 ## Experimental setup & procedure
 
-The basic experimental setup is an iteration of the incomplete-XOR task by @CK17, using the same set of stimuli (see fig X) and consisting of a training and a transfer phase. In the training phase of the experiment, participants will be shown 6 squares of differing shade and size (see fig X) in a trial-and-feedback procedure. Upon presentation, they have to predict whether the stimulus belongs to category "Nobz" or "Grot". After making their choice, they will receive feedback on whether they were correct. The stimuli of the reduced category (marked ‘A’ in fig. X) get displayed twice per block to "equate for category frequency" (@CK17), resulting in 8 trials per block across all conditions; that is, all stimuli in the first 2 blocks / 16 trials of the blocked condition will also be shown twice per block. The training phase consists of 12 randomized blocks and therefore 96 trials in total.
+The basic experimental setup is an iteration of the incomplete-XOR task by @CK17, using the same set of stimuli (see figure \@ref(fig:ch2-stimuli)) and consisting of a training and a transfer phase. In the training phase of the experiment, participants will be shown 6 squares of differing shade and size in a trial-and-feedback procedure. Upon presentation, they have to predict whether the stimulus belongs to category "Nobz" or "Grot". After making their choice, they will receive feedback on whether they were correct. The stimuli of the incomplete category get displayed twice per block to "equate for category frequency" [@CK17], resulting in 8 trials per block across all conditions; that is, all stimuli in the first 2 blocks / 16 trials of the blocked condition will also be shown twice per block. The training phase consists of 12 randomized blocks and therefore 96 trials in total.
+
+(ref:ch2-stimuli) (Left) Full set of stimuli to be used during the transfer phases, taken from @CK17. During the experiment, only one square was shown at a time. (Right) Subset of stimuli used during training and unobserved subset of interest for extrapolation (marked X).
+
+```{r ch2-stimuli, fig.show="hold", out.width='42%', out.height="25%", fig.cap="(ref:ch2-stimuli)"}
+knitr::include_graphics(c("figures/all-stimuli-arranged.png", 
+                          "figures/stimuli-trainfer.png"))
+```
 
 In a subsequent transfer phase, the full set of 49 stimuli has to be classified without feedback. Afterwards, the transfer phase will be repeated, the second time though participants are instructed to make a probability judgement about the stimulus category membership (e.g. 30% Nobz, 70% Grot) via a slider rating ranging from 0 to 100 in steps by 1.
 
@@ -39,8 +46,8 @@ In addition to the basic setup of @CK17 there are four different experimental gr
 This results in a between subjects design with 2 factors - instructions (rule vs. neutral) and training order (blocked vs. mixed). In more detail, the differences are:
 
 1. Instructions:^[although the study was conducted in German, the translation is rather direct; see Appendix x for the full instructions.] 
-    - **without mentioning rules:** "\\[You'll be shown\\] geometric shapes that differ in color and size. Your task is to learn, whether a figure belongs to category **Nobz** or category **Grot** \\[...\\] Do your best to master the categories Nobz and Grot!"
-    - **mentioning rules:** "Your task is to learn a rule on the basis of color and size by which you can decide whether a fugure belongs to **Nobz** or **Grot** \\[...\\] Do your best to master the rule for catgories Nobz and Grot!"
+    - **without mentioning rules:** "[You'll be shown] geometric shapes that differ in color and size. Your task is to learn, whether a figure belongs to category **Nobz** or category **Grot** [...] Do your best to master the categories Nobz and Grot!"
+    - **mentioning rules:** "Your task is to learn a rule on the basis of color and size by which you can decide whether a fugure belongs to **Nobz** or **Grot** [...] Do your best to master the rule for catgories Nobz and Grot!"
 2. Training order:
     - **Blocked:** the first two blocks of training (16 trials) consist of a 'simple rule first' (stimuli that can be differentiated along one axis (either size or shape)), thereafter stimulus presentation is identical to ‘mixed’ training
     - **Mixed:** all training trials - that is, the more complicated category structure - at random from the beginning (in blocks of 8 trials) - see figure x
@@ -76,7 +83,7 @@ The dependent variables are:
 
 Participants that appear to be guessing in the training phase (the probability of correct classification on a single trial being 0.5) will be excluded. The above-chance number of correct classifications needed (based on a 5% alpha level) in the last 3 training blocks (24 trials) then is 16. Additionally, should participants answer the question about any reason to not use their data in the affirmative, those participants will be excluded as well. 
 
-While two people haven been identified in that way, after data collection and upon closer inspection, three additional participants have been identified that clearly didn't learn the category strucure. Two classified stimuli solely along one stimulus dimension only, which lead to 18 perfectly classified stimuli and 6 errors, thereby passing the threshold and one barely passed but didn't give sensible responses in the transfer phase. Figure \@ref(fig:ch2-plot-exclusions) shows the accuracy of the last three training blocks and the responses in the transfer phase.
+While two people haven been identified in that way, after data collection and upon closer inspection, three additional participants have been identified that clearly didn't learn the category strucure. Two classified stimuli solely along one stimulus dimension only (and ignoring the second), which lead to 18 perfectly classified stimuli and 6 errors, thereby passing the threshold and one barely passed but didn't give sensible responses in the transfer phase. Figure \@ref(fig:ch2-plot-exclusions) shows the accuracy of the last three training blocks and the responses in the transfer phase.
 
 (ref:ch2-plot-exclusions) Response accuracy the for excluded participants on the last 3 blocks of training and respective responses of the transfer phase.
 

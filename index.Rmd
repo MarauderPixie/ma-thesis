@@ -17,10 +17,9 @@ institute: "Institut für Kognitionswissenschaft"
 # logo: "includes/LogoUniOsna.pdf"
 bibliography: "bib/thesis.bib"
 # csl: bib/apa.csl
-mainfont: 'Lato'
-# sansfont: 'PT Serif'
-sansfont: 'Lato'
-monofont: 'Fira Code'
+mainfont: 'Source Sans Pro'
+sansfont: 'Source Sans Pro'
+monofont: 'Source Code Pro'
 mathfont: 'Asana Math'
 site: bookdown::bookdown_site
 link-citations: true
