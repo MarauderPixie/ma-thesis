@@ -11,7 +11,10 @@ The following line is required to re-set page numbering after preliminary materi
 
 # Introduction {#ch:intro}
 
-Even after more than a century of research on the topic of category learning [@Hull1920] little is known about the cognitive processes by which rules and rule abstractions are learned.
+Even after more than a century of research on the topic of category learning [@Hull1920] little is known about the cognitive processes by which new rules and rule abstractions are learned. One recent attempt at shedding light on the issue is the CAL model (Category Abstraction Learning) by @Schlegelmilch2021. The key assumptions of how new rules are learned by CAL are (threefold)
+
+
+
 
 The gold standard in the research of human concept and category learning are the six problem types introduced by @Shepard1961. In their seminal work they were able to show a set of foundational rules and category structures (see fig. \@ref(fig:01-shj)) which are increasingly difficult to learn by human subjects - mostly independent of the items to learn, be it simple eometric shapes, musical instruments or everyday kitchen tools.   
 

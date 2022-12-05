@@ -2,11 +2,13 @@
 knit: "bookdown::render_book"
 ---
 
-# (APPENDIX) Appendix {-}
+# (APPENDIX) Appendix {-} 
 
-## Individual plots
+# Appendix
 
-```{r appA-transfer-plot, fig.cap="Individual responses in transfer phase", out.width="100%", out.height="95%", cache=TRUE}
+## Individual responses in transfer phase
+
+```{r apx-transfer, fig.cap="Individual responses in transfer phase", out.width="100%", out.height="80%", cache=TRUE}
 transfer %>% 
   ggplot(aes(img_x, img_y, fill = response)) +
     facet_wrap(~subj_id) +
@@ -15,6 +17,32 @@ transfer %>%
     theme_subjects +
     theme(legend.position = "none",
           strip.text = element_blank(),
+          panel.spacing = unit(2, "pt"))
+```
+
+## Individual probability judgements
+
+```{r apx-probability, fig.cap="Individuals probability judgementabout their decision", out.width="100%", out.height="80%", cache=TRUE}
+transp %>% 
+  mutate(
+    cert_unscaled = ifelse(prob < 50, 100 - prob, prob),
+    certainty = scales::rescale(cert_unscaled, c(0, 100))
+  ) %>% 
+  ggplot(aes(img_x, img_y, fill = certainty)) +
+    facet_wrap(~subj_id) +
+    geom_tile(size = .2, color = "white") +
+    scale_fill_viridis_c(
+      # guide = guide_colorbar(
+      #   title.position = "top",
+      #   title.hjust	= .5,
+      #   label.position = "bottom"
+      # )
+    ) +
+    theme_transfer +
+    theme(legend.position = "none",
+          legend.key.height = unit(.3, "lines"),
+          legend.text = element_text(),
+          strip.text = element_blank(), # element_text(size = 8),
           panel.spacing = unit(2, "pt"))
 ```
 
