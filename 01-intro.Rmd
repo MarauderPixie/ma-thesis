@@ -49,10 +49,10 @@ This study aims to replicate the findings of @CK17 as well as provide further in
 
 These research questions lead to the following set of hypotheses. The first regards XOR extrapolations during a transfer task whereas the second is about the learning speed/success during training.
 
-**Hypotheses 1**
-  - **H1.1** (directed): Higher number of extrapolations in the transfer phase for the stimuli of the untrained/incomplete category in the blocked training condition, compared to the mixed training condition
-  - **H1.2** (directed): Higher number of extrapolations for the stimuli of the untrained/incomplete category in the rule instructions condition compared to the neutral instructions condition in the transfer phase
-  - **H1.3** (undirected, _exploratory_): Interaction of rule order and the rule instructions on the number of extrapolations within the untrained/incomplete category
+- **Hypotheses 1**
+    - **H1.1** (directed): Higher number of extrapolations in the transfer phase for the stimuli of the untrained/incomplete category in the blocked training condition, compared to the mixed training condition
+    - **H1.2** (directed): Higher number of extrapolations for the stimuli of the untrained/incomplete category in the rule instructions condition compared to the neutral instructions condition in the transfer phase
+    - **H1.3** (undirected, _exploratory_): Interaction of rule order and the rule instructions on the number of extrapolations within the untrained/incomplete category
 
-**Hypothesis 2**
-  - (directed): quicker learning of categories with rule instructions than without in the mixed rule condition
+- **Hypothesis 2**
+    - (directed): quicker learning of categories with rule instructions than without in the mixed rule condition
