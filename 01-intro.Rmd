@@ -54,5 +54,6 @@ These research questions lead to the following set of hypotheses. The first rega
     - **H1.2** (directed): Higher number of extrapolations for the stimuli of the untrained/incomplete category in the rule instructions condition compared to the neutral instructions condition in the transfer phase
     - **H1.3** (undirected, _exploratory_): Interaction of rule order and the rule instructions on the number of extrapolations within the untrained/incomplete category
 
-- **Hypothesis 2**
-    - (directed): quicker learning of categories with rule instructions than without in the mixed rule condition
+- **Hypothesis 2**(directed): Quicker learning of categories with rule instructions than without in the mixed rule condition
+
+- **Exploration**: Additionally we will look at how certain people are in their categorical decisions, albeit without any predictions

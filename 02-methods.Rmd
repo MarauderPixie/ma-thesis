@@ -23,11 +23,12 @@ A total of `r nrow(demo) + length(exc_id)` participants took part in the experim
 
 The basic experimental setup is an iteration of the incomplete-XOR task by @CK17, using the same set of stimuli (see figure \@ref(fig:ch2-stimuli)) and consisting of a training and a transfer phase. In the training phase of the experiment, participants will be shown 6 squares of differing shade and size in a trial-and-feedback procedure. Upon presentation, they have to predict whether the given stimulus belongs to fictionally labeled categories "Nobz" or "Grot". After making their choice, participants will receive feedback on whether they were correct. The stimuli of the incomplete category get displayed twice per block to "equate for category frequency" [@CK17], resulting in 8 trials per block across all conditions; that is, all stimuli in the first 2 blocks / 16 trials of the blocked condition will also be shown twice per block. The training phase consists of 12 randomized blocks and therefore 96 trials in total.
 
-(ref:ch2-stimuli) (Left) Full set of stimuli to be used during the transfer phases, taken from @CK17. During the experiment, only one square was shown at a time. (Right) Subset of stimuli used during training and unobserved subset of interest for extrapolation (marked X).
+(ref:ch2-stimuli) (A) Full set of stimuli to be used during the transfer phases, taken from @CK17. During the experiment, only one square was shown at a time. (B) Subset of stimuli used during training and unobserved subset of interest for extrapolation (marked X).
 
-```{r ch2-stimuli, fig.show="hold", out.width='42%', out.height="25%", fig.cap="(ref:ch2-stimuli)"}
-knitr::include_graphics(c("figures/all-stimuli-arranged.png", 
-                          "figures/stimuli-trainfer.png"))
+```{r ch2-stimuli, fig.show="hold", out.height="30%", out.width="100%", fig.cap="(ref:ch2-stimuli)"}
+# knitr::include_graphics(c("figures/all-stimuli-arranged.png", 
+#                           "figures/stimuli-trainfer.png"))
+knitr::include_graphics("figures/stimulus-grids.png")
 ```
 
 In a subsequent transfer phase, the full set of 49 stimuli has to be classified without feedback, but otherwise remains the same. After that, the transfer phase will be repeated, the second time though participants are instructed to make a probability judgement about the stimulus category membership (e.g. 30% Nobz, 70% Grot) via a slider rating ranging from 0 to 100 in steps by 1.
@@ -75,8 +76,8 @@ Resulting from the 2x2 factorial design described above there are two manipulate
 The dependent variables are:
 
 - **(training) Decision accuracy:** `0` or `1` - whether the presented stimulus has been correctly classified (aggregated successes _k_ of _n_ trials on subject and block level)
-- **(transfer 1) Chosen category:** `Nobz` or `Grot` on the full set of stimuli; of special relevance to the research question are the nine stimuli not shown (and learned) during the training phase (see. fig. \@(ref:ch2-stimuli))
-- **(transfer 2) Probability judgement:** `[0;100]` - integer depicting the numerical certainty (see the discussion on that) of the presented stimulus belonging to either one Category
+- **(transfer 1) Chosen category:** `Nobz` or `Grot` on the full set of stimuli; of special relevance to the research question are the nine stimuli not shown (and learned) during the training phase (see. fig. \@(ref:ch2-stimuli)), which are treated as either extrapolation (`1`) or proximation (`0`)
+- **(transfer 2) Probability judgement:** `[0;100]` - integer depicting the numerical certainty of the presented stimulus belonging to either one Category.
 
 
 ### Data exclusion
@@ -85,9 +86,9 @@ Participants that appear to be guessing in the training phase (the probability o
 
 While two people haven been identified in that way, after data collection and upon closer inspection, three additional participants have been identified that clearly didn't learn the category strucure. Two classified stimuli solely along one stimulus dimension only (and ignoring the second), which lead to 18 perfectly classified stimuli and 6 errors, thereby passing the threshold and one barely passed but didn't give sensible responses in the transfer phase. Figure \@ref(fig:ch2-plot-exclusions) shows the accuracy of the last three training blocks and the responses in the transfer phase. Lastly, no participant indicated to be excluded from the analysis.
 
-(ref:ch2-plot-exclusions) Response accuracy the for excluded participants on the last 3 blocks of training and respective responses of the transfer phase.
+(ref:ch2-plot-exclusions) Response accuracy for excluded participants on the last 3 blocks of training and respective responses of the transfer phase.
 
-```{r ch2-plot-exclusions, fig.cap="(ref:ch2-plot-exclusions)", out.height="25%"}
+```{r ch2-plot-exclusions, fig.cap="(ref:ch2-plot-exclusions)", fig.height=2.2}
 plex_train <- exclud_train %>% 
   left_join(distinct(select(exclud_trans, image, img_x, img_y)), by = "image") %>% 
   filter(block > 9) %>% 
@@ -101,13 +102,18 @@ plex_train <- exclud_train %>%
   ggplot(aes(img_x, img_y, fill = p_correct)) +
     facet_wrap(~subj_id, nrow = 1) +
     geom_tile(size = .5) +
-    scale_fill_viridis_c() +
+    scale_fill_viridis_c(
+      guide = guide_colorbar(
+        barwidth = 1,
+        barheight = 3
+      )
+    ) +
     labs(fill = "Acc.") +
     theme_subjects +
     theme(panel.border = element_rect(color = "#3c3c3c", fill = NA),
           legend.text  = element_text(size = 6),
-          legend.position = "right"
-    )
+          legend.position = "right",
+          legend.justification = c(.9, .1))
 
 plex_trans <- ggplot(exclud_trans, aes(img_x, img_y, fill = response)) +
   facet_wrap(~subj_id, nrow = 1) +
@@ -116,8 +122,7 @@ plex_trans <- ggplot(exclud_trans, aes(img_x, img_y, fill = response)) +
   theme_subjects +
   theme(panel.border = element_rect(color = "#525252", fill = NA),
         legend.text  = element_text(size = 6),
-        legend.position = "none"
-  )
+        legend.position = "none")
 
 plex_train / plex_trans
 ```

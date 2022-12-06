@@ -6,9 +6,11 @@ knit: "bookdown::render_book"
 
 # Appendix
 
-## Individual responses in transfer phase
+## Individual Responses
 
-```{r apx-transfer, fig.cap="Individual responses in transfer phase", out.width="100%", out.height="80%", cache=TRUE}
+Figure \@ref(fig:apx-transfer) shows each participants response to every stimulus in the transfer phase. Figure \@ref(fig:apx-probability) shows each participants certainty of a stimulus belonging to category Grot in the second run of the transfer phase.
+
+```{r apx-transfer, fig.cap="Individual responses in transfer phase", out.width="100%", out.height="80%"}
 transfer %>% 
   ggplot(aes(img_x, img_y, fill = response)) +
     facet_wrap(~subj_id) +
@@ -20,15 +22,9 @@ transfer %>%
           panel.spacing = unit(2, "pt"))
 ```
 
-## Individual probability judgements
-
-```{r apx-probability, fig.cap="Individuals probability judgementabout their decision", out.width="100%", out.height="80%", cache=TRUE}
+```{r apx-probability, fig.cap="Individual probability judgements of any given stimulus belonging to category Grot", out.width="100%", out.height="80%"}
 transp %>% 
-  mutate(
-    cert_unscaled = ifelse(prob < 50, 100 - prob, prob),
-    certainty = scales::rescale(cert_unscaled, c(0, 100))
-  ) %>% 
-  ggplot(aes(img_x, img_y, fill = certainty)) +
+  ggplot(aes(img_x, img_y, fill = prob)) +
     facet_wrap(~subj_id) +
     geom_tile(size = .2, color = "white") +
     scale_fill_viridis_c(

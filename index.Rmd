@@ -52,13 +52,12 @@ The actual thesis content is in several Rmd files.
 You'll need to edit the _bookdown.yml file to set the order in which you'd like them to appear.
 
 
-**Notice**: This file has to be named `index.Rmd`. If you created it from the RStudio template picker thingy and gave it a filename, you'll have to rename it.
-
-Maybe I'll figure out how to fix this, sorry. -->
+**Notice**: This file has to be named `index.Rmd`. If you created it from the RStudio template picker thingy and gave it a filename, you'll have to rename it. -->
 
 ```{r init_options, message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
 library(dplyr)
 library(tidyr)
+# library(forcats)
 library(bridgesampling)
 library(effectsize)
 library(ggplot2)
@@ -125,7 +124,7 @@ update_geom_defaults("text", list(colour = "#ac0634"))
 ```{r init_data}
 demo <- readRDS("data/demographics.rds")
 training <- readRDS("data/trials-training.rds")
-transfer <- readRDS("data/trials-transfer.rds")
+transfer <- readRDS("data/trials-transfer.rds") 
 stimprob <- readRDS("data/trials-probability.rds")
 
 h1_bfs <- readr::read_csv("models/BFs.csv")
@@ -134,7 +133,7 @@ exclud_trans <- readRDS("data/exclusions_transfer.rds")
 
 extra_binom <- transfer %>% 
   filter(item == "transfer") %>% 
-  group_by(subj_id, condition, rules, blocked) %>% 
+  group_by(subj_id, Group, rules, blocked) %>% 
   summarize(
     k = sum(extrapolation),
     n = n(),
@@ -144,6 +143,10 @@ extra_binom <- transfer %>%
   mutate(
     exab4 = ifelse(k > 3, 1, 0),
     exab5 = ifelse(k > 4, 1, 0),
-    exab6 = ifelse(k > 5, 1, 0)
+    exab6 = ifelse(k > 5, 1, 0),
+    extrap = ifelse(k > 5, "Extrapolators", "Proximators")
   )
+
+proxy_ex_ids <- extra_binom %>% 
+    select(subj_id, Group, extrap)
 ```

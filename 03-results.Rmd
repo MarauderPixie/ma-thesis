@@ -25,7 +25,7 @@ This chapter reports the results of the conducted analyses; first by looking at 
 
 ```{r h1-tbl-summary}
 beobachtet <- extra_binom %>% 
-  group_by(condition, rules, blocked) %>% 
+  group_by(Group, rules, blocked) %>% 
   summarise(
     n = n(),
     mean_p = mean(p),
@@ -39,12 +39,7 @@ beobachtet <- extra_binom %>%
 
 beobachtet %>% 
     transmute(
-        Group = case_when(
-            condition == "control" ~ "No Treatment",
-            condition == "blocked" ~ "Blocked Rules",
-            condition == "rules" ~ "Rule Instructions",
-            condition == "both" ~ "Blocked + Instructions",
-        ),
+        Group = Group,
         "n" = n,
         "Extrapolators"   = paste0(round(mean_ckab6 * 100), "%"),
         "Mean" = paste0(round(mean_p * 100, 2), "%"),
@@ -58,41 +53,44 @@ beobachtet %>%
   add_header_above(c(" " = 3, "XOR Extrapolations" = 2))
 ```
 
-The main interest of this study is to find out whether an increase in the number of XOR extrapolations and thereby the learning of a full XOR category structure is facilitated by the use of rule instructions, the ordering of rules during learning and a possible interaction of both. Table \@ref(tab:h1-tbl-summary) shows the final group sizes, the average percentage of extrapolated stimuli per person as well as the percentage of extrapolators - people who extrapolated more than six of the nine critical stimuli - between experimental conditions. Figure \@ref(fig:h1-plots-hist) shows the number of extrapolations per person overall as well as between experimental groups. Figure \@ref(fig:h1-plots-gradient) on the other hand shows decision gradients for all stimuli across the conditions^[see fig. \@ref(fig:apx-transfer) in the appendix for an overview of responses by every individual.]. `[may combine them into one plot]`
+The main interest of this study is to find out whether an increase in the number of XOR extrapolations and thereby the learning of a full XOR category structure is facilitated by the use of rule instructions, the ordering of rules during learning and a possible interaction of both. Table \@ref(tab:h1-tbl-summary) shows the final group sizes, the average percentage of extrapolated stimuli per person as well as the percentage of extrapolators - people who extrapolated at least 6 of the nine critical stimuli - between experimental conditions. Figure \@ref(fig:h1-plots-hist) shows the number of extrapolations per person overall as well as between experimental groups. Figure \@ref(fig:h1-plots-gradient) on the other hand shows decision gradients for all stimuli across the conditions^[see fig. \@ref(fig:apx-transfer) in the appendix for an overview of responses by every individual.]. `[may combine them into one plot]`
 
 ```{r h1-plots-hist, fig.cap="Number of extrapolated stimuli per person and condition", fig.asp=1/3}
 transfer %>% 
   filter(item == "transfer") %>% 
-  group_by(subj_id, condition) %>% 
-  summarise(ext = sum(extrapolation)) %>% 
+  group_by(subj_id, Group) %>% 
+  summarise(ext = sum(extrapolation)) %>%
   ggplot(aes(ext)) +
-    facet_wrap(~condition, nrow = 1) +
+    facet_wrap(~Group, nrow = 1, 
+               labeller = label_wrap_gen(width=10)) +
     geom_histogram(binwidth = 1) +
     scale_x_continuous(breaks = scales::pretty_breaks(n = 10), 
                        labels = c("", 0:9, "")) +
     labs(x = "Extrapolations", y = "n") +
-    theme(panel.spacing.x = unit(5, "pt"),
-          panel.grid.minor.x = element_blank(),
-          panel.grid.major.x = element_blank())
+    theme(panel.grid.minor.x = element_blank(),
+          panel.grid.major.x = element_blank(),
+          panel.spacing = unit(5, "pt"))
 ```
 
-```{r h1-plots-gradient, fig.cap="Gradient of category decisions in the transfer phase", fig.asp=1/4}
+```{r h1-plots-gradient, fig.cap="Gradient of category decisions in the transfer phase", fig.asp=1/2}
 transfer %>% 
-  count(condition, img_x, img_y, response) %>% 
+  left_join(proxy_ex_ids, by = c("subj_id", "Group")) %>% 
+  count(Group, img_x, img_y, extrap, response) %>% 
   spread(response, n) %>% 
   mutate(
-    # extra = ifelse(subj_id %in% extra_pols$subj_id, "Extrapolators", "Proximators"),
     Nobz = ifelse(is.na(Nobz), 0, Nobz),
     Grot = ifelse(is.na(Grot), 0, Grot),
     n = Nobz + Grot,
     p_Grot = (Grot / n * 100) |> round(2)
   ) %>% 
   ggplot(aes(img_x, img_y, fill = p_Grot)) +
-    facet_wrap(~condition, nrow = 1) +
-    geom_tile(size = .1, color = "white") +
+    facet_grid(extrap~Group, switch = "y",
+               labeller = label_wrap_gen(width=10)) +
+    geom_tile(size = .2, color = "white") +
     scale_fill_viridis_c() +
     theme_transfer +
-    theme(legend.position = "none")
+    theme(legend.position = "none",
+          panel.spacing = unit(5, "pt"))
 ```
 
 In order to quantify evidence for an effect of rule instructions and rule order, we fitted several Bayesian logistic models (estimated using MCMC sampling with 4 chains of 12000 iterations and a warmup of 2000) to predict the extrapolation of stimulus responses. Priors over parameters for all models were set as:
@@ -148,39 +146,29 @@ The first (intercept-only) model assumes random intercepts for participants with
 `[decide on what to keep, what to say about it and whether to have some comparisons between "extrapolators" and "proximators"]`
 
 ```{r straight-outta-fibbleburg, out.width="80%"}
-transp <- extra_binom %>% 
-  mutate(
-    extrap = ifelse(k > 5, "extrapolators", "proximators")
-  ) %>%
-  select(subj_id, condition, extrap) %>%
-  right_join(stimprob, by = c("subj_id", "condition"))
+transp <- stimprob %>%
+  left_join(proxy_ex_ids, by = c("subj_id", "Group")) 
 
 transp %>% 
-  group_by(condition, extrap, img_x, img_y) %>% 
+  group_by(Group, extrap, img_x, img_y) %>% 
   summarise(
     p = mean(prob),
     .groups = "drop"
-  ) %>% 
-  mutate(
-    cert_unscaled = ifelse(p < 50, 100 - p, p),
-    certainty = scales::rescale(cert_unscaled, c(0, 100))
-  ) %>% 
-  ggplot(aes(img_x, img_y, fill = certainty)) +
-    facet_grid(condition ~ extrap) +
-    # facet_wrap(~condition, nrow = 1) ~
+  ) %>%  
+  ggplot(aes(img_x, img_y, fill = p)) +
+    facet_grid(extrap ~ Group, switch = "y",
+               labeller = label_wrap_gen(width=10)) +
+    # facet_wrap(~Group, nrow = 1) ~
     geom_tile(size = .5, color = "white") +
     scale_fill_viridis_c() +
     theme_transfer +
-    theme(legend.position = "left",
+    theme(legend.position = "right",
           strip.text = element_text(size = 8),
           panel.spacing = unit(5, "pt"))
 ```
 
 ```{r auch-cool, fig.asp=1/1, caption="Pretty cool plot showing the distribution of probability judgements per stimulus that's sadly not all too informative"}
 transp %>%
-  # mutate(
-  #   image = str_extract(image, "e[0-9][0-9]")
-  # ) %>% 
   ggplot(aes(x = prob)) +
     facet_grid(cols = vars(img_x), 
                rows = vars(7 - img_y)) +
