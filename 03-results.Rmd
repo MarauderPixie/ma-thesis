@@ -13,9 +13,7 @@ knit: "bookdown::render_book"
 
 # Results {#ch:results}
 
-The following chapter lays out the results of the experiment and the analyses. Beginning with a look at the descriptives we will deal with the hypotheses and close with some exploration. 
-
-This chapter reports the results of the conducted analyses; first by looking at the data descriptively, then at the hypotheses and at last at some exploration.
+The following chapter lays out the results of the experiment and the analyses thereof. Beginning with a look at the descriptives we will deal with the hypotheses and close with some exploration. 
 
 `[maybe something about model- and prior selection?]`
 
@@ -34,6 +32,7 @@ beobachtet <- extra_binom %>%
     sd_k   = sd(k),
     mean_ckab6 = mean(exab6),
     mean_ckab5 = mean(exab5),
+    sum_ckab6  = sum(exab6),
     .groups = "drop"
   )
 
@@ -41,22 +40,25 @@ beobachtet %>%
     transmute(
         Group = Group,
         "n" = n,
-        "Extrapolators"   = paste0(round(mean_ckab6 * 100), "%"),
+        "Extrapolators" = paste0(sum_ckab6, " (", 
+                                 round(mean_ckab6 * 100), "%)"),
         "Mean" = paste0(round(mean_p * 100, 2), "%"),
         "SD"   = round(sd_p * 100, 2)
     ) %>% 
   # xtable(booktabs = TRUE, caption = "(ref:h1-tbl-summary)") %>%
   # xtable2kable() %>%
-  kbl(booktabs = TRUE, caption = "(ref:h1-tbl-summary)") %>%
-  kable_styling(full_width = FALSE, font_size = 10, 
+  kbl(booktabs = TRUE, align = "r", caption = "(ref:h1-tbl-summary)") %>%
+  kable_styling(full_width = FALSE, font_size = 10,
                 position = "center", latex_options = "hold_position") %>% # "float_right") %>% 
   add_header_above(c(" " = 3, "XOR Extrapolations" = 2))
 ```
 
-The main interest of this study is to find out whether an increase in the number of XOR extrapolations and thereby the learning of a full XOR category structure is facilitated by the use of rule instructions, the ordering of rules during learning and a possible interaction of both. Table \@ref(tab:h1-tbl-summary) shows the final group sizes, the average percentage of extrapolated stimuli per person as well as the percentage of extrapolators - people who extrapolated at least 6 of the nine critical stimuli - between experimental conditions. Figure \@ref(fig:h1-plots-hist) shows the number of extrapolations per person overall as well as between experimental groups. Figure \@ref(fig:h1-plots-gradient) on the other hand shows decision gradients for all stimuli across the conditions^[see fig. \@ref(fig:apx-transfer) in the appendix for an overview of responses by every individual.]. `[may combine them into one plot]`
+The main interest of this study is to find out whether an increase in the number of XOR extrapolations and thereby the learning of a full XOR category structure is facilitated by the use of rule instructions, the ordering of rules during learning and a possible interaction of both. Table \@ref(tab:h1-tbl-summary) shows the final group sizes, the average percentage of extrapolated stimuli per person as well as the percentage of extrapolators - people who extrapolated at least 6 of the nine critical stimuli - between experimental conditions. Figure \@ref(fig:h1-plots-hist) shows the number of extrapolations per person overall as well as between experimental groups. Figure \@ref(fig:h1-plots-gradient) on the other hand shows decision gradients for all stimuli across the conditions^[see fig. \@ref(fig:apx-transfer) in the appendix for an overview of responses by every individual.].
 
-```{r h1-plots-hist, fig.cap="Number of extrapolated stimuli per person and condition", fig.asp=1/3}
-transfer %>% 
+(ref:h1-extrapolations) (A) Number of xor-extrapolated stimuli between experimental groups. (B) Decision gradients for each stimulus between groups and people extrapolating to a full XOR solution (Extrapolators) and people inferring group membership by similarity to neighboring categories (Proximators).
+
+```{r h1-extrapolations, fig.cap="(ref:h1-extrapolations)", fig.height=3.8}
+ext_hist <- transfer %>% 
   filter(item == "transfer") %>% 
   group_by(subj_id, Group) %>% 
   summarise(ext = sum(extrapolation)) %>%
@@ -70,10 +72,8 @@ transfer %>%
     theme(panel.grid.minor.x = element_blank(),
           panel.grid.major.x = element_blank(),
           panel.spacing = unit(5, "pt"))
-```
-
-```{r h1-plots-gradient, fig.cap="Gradient of category decisions in the transfer phase", fig.asp=1/2}
-transfer %>% 
+          
+ext_grad <- transfer %>% 
   left_join(proxy_ex_ids, by = c("subj_id", "Group")) %>% 
   count(Group, img_x, img_y, extrap, response) %>% 
   spread(response, n) %>% 
@@ -84,13 +84,18 @@ transfer %>%
     p_Grot = (Grot / n * 100) |> round(2)
   ) %>% 
   ggplot(aes(img_x, img_y, fill = p_Grot)) +
-    facet_grid(extrap~Group, switch = "y",
+    facet_grid(extrap~Group, 
                labeller = label_wrap_gen(width=10)) +
     geom_tile(size = .2, color = "white") +
     scale_fill_viridis_c() +
     theme_transfer +
     theme(legend.position = "none",
-          panel.spacing = unit(5, "pt"))
+          panel.spacing = unit(5, "pt"),
+          strip.text.x = element_blank())
+
+ext_hist / ext_grad + 
+  plot_layout(heights = c(1, 2)) +
+  plot_annotation(tag_levels = 'A')
 ```
 
 In order to quantify evidence for an effect of rule instructions and rule order, we fitted several Bayesian logistic models (estimated using MCMC sampling with 4 chains of 12000 iterations and a warmup of 2000) to predict the extrapolation of stimulus responses. Priors over parameters for all models were set as:
@@ -100,7 +105,7 @@ In order to quantify evidence for an effect of rule instructions and rule order,
 - $student\_t(df = 3, location = 2.2, scale = 1)$ with a lower bound of 0 and an upper bound of 5 for random intercepts per participant
 
 The final model was fit with fixed effects for the blocked rule condition, the rule instructions condition and their interaction, as well as random intercepts per participant. Convergence and stability of the Bayesian sampling has been assessed using R-hat, which should be below 1.01 [@Vehtari2021], and Effective Sample Size (ESS), which should be greater than 1000 [@Buerkner2017], which in turn can be confirmed for all parameters of all models. Bayes Factors for all model comparisons were obtained by comparing marginal likelihoods via bridge sampling and are shown in table \@ref(tab:h1-tbl-bfs).
-Compared to the intercept only model, we found moderate evidence (_BF_ = `r h1_bfs[1,2]`) in favour of the Blockd Rule model; no evidence (_BF_ = `r h1_bfs[2,2]`) against the Rule Instructions model (the least supported model); moderate evidence (_BF_ = `r h1_bfs[3,2]`) in favour of the model including both terms (the most supported model) and moderate evidence (_BF_ = `r h1_bfs[4,2]`) in favour of the model including both terms and their interaction. Since the model including both terms but no interaction is the most supported one, with an substantial explanatory power of $R^2 = 0.67$ (_CI_ = [0.64, 0.69]), that models posterior estimates are reported in table \@ref(tab:model-summary). 
+Compared to the intercept only model, we found moderate evidence (_BF_ = `r h1_bfs[1,2]`) in favour of the Blockd Rule model; no evidence (_BF_ = `r h1_bfs[2,2]`) against the Rule Instructions model (the least supported model); moderate evidence (_BF_ = `r h1_bfs[3,2]`) in favour of the model including both terms (the most supported model) and moderate evidence (_BF_ = `r h1_bfs[4,2]`) in favour of the model including both terms and their interaction. Since the model including both terms but no interaction is the most supported one, with an substantial explanatory power of $R^2 = 0.67$ (_CI_ = [0.64, 0.69]), that models posterior estimates are reported in table \@ref(tab:model-summary). As recommended by @VanDoorn2021, robustness of the acquired bayes factor of that model has further been established by running the same analyses with different sensible prior assumptions. The qualitative conclusions within the ranges declared under section \@ref(02-ic) stay largely the same even under different prior assumptions, for details see \@ref(bfrc) in the appendix.
 
 (ref:h1-tbl-bfs) Model comparison for effects of rule instruction, blocked rules and their interaction; Bayes Factors for $M_1$ over $M_2$ obtained via bridge sampling.
 

@@ -154,6 +154,6 @@ Futhermore, all models use only weakly informative priors. @Gelman2020 recommend
 
 In any case, $M_{null}$ denotes an intercept-only model that is otherwise identical to the models tested against.
 
-### Inference criteria
+### Inference criteria {#02-ic}
 
 Hypotheses are evaluated with Bayes Factors according to @Andras2014^[adjusted from Jeffreys, 1961]: $BF_{12} > 3$ constitutes moderate evidence for $M_1$ over $M_2$ (or vice versa when $BF_{12} < 1/3$) and $BF_{12} > 10$ (or $BF_{12} < 1/10$) will be interpreted as strong evidence respectively. Bayes Factors between 1/3 and 3 are treated as no meaningful evidence in favor of either model.
