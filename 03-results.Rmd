@@ -144,11 +144,37 @@ logistic mixed models were fitted (estimated using MCMC sampling with 4 chains o
 
 Model $M_1$ (intercept-only) assumes random intercepts for participants with a by-participant random effect for training blocks. Model $M_2$ assumes the same but adds the rule instructions condition as a fixed effect. Convergence and stability of the Bayesian sampling has again been assessed using R-hat and Effective Sample Size (ESS), which again can be confirmed for all parameters. Model comparison via bridge sampling yields no meaningful evidence for an effect of Rule Instructions ($BF_{21}$ = `r bf_h2`), even though the rule instructions model has substantial explanatory power ($R^2$ = 0.48, _CI_ = [0.43, 0.53]) and the rule effect has a 98.22% probability of being positive (_Median_ = 0.40, _95% HDI_= [0.03, 0.77]). 
 
-`[here, a plot showing the learning "curves" would do nicely]`
+(ref:h2-lcurves) Mean accuracy and 95% confidence intervals for learning curves during training of groups with and without rule instructions.
+
+```{r h2-lcurves, fig.cap="(ref:h2-lcurves)", out.width="90%", fig.height=3}
+training %>%  
+  filter(condition %in% c("control", "rules")) %>% 
+  group_by(rules, block) %>% 
+  summarise(
+    n = n(),
+    k = sum(correct),
+    accuracy = mean(correct),
+    acc_hi   = Hmisc::binconf(k, n, return.df = TRUE)$Upper,
+    acc_lo   = Hmisc::binconf(k, n, return.df = TRUE)$Lower,
+    .groups  = "drop"
+  ) %>% 
+  ggplot(aes(block, accuracy, fill = rules, color = rules, group = rules)) +
+    geom_line(position = position_dodge(0.4)) +
+    # geom_smooth(se = F, lty = "dotted", method = 'loess') +
+    geom_point(position = position_dodge(0.4), size = 2.5, shape = 21, color = "white") +
+    geom_linerange(aes(ymax = acc_hi, ymin = acc_lo),
+                  position = position_dodge(0.4), size = .8) +
+    labs(x = "Training Block", y = "Mean Accuracy",
+        color = "Rule Instructions:", fill = "Rule Instructions:") +
+    scale_color_manual(values = c("#4d4d4d", "#ac0634")) +
+    scale_fill_manual(values = c("#4d4d4d", "#ac0634")) +
+    scale_x_continuous(breaks = scales::pretty_breaks(n = 12)) +
+    scale_y_continuous(labels = scales::label_percent()) +
+    theme(legend.position = "top",
+          panel.grid.minor.x = element_blank())
+```
 
 ## Exploration
-
-`[decide on what to keep, what to say about it and whether to have some comparisons between "extrapolators" and "proximators"]`
 
 Sth Sth include ref to fig. \@ref(fig:xplore-prob)
 
