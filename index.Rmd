@@ -17,8 +17,8 @@ institute: "Institut für Kognitionswissenschaft"
 # logo: "includes/LogoUniOsna.pdf"
 bibliography: "bib/thesis.bib"
 # csl: bib/apa.csl
-mainfont: 'Mukta Mahee'
-sansfont: 'Mukta Mahee'
+mainfont: 'Lato' # 'Mukta Mahee'
+sansfont: 'Lato' # 'Mukta Mahee'
 monofont: 'Source Code Pro'
 mathfont: 'Asana Math'
 site: bookdown::bookdown_site
@@ -149,4 +149,6 @@ extra_binom <- transfer %>%
 
 proxy_ex_ids <- extra_binom %>% 
     select(subj_id, Group, extrap)
+
+bf_h2 <- 1.77 # last time I checked und so...
 ```
