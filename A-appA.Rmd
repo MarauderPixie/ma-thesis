@@ -6,19 +6,38 @@ knit: "bookdown::render_book"
 
 # Appendix
 
-## Bayes Factor Robustness Check {#bfrc}
+## Bayes Factor Robustness Checks {#bfrc}
 
-The checkmarks in Table \@ref(tab:apx-bfrc) depict differences in prior specifications over the priors chosen in the reported models in the results section. Changes to _df = 7_ relate to all model parameters, _Slope = 0_ relates to the location/mean of main effects and truncation means a lower and upper bound of -10 and 10 for the prior on the intercept. 
+**Hypothesis 1 --** The checkmarks in Table \@ref(tab:apx-bfrc-h1) depict differences in prior specifications over the priors chosen in the reported models in the results section. Changes to _df = 7_ relate to all model parameters, _Slope = 0_ relates to the location/mean of main effects and truncation means a lower and upper bound of -10 and 10 for the prior on the intercept. 
 
-(ref:apx-bfrc) Bayes Factor robustness check with the same model for hypothesis 1 (including both effects without interaction) run against the intercept only model with different priors.
+(ref:apx-bfrc-h1) Bayes Factor robustness check for H1: the same model (including both effects without interaction) run against the intercept only model with different priors.
 
-```{r apx-bfrc}
+```{r apx-bfrc-h1}
 options(knitr.kable.NA = "")
-readr::read_delim("models/bf-rc.csv") %>% 
+readr::read_delim("models/h1-bfrc.csv") %>% 
   kbl(escape = FALSE, booktabs = TRUE, align = "c",
-      caption="(ref:apx-bfrc)") %>% 
-  kable_styling(latex_options = "striped")
+      caption="(ref:apx-bfrc-h1)") %>% 
+  kable_styling(latex_options = "striped", full_width = FALSE,
+                font_size = 10) %>%
+  row_spec(7, hline_after = TRUE) %>%
+  row_spec(8, bold = TRUE)
 ```
+
+**Hypothesis 2 --** The same robustness check has been done for the model to analyse the training phase, displayed in table \@ref(tab:apx-bfrc-h2). Changes in prior assumptions are: changing the degrees of freedom of the student distributed parameters to 7 (same as before), assuming an intercept of 0 (that is, participants are just guessing) and assuming a slope of 0.4 (overall increase in learning accuracy by 10% by using rule instructions).
+
+(ref:apx-bfrc-h2) Bayes Factor robustness check for H2.
+
+```{r apx-bfrc-h2}
+# options(knitr.kable.NA = "")
+readr::read_delim("models/h2-bfrc.csv") %>% 
+  kbl(escape = FALSE, booktabs = TRUE, align = "c",
+      caption="(ref:apx-bfrc-h2)") %>% 
+  kable_styling(latex_options = "striped", full_width = FALSE,
+                font_size = 10) %>%
+  row_spec(7, hline_after = TRUE) %>%
+  row_spec(8, bold = TRUE)
+```
+
 
 ## Individual Responses
 
