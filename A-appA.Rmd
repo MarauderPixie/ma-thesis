@@ -6,11 +6,25 @@ knit: "bookdown::render_book"
 
 # Appendix
 
+## Bayes Factor Robustness Check {#bfrc}
+
+The checkmarks in Table \@ref(tab:apx-bfrc) depict differences in prior specifications over the priors chosen in the reported models in the results section. Changes to _df = 7_ relate to all model parameters, _Slope = 0_ relates to the location/mean of main effects and truncation means a lower and upper bound of -10 and 10 for the prior on the intercept. 
+
+(ref:apx-bfrc) Bayes Factor robustness check with the same model for hypothesis 1 (including both effects without interaction) run against the intercept only model with different priors.
+
+```{r apx-bfrc}
+options(knitr.kable.NA = "")
+readr::read_delim("models/bf-rc.csv") %>% 
+  kbl(escape = FALSE, booktabs = TRUE, align = "c",
+      caption="(ref:apx-bfrc)") %>% 
+  kable_styling(latex_options = "striped")
+```
+
 ## Individual Responses
 
 Figure \@ref(fig:apx-transfer) shows each participants response to every stimulus in the transfer phase. Figure \@ref(fig:apx-probability) shows each participants certainty of a stimulus belonging to category Grot in the second run of the transfer phase.
 
-```{r apx-transfer, fig.cap="Individual responses in transfer phase", out.width="100%", out.height="80%"}
+```{r apx-transfer, fig.cap="Individual responses in transfer phase", out.width="100%", out.height="80%", cache=TRUE}
 transfer %>% 
   ggplot(aes(img_x, img_y, fill = response)) +
     facet_wrap(~subj_id) +
@@ -22,7 +36,7 @@ transfer %>%
           panel.spacing = unit(2, "pt"))
 ```
 
-```{r apx-probability, fig.cap="Individual probability judgements of any given stimulus belonging to category Grot", out.width="100%", out.height="80%"}
+```{r apx-probability, fig.cap="Individual probability judgements of any given stimulus belonging to category Grot", out.width="100%", out.height="80%", cache=TRUE}
 transp %>% 
   ggplot(aes(img_x, img_y, fill = prob)) +
     facet_wrap(~subj_id) +
@@ -41,3 +55,4 @@ transp %>%
           strip.text = element_blank(), # element_text(size = 8),
           panel.spacing = unit(2, "pt"))
 ```
+
