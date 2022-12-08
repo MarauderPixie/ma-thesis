@@ -17,6 +17,24 @@ The following chapter lays out the results of the experiment and the analyses th
 
 `[maybe something about model- and prior selection?]`
 
+
+## Variables, indices and aggregation
+
+auch: classification nach ck17
+
+Resulting from the 2x2 factorial design described above there are two manipulated/independent variables with two levels each:
+
+- **IV 1: Instructions** - explicitly introducting participants to look for rules and neutral language without any mentioning of rules
+- **IV 2: Rule order** - blocked stimulus presentation and mixed stimulus presentation
+
+The dependent variables are:
+
+- **(training) Decision accuracy:** `0` or `1` - whether the presented stimulus has been correctly classified (aggregated successes _k_ of _n_ trials on subject and block level)
+- **(transfer 1) Chosen category:** `Nobz` or `Grot` on the full set of stimuli; of special relevance to the research question are the nine stimuli not shown (and learned) during the training phase (see. fig. \@(ref:ch2-stimuli)), which are treated as either extrapolation (`1`) or proximation (`0`)
+- **(transfer 2) Probability judgement:** `[0;100]` - integer depicting the numerical certainty of the presented stimulus belonging to either one Category.
+
+
+
 ## H1: Extrapolations in Transfer Phase
 
 (ref:h1-tbl-summary) Mean proportion of extrapolated stimuli per person and proportion of extrapolators between experimental conditions.
