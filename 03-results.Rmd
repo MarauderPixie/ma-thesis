@@ -144,7 +144,7 @@ Log_loss                                                                        
 
 ### H1.3: Interaction of blocked rules and instructions 
 
-Hypothesis 1.3 predicts a possible interaction of the main effects of the blocked and rule instructions. Again, two bayesian logistic models have been compared in order to quantify evidence for such an effect. For both models, the dependent variable is the number of xor-extrapolations. Fixed effects are both main effects for model 1 with an interaction term added to model 2; both models are fit with by-subject random intercepts. Priors over parameters were again set identical to those under H1.1. The bayes factor of comparing model 2 to model 1 (interaction vs. no interaction) is `r h1_bfs[4,5]`, which amounts to no meaningful evidence in favor of Hypothesis 1.3: it seems to make no difference to be exposed to both effects over eing exposed to only one of them.
+Hypothesis 1.3 predicts a possible interaction of the main effects of the blocked and rule instructions. Again, two bayesian logistic models have been compared in order to quantify evidence for such an effect. For both models, the dependent variable is the number of xor-extrapolations. Fixed effects are both main effects for model 1 with an interaction term added to model 2; both models are fit with by-subject random intercepts. Priors over parameters were again set identical to those under H1.1. The bayes factor of comparing model 2 to model 1 (interaction vs. no interaction) is `r h1_bfs[4,5]`, which amounts to no meaningful evidence in favor of Hypothesis 1.3: it seems to make no difference to be exposed to both effects over being exposed to only one of them.
 
 
 ## H2: Learning Accuracy with Rule Instructions
