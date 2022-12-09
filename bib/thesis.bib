@@ -1,3 +1,12 @@
+  @Manual{R4,
+    title = {R: A Language and Environment for Statistical Computing},
+    author = {{R Core Team}},
+    organization = {R Foundation for Statistical Computing},
+    address = {Vienna, Austria},
+    year = {2022},
+    url = {https://www.R-project.org/},
+  }
+
 @article{Schad2021,
    abstract = {Inferences about hypotheses are ubiquitous in the cognitive sciences. Bayes factors provide one general way to compare different hypotheses by their compatibility with the observed data. Those quantifications can then also be used to choose between hypotheses. While Bayes factors provide an immediate approach to hypothesis testing, they are highly sensitive to details of the data/model assumptions. Moreover it's not clear how straightforwardly this approach can be implemented in practice, and in particular how sensitive it is to the details of the computational implementation. Here, we investigate these questions for Bayes factor analyses in the cognitive sciences. We explain the statistics underlying Bayes factors as a tool for Bayesian inferences and discuss that utility functions are needed for principled decisions on hypotheses. Next, we study how Bayes factors misbehave under different conditions. This includes a study of errors in the estimation of Bayes factors. Importantly, it is unknown whether Bayes factor estimates based on bridge sampling are unbiased for complex analyses. We are the first to use simulation-based calibration as a tool to test the accuracy of Bayes factor estimates. Moreover, we study how stable Bayes factors are against different MCMC draws. We moreover study how Bayes factors depend on variation in the data. We also look at variability of decisions based on Bayes factors and how to optimize decisions using a utility function. We outline a Bayes factor workflow that researchers can use to study whether Bayes factors are robust for their individual analysis, and we illustrate this workflow using an example from the cognitive sciences. We hope that this study will provide a workflow to test the strengths and limitations of Bayes factors as a way to quantify evidence in support of scientific hypotheses. Reproducible code is available from https://osf.io/y354c/.},
    author = {Daniel J. Schad and Bruno Nicenboim and Paul-Christian Bürkner and Michael Betancourt and Shravan Vasishth},
@@ -147,15 +156,6 @@
    year = {2018},
 }
 
-  @Manual{R4,
-    title = {R: A Language and Environment for Statistical Computing},
-    author = {{R Core Team}},
-    organization = {R Foundation for Statistical Computing},
-    address = {Vienna, Austria},
-    year = {2022},
-    url = {https://www.R-project.org/},
-  }
-
 @manual{Gelman2020,
    author = {Andrew Gelman},
    title = {Prior Choice Recommendations},
@@ -297,4 +297,101 @@
   year={1988},
   volume={14 1},
   pages={33-53}
+}
+
+@article{Reed1972,
+   title = {Pattern recognition and categorization},
+   journal = {Cognitive Psychology},
+   volume = {3},
+   number = {3},
+   pages = {382-407},
+   year = {1972},
+   issn = {0010-0285},
+   doi = {https://doi.org/10.1016/0010-0285(72)90014-X},
+   url = {https://www.sciencedirect.com/science/article/pii/001002857290014X},
+   author = {Stephen K. Reed},
+   abstract = {Four experiments are reported which attempt to determine how people make classifications when categories are defined by sets of exemplars and not by logical rules. College students classified schematic faces into one of two categories each composed of five faces. One probability model and three distance models were tested. The predominant strategy, as revealed by successful models, was to abstract a prototype representing each category and to compare the distance of novel patterns to each prototype, emphasizing those features which best discriminated the two categories.}
+}
+
+@article{Posner1968,
+   abstract = {PREVIOUS WORK INDICATES THAT SS CAN LEARN TO CLASSIFY SETS OF PATTERNS WHICH ARE DISTORTIONS OF A PROTOTYPE THEY HAVE NOT SEEN. IT IS SHOWN THAT AFTER LEARNING A SET OF PATTERNS, THE PROTOTYPE (SCHEMA) OF THAT SET IS MORE EASILY CLASSIFIED THAN CONTROL PATTERNS ALSO WITHIN THE LEARNED CATEGORY. AS THE VARIABILITY AMONG THE MEMORIZED PATTERNS INCREASES, SO DOES THE ABILITY OF SS TO CLASSIFY HIGHLY DISTORTED NEW INSTANCES. THESE FINDINGS ARGUE THAT INFORMATION ABOUT THE SCHEMA IS ABSTRACTED FROM THE STORED INSTANCES WITH VERY HIGH EFFICIENCY. IT IS UNCLEAR WHETHER THE ABSTRACTION OF INFORMATION INVOLVED IN CLASSIFYING THE SCHEMA OCCURS WHILE LEARNING THE ORIGINAL PATTERNS OR WHETHER THE ABSTRACTION PROCESS OCCURS AT THE TIME OF THE 1ST PRESENTATION OF THE SCHEMA. (PsycINFO Database Record (c) 2006 APA, all rights reserved). © 1968 American Psychological Association.},
+   author = {Michael I. Posner and Steven W. Keele},
+   doi = {10.1037/H0025953},
+   issn = {00221015},
+   issue = {3 PART 1},
+   journal = {Journal of Experimental Psychology},
+   keywords = {PATTERN DISTORTIONS, ABSTRACTION OF CRITERIA},
+   month = {7},
+   pages = {353-363},
+   pmid = {5665566},
+   title = {On the genesis of abstract ideas},
+   volume = {77},
+   url = {/record/1968-14980-001},
+   year = {1968},
+}
+
+@article{Erickson1998,
+   abstract = {Psychological theories of categorization generally focus on either rule- or exemplar-based explanations. We present 2 experiments that show evidence of both rule induction and exemplar encoding as well as a connectionist model, ATRIUM, that specifies a mechanism for combining rule- and exemplar-based representation. In 2 experiments participants learned to classify items, most of which followed a simple rule, although there were a few frequently occurring exceptions. Experiment 1 examined how people extrapolate beyond the range of training. Experiment 2 examined the effect of instance frequency on generalization. Categorization behavior was well described by the model, in which exemplar representation is used for both rule and exception processing. A key element in correctly modeling these results was capturing the interaction between the rule- and exemplar-based representations by using shifts of attention between rules and exemplars.},
+   author = {Michael A. Erickson and John K. Kruschke},
+   doi = {10.1037/0096-3445.127.2.107},
+   issn = {00963445},
+   issue = {2},
+   journal = {Journal of Experimental Psychology: General},
+   pages = {107-140},
+   pmid = {9622910},
+   publisher = {American Psychological Association Inc.},
+   title = {Rules and exemplars in category learning.},
+   volume = {127},
+   year = {1998},
+}
+
+@article{Medin1978,
+   abstract = {Most theories dealing with ill-defined concepts assume that performance is based on category level information or a mixture of category level and specific item information. A context theory of classification is described in which judgments are assumed to derive exclusively from stored exemplar information. The main idea is that a probe item acts as a retrieval cue to access information associated with stimuli similar to the probe. The predictions of the context theory are contrasted with those of a class of theories (including prototype theory) that assume that the information entering into judgments can be derived from an additive combination of information from component cue dimensions. Across 4 experiments with 128 paid Ss, using both geometric forms and schematic faces as stimuli, the context theory consistently gave a better account of the data. The relation of context theory to other theories and phenomena associated with ill-defined concepts is discussed in detail. (42 ref) (PsycINFO Database Record (c) 2006 APA, all rights reserved). © 1978 American Psychological Association.},
+   author = {Douglas L. Medin and Marguerite M. Schaffer},
+   doi = {10.1037/0033-295X.85.3.207},
+   issn = {0033295X},
+   issue = {3},
+   journal = {Psychological Review},
+   keywords = {test of context theory vs other theories of ill-defined concepts, classification learning, 17-30 yr olds},
+   month = {5},
+   pages = {207-238},
+   title = {Context theory of classification learning},
+   volume = {85},
+   url = {/record/1979-12633-001},
+   year = {1978},
+}
+
+@article{Kruschke2001,
+   abstract = {The inverse base-rate effect is a phenomenon in which people learn about some common and some rare outcomes and in subsequent testing people predict the rare outcome for particular sets of conflicting cues, contrary to normative predictions. P. Juslin, P. Wennerholm, and A. Winman suggested that the effect could be explained by eliminative inference, contrary to the attention-shifting explanation of J. K. Kruschke. The present article shows that the eliminative inference model exhibits ordinal discrepancies from previously published data and from data of 2 new experiments. A connectionist implementation of attentional theory fits the data well. The author concludes that people can use eliminative inference but that it cannot account for the inverse base-rate effect.},
+   author = {John K. Kruschke},
+   doi = {10.1037//0278-7393.27.6.1385},
+   issn = {0278-7393},
+   issue = {6},
+   journal = {Journal of experimental psychology. Learning, memory, and cognition},
+   pages = {1385-1400},
+   publisher = {American Psychological Association (APA)},
+   title = {The inverse base-rate effect is not explained by eliminative inference.},
+   volume = {27},
+   year = {2001},
+}
+
+@article{Kruschke2003,
+   abstract = {A. Winman, P. Wennerholm, and P. Juslin (2003) have admitted that J. K. Kruschke (2001a) cogently demonstrated the shortcomings of eliminative inference as an explanation of the inverse base rate effect, but they raise criticisms of Kruschke's attentionally based explanation. First, Winman et al. pointed out that attentional shifting does not improve learning performance in Kruschke's (1996) ADIT model, contrary to the claims that attentional shifting accelerates learning. This reply demonstrates that the deceleration of learning is a natural consequence when attentional shifts are not learned, as is the case in ADIT; however, when attentional shifts are learned, as was assumed by the underlying theory and as is the case in the EXIT model (Kruschke, 2001a, 2001b), then performance is indeed accelerated by attentional shifts. Second, Winman et al. pointed out that, whereas EXIT captures essentially all of the notable effects in the transfer data, it fails to capture a small effect [viz., p(CPC) p(RPR)]. This reply demonstrates that when this trend in the data is merely weighted more heavily in the model fitting, then the EXIT model accommodates it. EXIT accomplishes this by emphasizing base rate learning more strongly. Thus, the EXIT model, and attentional theory more generally, remains a viable explanation of the inverse base rate effect.},
+   author = {John K. Kruschke},
+   doi = {10.1037/0278-7393.29.6.1396},
+   journal = {Journal of Experimental Psychology:Copyright 2003 by the American Psychological Association, Inc.Learning, Memory, and Cognition},
+   title = {Attentional Theory Is a Viable Explanation of the Inverse Base Rate Effect: A Reply to Winman, Wennerholm, and Juslin (2003)},
+   year = {2003},
+}
+
+@article{Smith2004,
+   author = {J. David Smith and John Paul Minda and David A. Washburn},
+   doi = {10.1037/0096-3445.133.3.398},
+   issn = {1939-2222},
+   issue = {3},
+   journal = {Journal of Experimental Psychology: General},
+   pages = {398-414},
+   title = {Category Learning in Rhesus Monkeys: A Study of the Shepard, Hovland, and Jenkins (1961) Tasks.},
+   volume = {133},
+   year = {2004},
 }

@@ -6,11 +6,31 @@ knit: "bookdown::render_book"
 
 # Appendix
 
+## Experimental instructions {#apx-instructions}
+
+Original instructions in german language. Emphasis as in the experiment.
+
+**Not mentioning rules:**
+
+> Im ersten Abschnitt des Experiments werden dir nacheinander einige Beispiele geometrischer Figuren gezeigt, die sich in ihrer Farbe und Größe unterscheiden. Deine Aufgabe ist es, zu erlernen, ob eine Figur zur Kategorie **Nobz** oder zur Kategorie **Grot** gehört:
+> 
+> Klicke dazu bei jedem Beispiel, das dir gezeigt wird, auf die entsprechende Schaltfläche. Nach jeder Entscheidung bekommst du eine Rückmeldung darüber, ob deine Wahl richtig oder falsch war. Am Anfang musst du raten, letztendlich aber wirst du lernen, wie man die Objekte richtig kategorisiert.
+> 
+> Gib dein Bestes, um die Kategorien Nobz und Grot zu meistern!
+
+**Explicitly mentioning rules:**
+
+> Im ersten Abschnitt des Experiments werden dir nacheinander einige Beispiele geometrischer Figuren gezeigt. Deine Aufgabe ist es, anhand von Farbe und Größe eine Regel zu erlernen, mit der Du entscheiden kannst, ob eine Figur zur Kategorie **Nobz** oder zur Kategorie **Grot** gehört:
+> 
+> Klicke dazu bei jedem Beispiel, das dir gezeigt wird, auf die entsprechende Schaltfläche. Nach jeder Entscheidung bekommst du eine Rückmeldung darüber, ob deine Wahl richtig oder falsch war. Am Anfang musst du raten, letztendlich aber wirst du lernen, wie man die Objekte richtig kategorisiert.
+> 
+> Gib dein Bestes, um die Regeln für Kategorien Nobz und Grot zu meistern!
+
 ## Bayes Factor Robustness Checks {#bfrc}
 
 **Hypothesis 1 --** The checkmarks in Table \@ref(tab:apx-bfrc-h1) depict differences in prior specifications over the priors chosen in the reported models in the results section. Changes to _df = 7_ relate to all model parameters, _Slope = 0_ relates to the location/mean of main effects and truncation means a lower and upper bound of -10 and 10 for the prior on the intercept. 
 
-(ref:apx-bfrc-h1) Bayes Factor robustness check for H1: the same model (including both effects without interaction) run against the intercept only model with different priors.
+(ref:apx-bfrc-h1) Bayes Factor robustness check for H1: the full model (both main efects and interaction) compared against the model assuming no effects with different priors.
 
 ```{r apx-bfrc-h1}
 options(knitr.kable.NA = "")
@@ -23,7 +43,7 @@ readr::read_delim("models/h1-bfrc.csv") %>%
   row_spec(8, bold = TRUE)
 ```
 
-**Hypothesis 2 --** The same robustness check has been done for the model to analyse the training phase, displayed in table \@ref(tab:apx-bfrc-h2). Changes in prior assumptions are: changing the degrees of freedom of the student distributed parameters to 7 (same as before), assuming an intercept of 0 (that is, participants are just guessing) and assuming a slope of 0.4 (overall increase in learning accuracy by 10% by using rule instructions).
+**Hypothesis 2 --** The same robustness check has been done for the model to analyse the training phase, displayed in table \@ref(tab:apx-bfrc-h2). Changes in prior assumptions are: changing the degrees of freedom of the student distributed parameters to 7 (same as for H1), assuming an intercept of 0 ("participants are just guessing") and assuming a slope of 0.4 (overall increase in learning accuracy by 10% by using rule instructions).
 
 (ref:apx-bfrc-h2) Bayes Factor robustness check for H2.
 
