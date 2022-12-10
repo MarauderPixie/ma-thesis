@@ -13,12 +13,12 @@ knit: "bookdown::render_book"
 
 # Results {#ch:results}
 
-The following chapter lays out the results of the experiment and the analyses with respect to their given hypothesis. 
+This chapter describes the results of the experiment and the analyses with respect to their given hypothesis. It starts with looking at the results of the transfer phase and then goes into the analysis of Hypotheses 1.1 through 1.3. Following that is the training phase with regard to hypothesis 2. It ends with an exploratory look at the probability judgements of the secodn transfer phase.
 
 
 ## H1: Extrapolations in Transfer Phase
 
-The main interest of this study is to find out whether an increase in the number of XOR extrapolations and thereby the learning of a full XOR category structure is facilitated by the ordering of rules during learning (**H1.1**), the use of rule instructions (**H1.2**) and a possible interaction of both (**H1.3**). Resulting from the 2x2 factorial setup described under section \@ref(ch2-setup) there are two manipulated/independent variables with two levels each. Independent variable 1 are the rule instructions with levels 0 for neutral language and 1 for rule language. Independent variable 2 is the rule order with levels 0 for the mixed condition and 1 for the blocked condition. The dependent variable for hypotheses 1.1-1.3 is whether the chosen category for the nine critical transfer trials (see fig. \@ref(fig:ch2-stimuli)) has been extrapolated (1) or not (0). 
+The main objective of this study is to investigate whether an increase in the number of XOR extrapolations and thereby the learning of a full XOR category structure is facilitated by the ordering of rules during learning (**H1.1**), the use of rule instructions (**H1.2**) and a possible interaction of both (**H1.3**). Resulting from the 2x2 factorial setup described in section \@ref(ch2-setup) there are two manipulated/independent variables with two levels each. Independent variable 1 are the rule instructions with levels 0 for neutral language and 1 for rule language. Independent variable 2 is the rule order with levels 0 for the mixed condition and 1 for the blocked condition. The dependent variable for hypotheses 1.1-1.3 is whether the chosen category for the nine critical transfer trials (see fig. \@ref(fig:ch2-stimuli)) has been extrapolated (1) or not (0). 
 
 (ref:h1-tbl-summary) Mean proportion of extrapolated stimuli per person and proportion of extrapolators between experimental condition.
 
@@ -64,9 +64,9 @@ beobachtet %>%
   row_spec(5, bold = TRUE)
 ```
 
-@CK17 classified participants that extrapolated more than 5 of these stimuli as "extrapolators". The same is done here for comparison to their results - people _not_ extrapolating and therefore inferring category membership by proximity to the "neighboring" stimuli are here called "proximators". Table \@ref(tab:h1-tbl-summary) shows the final group sizes, the average percentage of extrapolated stimuli per person as well as the percentage of extrapolators between experimental conditions. Furthermore, figure \@ref(fig:h1-extrapolations) (A) shows the distributions of extrapolated stimuli per person between experimental groups and (B) shows decision gradients for all stimuli across the conditions for extrapolators and proximators. For an overview of individual responses see fig. \@ref(fig:apx-transfer) in the appendix.
+@CK17 classified participants that extrapolated more than 5 of these stimuli as "extrapolators". The same is done here for comparability to their results -- people _not_ extrapolating and therefore inferring category membership by proximity to the "neighboring" stimuli are here called "interpolators" in consistency with the wording in @Schlegelmilch2021. Table \@ref(tab:h1-tbl-summary) shows the final group sizes, the average percentage of extrapolated stimuli per person and the percentage of extrapolators between experimental conditions. Furthermore, figure \@ref(fig:h1-extrapolations) (A) shows the distributions of extrapolated stimuli per person between experimental groups and (B) shows decision gradients for all stimuli across the conditions for extrapolators and interpolators. For an overview of individual responses, see fig. \@ref(fig:apx-transfer) in the appendix.
 
-(ref:h1-extrapolations) (A) Number of xor-extrapolated stimuli between experimental groups. (B) Decision gradients for each stimulus between groups and people extrapolating to a full XOR solution (Extrapolators) and people inferring group membership by similarity to neighboring categories (Proximators). Cave: _n_ = 1 for subgroup 'No Treatment - Extrapolators'.
+(ref:h1-extrapolations) (A) Number of XOR-extrapolated stimuli between experimental groups. (B) Decision gradients for each stimulus between groups and people extrapolating to a full XOR solution (Extrapolators) and people inferring group membership by similarity to neighboring categories (Proximators). Caveat: _n_ = 1 for subgroup 'No Treatment - Extrapolators'.
 
 ```{r h1-extrapolations, fig.cap="(ref:h1-extrapolations)", fig.height=4}
 ext_hist <- transfer %>% 
@@ -111,7 +111,7 @@ ext_hist / ext_grad +
 
 ### H1.1: main effect of rule order
 
-Hypothesis 1.1 predicts an increase in xor-extrapolations under the blocked rule condition. Two bayesian logistic models have been compared in order to quantify evidence for such an effect. For both models, the dependent variable is the number of xor-extrapolations. Model 1 includes no fixed effects, model 2 includes the blocked rule as a fixed effect; both models are fit with by-subject random intercepts to account for individual differences. Priors over the intercept parameters were set as $student\_t(df = 3, location = -1.4, scale = 1)$, which corresponds to an assumed 30% of the participants extrapolating at least 6 out ouf 9 trials, $student\_t(df = 3, location = 0.5, scale = 1)$ for the slope of the main effect, assuming an approximately 10% increase in extrapolations and $student\_t(df = 3, location = 2.2, scale = 1)$ with a lower bound of 0 and an upper bound of 5 for the random by-participant intercepts. The bayes factor of comparing model 2 to model 1 (blocked rule vs. no blocked rule) is `r h1_bfs[1,2]`, which amounts to moderate evidence in favor of Hypothesis 1.1: the delayed introduction of a context modulating stimulus indeed seems to make the rule inversion more likely to happen.
+Hypothesis 1.1 predicts an increase in XOR-extrapolations under the blocked rule condition. Two bayesian logistic models have been compared in order to quantify evidence for such an effect. For both models, the dependent variable is the number of XOR-extrapolations. Model 1 includes no fixed effects, model 2 includes the blocked rule as a fixed effect. Both models are fit with by-subject random intercepts to account for individual differences. Priors over the intercept parameters were set as $\mathrm{student}(\mathrm{df} = 3, \mathrm{location} = -1.4, \mathrm{scale} = 1)$, which corresponds to an assumed 30% of the participants extrapolating at least 6 out ouf 9 trials, $\mathrm{student}(\mathrm{df} = 3, \mathrm{location} = 0.5, \mathrm{scale} = 1)$ for the slope of the main effect, assuming an approximately 10% increase in extrapolations and $\mathrm{student}(\mathrm{df} = 3, \mathrm{location} = 2.2, \mathrm{scale} = 1)$ with a lower bound of 0 and an upper bound of 5 for the random by-participant intercepts. The bayes factor of comparing model 2 to model 1 (blocked rule vs. no blocked rule) is `r h1_bfs[1,2]`, which amounts to moderate evidence in favor of Hypothesis 1.1: The delayed introduction of a context modulating stimulus indeed seems to establish a simple rule that can be contrasted.
 
 (ref:h1-tbl-bfs) Model comparison for effects of rule instruction, blocked rules and their interaction; Bayes Factors for $M_1$ over $M_2$ obtained via bridge sampling.
 
@@ -126,9 +126,9 @@ h1_bfs %>%
 
 ### H1.2: main effect of rule instructions
 
-Hypothesis 1.2 predicts an increase in xor-extrapolations under the rule instructions condition. Two bayesian logistic models have been compared in order to quantify evidence for such an effect. For both models, the dependent variable is the number of xor-extrapolations. Model 1 includes no fixed effects, model 2 includes the rule instructions as a fixed effect; both models are fit with by-subject random intercepts. Priors over parameters were set the same as for H1.1. The bayes factor of comparing model 2 to model 1 (rule vs. neutral instructions) is `r h1_bfs[2,2]`, which amounts to no meaningful evidence in favor of Hypothesis 1.2: it seems that being instructed to find a rule did not lead to a stronger learning and application of rule inversion.
+Hypothesis 1.2 predicts an increase in XOR-extrapolations under the rule instructions condition. Two bayesian logistic models have been compared in order to quantify evidence for such an effect. For both models, the dependent variable is the number of XOR-extrapolations. Model 1 includes no fixed effects, model 2 includes the rule instructions as a fixed effect. Both models are fit with by-subject random intercepts. Priors over parameters were set analoguously to H1.1. The bayes factor of comparing model 2 to model 1 (rule vs. neutral instructions) is `r h1_bfs[2,2]`, which amounts to no meaningful evidence in favor of Hypothesis 1.2: It seems that being instructed to find a rule did not lead to a stronger learning and application of rule inversion.
 
-Table: (\#tab:model-summary) Ugly and absolutely unformatted, incomplete and rather convoluted model summary table.
+<!-- Table: (\#tab:model-summary) Ugly and absolutely unformatted, incomplete and rather convoluted model summary table.
 
 Parameter      Median          95% CI     Rhat      ESS               95% CI       Fit
 -------------  ------  ---------------   -----  -------  -------------------  --------
@@ -141,17 +141,18 @@ WAIC                                                                            
 R2                                                                                0.66
 Sigma                                                                             1.81
 Log_loss                                                                          0.14
+-->
 
 ### H1.3: Interaction of blocked rules and instructions 
 
-Hypothesis 1.3 predicts a possible interaction of the main effects of the blocked and rule instructions. Again, two bayesian logistic models have been compared in order to quantify evidence for such an effect. For both models, the dependent variable is the number of xor-extrapolations. Fixed effects are both main effects for model 1 with an interaction term added to model 2; both models are fit with by-subject random intercepts. Priors over parameters were again set identical to those under H1.1. The bayes factor of comparing model 2 to model 1 (interaction vs. no interaction) is `r h1_bfs[4,5]`, which amounts to no meaningful evidence in favor of Hypothesis 1.3: it seems to make no difference to be exposed to both effects over being exposed to only one of them.
+Hypothesis 1.3 predicts a possible interaction of the main effects of the blocked and rule instructions. Again, two bayesian logistic models have been compared in order to quantify evidence for such an effect. For both models, the dependent variable is the number of XOR-extrapolations. Fixed effects are both main effects for model 1 with an interaction term added to model 2. Both models are fit with by-subject random intercepts. Priors over parameters were again set identical to those under H1.1. The bayes factor for the comparison of 2 to model 1 (interaction vs. no interaction) is `r h1_bfs[4,5]`, which amounts to no meaningful evidence in favor of Hypothesis 1.3: There is no discernible difference in XOR-extrapolations by being exposed to both effects over being exposed to only one of them.
 
 
-## H2: Learning Accuracy with Rule Instructions
+## H2: Learning accuracy with rule instructions
 
-The second hypothesis concerns itself with the learning of a rule, namely a variant of the classic Type II rule otherwise known as exclusive-or problem. Figure \@ref(fig:h2-lcurves) shows the learning curves of the group being instructed to find a rule and the one with neutral task instructions.
+The second hypothesis concerns itself with the learning of a rule, namely a variant of the classic Type II rule otherwise known as XOR-problem. Figure \@ref(fig:h2-lcurves) shows the learning curves of the group being instructed to find a rule and the one with neutral task instructions.
 
-To investigate the prediction of hypothesis 2 on a quicker learning of a type II rule structure, two bayesian logistic models have been comparedt. The dependent variable is the correct classification of traning stimuli, aggregated by training block and by participant. Model 1 again includes no fixed effects, whereas model 2 treats rule instructions as such; both models are fit with by-subject random intercepts with random slopes for the training blocks. The prior on the intercept  is $student\_t(df = 3, location = 2, scale = 1)$, assuming an average 88% learning accuracy, $student\_t(df = 3, location = 0, scale = 1)$ for the slope of the rule instructions condition, assuming no difference and $student\_t(df = 3, location = 2.2, scale = 1)$ with a lower bound of 0 and an upper bound of 5 for the random by-participant intercepts. Model comparison via bridge sampling yields no meaningful evidence for an effect of Rule Instructions ($BF_{21}$ = `r bf_h2`), such that hypothesis 2 can not be confirmed. The instructions mentioning rules does not facilitate the learning of rules.
+To investigate the prediction of hypothesis 2 on a quicker learning of a Type II rule structure, two bayesian logistic models have been compared. The dependent variable is the number of correct classifications of traning stimuli, aggregated by training block and by participant. Model 1 again includes no fixed effects, whereas model 2 assumes a a fixed effect of rule instructions. Both models are fit with by-subject random intercepts with random slopes for the training blocks. The prior on the intercept  is $\mathrm{student}(\mathrm{df} = 3, \mathrm{location} = 2, \mathrm{scale} = 1)$, assuming an average 88% learning accuracy, $\mathrm{student}(\mathrm{df} = 3, \mathrm{location} = 0, \mathrm{scale} = 1)$ for the slope of the rule instructions condition, assuming no difference and $\mathrm{student}(\mathrm{df} = 3, \mathrm{location} = 2.2, \mathrm{scale} = 1)$ with a lower bound of 0 and an upper bound of 5 for the random by-participant intercepts. Comparison of model 1 to model 2 via bridge sampling yields no meaningful evidence for an effect of Rule Instructions ($BF_{21}$ = `r bf_h2`), such that hypothesis 2 can not be confirmed. The instructions mentioning rules do not facilitate better learning of a XOR rule.
 
 (ref:h2-lcurves) Mean accuracy and 95% binomial confidence intervals for learning curves during training of groups with and without rule instructions.
 
@@ -185,9 +186,9 @@ training %>%
 
 ## Exploration
 
-Sth Sth include ref to fig. \@ref(fig:xplore-prob)
+Figure \@ref(fig:xplore-prob) shows the mean probability judgements for every transfer stimulus between experimental groups split by extra- and interpolators.
 
-(ref:xplore-prob) Average probability judement of any stimulus belonging to category Grot between experimental groups, subdivided by extrapolators and proximators. Cave: _n_ = 1 for subgroup 'No Treatment - Extrapolators'.
+(ref:xplore-prob) Average probability judement of any stimulus belonging to category Grot between experimental groups, subdivided by extrapolators and interpolators. Caveat: _n_ = 1 for subgroup 'No Treatment - Extrapolators'.
 
 ```{r xplore-prob, fig.cap="(ref:xplore-prob)", out.width="90%", fig.height=2.4}
 transp <- stimprob %>%
