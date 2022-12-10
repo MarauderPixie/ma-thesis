@@ -145,7 +145,7 @@ extra_binom <- transfer %>%
     exab4 = ifelse(k > 3, 1, 0),
     exab5 = ifelse(k > 4, 1, 0),
     exab6 = ifelse(k > 5, 1, 0),
-    extrap = ifelse(k > 5, "Extrapolators", "Proximators")
+    extrap = ifelse(k > 5, "Extrapolators", "Interpolators")
   )
 
 proxy_ex_ids <- extra_binom %>% 
