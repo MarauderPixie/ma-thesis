@@ -28,17 +28,17 @@ Original instructions in german language. Emphasis as in the experiment.
 
 ## Bayes Factor Robustness Checks {#bfrc}
 
-**Hypothesis 1 --** The checkmarks in Table \@ref(tab:apx-bfrc-h1) depict differences in prior specifications over the priors chosen in the reported models in the results section. Changes to _df = 7_ relate to all model parameters, _Slope = 0_ relates to the location/mean of main effects and truncation means a lower and upper bound of -10 and 10 for the prior on the intercept. 
+**Hypothesis 1 --** The checkmarks in Table \@ref(tab:apx-bfrc-h1) depict differences in prior specifications over the priors chosen in the reported models in the results section. Changes to _df = 7_ relate to all model parameters, _Slope = 0_ relates to the location/mean of main effects and truncation means a lower and upper bound of -10 and 10 for the prior on the intercept. $\mathrm{M_{1.1}}$ denotes the model for H1.1, $\mathrm{M_{1.2}}$ the model for 1.2. The reference is the BF reported in the results section.
 
-(ref:apx-bfrc-h1) Bayes Factor robustness check for H1: the full model (both main efects and interaction) compared against the model assuming no effects with different priors.
+(ref:apx-bfrc-h1) Bayes Factor robustness check for H1.1 (blocked condition) and H1.2 (rule instructions) compared against the model assuming no effects with different priors.
 
 ```{r apx-bfrc-h1}
 options(knitr.kable.NA = "")
 readr::read_delim("models/h1-bfrc.csv") %>% 
   kbl(escape = FALSE, booktabs = TRUE, align = "c",
       caption="(ref:apx-bfrc-h1)") %>% 
-  kable_styling(latex_options = "striped", full_width = FALSE,
-                font_size = 10) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), 
+                full_width = FALSE, font_size = 10) %>%
   row_spec(7, hline_after = TRUE) %>%
   row_spec(8, bold = TRUE)
 ```
@@ -52,8 +52,8 @@ readr::read_delim("models/h1-bfrc.csv") %>%
 readr::read_delim("models/h2-bfrc.csv") %>% 
   kbl(escape = FALSE, booktabs = TRUE, align = "c",
       caption="(ref:apx-bfrc-h2)") %>% 
-  kable_styling(latex_options = "striped", full_width = FALSE,
-                font_size = 10) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), 
+                full_width = FALSE, font_size = 10) %>%
   row_spec(7, hline_after = TRUE) %>%
   row_spec(8, bold = TRUE)
 ```

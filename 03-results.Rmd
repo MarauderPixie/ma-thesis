@@ -13,7 +13,7 @@ knit: "bookdown::render_book"
 
 # Results {#ch:results}
 
-This chapter describes the results of the experiment and the analyses with respect to their given hypothesis. It starts with looking at the results of the transfer phase and then goes into the analysis of Hypotheses 1.1 through 1.3. Following that is the training phase with regard to hypothesis 2. It ends with an exploratory look at the probability judgements of the secodn transfer phase.
+This chapter describes the results of the experiment and the analyses with respect to their given hypothesis. It starts with looking at the results of the transfer phase and then goes into the analysis of Hypotheses 1.1 through 1.3. Following that is the training phase with regard to hypothesis 2. It ends with an exploratory look at the probability judgements of the second transfer phase.
 
 
 ## H1: Extrapolations in Transfer Phase
@@ -113,9 +113,9 @@ ext_hist / ext_grad +
 
 Hypothesis 1.1 predicts an increase in XOR-extrapolations under the blocked rule condition. Two bayesian logistic models have been compared in order to quantify evidence for such an effect. For both models, the dependent variable is the number of XOR-extrapolations. Model 1 includes no fixed effects, model 2 includes the blocked rule as a fixed effect. Both models are fit with by-subject random intercepts to account for individual differences. Priors over the intercept parameters were set as $\mathrm{student}(\mathrm{df} = 3, \mathrm{location} = -1.4, \mathrm{scale} = 1)$, which corresponds to an assumed 30% of the participants extrapolating at least 6 out ouf 9 trials, $\mathrm{student}(\mathrm{df} = 3, \mathrm{location} = 0.5, \mathrm{scale} = 1)$ for the slope of the main effect, assuming an approximately 10% increase in extrapolations and $\mathrm{student}(\mathrm{df} = 3, \mathrm{location} = 2.2, \mathrm{scale} = 1)$ with a lower bound of 0 and an upper bound of 5 for the random by-participant intercepts. The bayes factor of comparing model 2 to model 1 (blocked rule vs. no blocked rule) is `r h1_bfs[1,2]`, which amounts to moderate evidence in favor of Hypothesis 1.1: The delayed introduction of a context modulating stimulus indeed seems to establish a simple rule that can be contrasted.
 
-(ref:h1-tbl-bfs) Model comparison for effects of rule instruction, blocked rules and their interaction; Bayes Factors for $M_1$ over $M_2$ obtained via bridge sampling.
+<!-- (ref:h1-tbl-bfs) Model comparison for effects of rule instruction, blocked rules and their interaction; Bayes Factors for $M_1$ over $M_2$ obtained via bridge sampling. -->
 
-```{r h1-tbl-bfs}
+```{r h1-tbl-bfs, eval = FALSE}
 h1_bfs %>% 
   kbl(booktabs = TRUE, escape = FALSE, 
       caption = "(ref:h1-tbl-bfs)", align = "l") %>% 
@@ -124,7 +124,7 @@ h1_bfs %>%
   column_spec(1, width = "5cm")
 ```
 
-### H1.2: main effect of rule instructions
+### H1.2: Main effect of rule instructions
 
 Hypothesis 1.2 predicts an increase in XOR-extrapolations under the rule instructions condition. Two bayesian logistic models have been compared in order to quantify evidence for such an effect. For both models, the dependent variable is the number of XOR-extrapolations. Model 1 includes no fixed effects, model 2 includes the rule instructions as a fixed effect. Both models are fit with by-subject random intercepts. Priors over parameters were set analoguously to H1.1. The bayes factor of comparing model 2 to model 1 (rule vs. neutral instructions) is `r h1_bfs[2,2]`, which amounts to no meaningful evidence in favor of Hypothesis 1.2: It seems that being instructed to find a rule did not lead to a stronger learning and application of rule inversion.
 

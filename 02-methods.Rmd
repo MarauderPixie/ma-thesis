@@ -10,7 +10,7 @@ exc_id <- unique(exclud_trans$subj_id)
 
 # Methods {#ch:methods}
 
-An online experiment has been conducted using the \_magpie 3 framework (https://magpie-ea.github.io/magpie-site/). This chapter describes the collected sample, the experimental setup and procedure, the data preparation and the statistical methods used for data analysis. The experiment has been pre-registered according to the guidelines of the Open Science Foundation (https://osf.io/)^[Pre-registration URL: [https://osf.io/wegm9](https://osf.io/wegm9)]. All code regarding the experiment and the data analysis can be found on the corresponding project page^[Project URL: [https://osf.io/gup7x/](https://osf.io/gup7x/)].
+An online experiment has been conducted using the \_magpie 3 framework (https://magpie-ea.github.io/magpie-site/). This chapter describes the collected sample, the experimental setup and procedure, the data preparation and the statistical methods used for data analysis. The experiment has been pre-registered according to the guidelines of the Open Science Foundation (https://osf.io/)^[Pre-registration: [https://osf.io/wegm9](https://osf.io/wegm9)]. All code regarding the experiment and the data analysis can be found on the corresponding project page^[Project: [https://osf.io/gup7x/](https://osf.io/gup7x/)].
 
 ## Data collection procedure and sample description
 
@@ -43,7 +43,7 @@ This setup results in a two-factorial between subjects design with two levels ea
 
 (ref:ch2-blocked) Example of a blocked and a mixed training block. The mixed set contains all available training stimuli, while the blocked set contains only stimuli that can be classified along one dimension (size in this case).
 
-```{r ch2-blocked, fig.show="hold", out.height="20%", out.width="100%", fig.cap="(ref:ch2-blocked)"}
+```{r ch2-blocked, fig.show="hold", out.height="16%", out.width="100%", fig.cap="(ref:ch2-blocked)"}
 # knitr::include_graphics(c("figures/all-stimuli-arranged.png", 
 #                           "figures/stimuli-trainfer.png"))
 knitr::include_graphics("figures/mixblock.png")
@@ -108,7 +108,7 @@ plex_train / plex_trans
 
 ## Analysis plan
 
-All analyses are conducted using R (@R4, v`r paste0(R.Version()$major, ".", R.Version()$minor, " - ", R.Version()$nickname)`). All raw and prepared data as well as the corresponding analysis scripts are available on the osf repository^[Again, the link to the project for convenience: [https://osf.io/gup7x/](https://osf.io/gup7x/)]. 
+All analyses are conducted using R [@R4, v`r paste0(R.Version()$major, ".", R.Version()$minor, " - ", R.Version()$nickname)`]. All raw and prepared data as well as the corresponding analysis scripts are available on the osf repository^[Again, the link to the project for convenience: [https://osf.io/gup7x/](https://osf.io/gup7x/)]. 
 
 To investigate the hypotheses laid out in section \@ref(01-hypotheses), several bayesian mixed-effect logistic regression models using a logit link function are fit with weakly informative priors. @Gelman2020 recommends using $\mathrm{student}(\mathrm{df}, \mathrm{location} = 0, \mathrm{scale} = 1)$ where $3 \leq df \leq 7$, since the often used Cauchy-Distribution (that is, $\mathrm{student}(1, 0, 2.5)$) has too thick tails and a strict Gaussian may be too informative. Finally, Bayes Factors for model comparisons are obtained by computing marginal likelihooods via bridge sampling [@Gronau2020]. Since that method requries a large number of posterior samples to obtain robust bayes factors, each model will have 4 MCMC chains with 12000 samples and 2000 warm-up samples each, resulting in 40000 posterior samples drawn per model [for details, see @Schad2021]. Convergence and stability of the Bayesian sampling has been assessed using R-hat, which should be below 1.01 [@Vehtari2021], and Effective Sample Size (ESS), which should be greater than 1000 [@Buerkner2017]. @VanDoorn2021 recommend conducing a bayes factor robustness check by comparing the same models using different priors. This has been done for the model comparisons of H1.1, H1.2 and H2, the results of which can be found in appendix \@ref(bfrc).
 
@@ -126,4 +126,4 @@ Hypotheses are evaluated with Bayes Factors according to @Andras2014, adjusted f
 
 ### Exploration
 
-The second transfer phase in which participants are asked about their probability judgement for any given stimulus belonging to either category is not linked to a specific hypothesis. This study looks at these in an explanatory fashion. For example, probability judgements allow a look at decision gradients on an individual level or whether stimuli near the center of the grid are classified with as much certainty as the ones in the corners. In terms of feature similarity that is to say, stimuli that are closer to members of other categories than to their most distinctive class members.
+The second transfer phase in which participants are asked about their probability judgement for any given stimulus belonging to either category is not linked to a specific hypotheses. This study looks at these in an exploratory fashion. For example, probability judgements allow a look at decision gradients on an individual level or whether stimuli near the center of the grid are classified with as much certainty as the ones in the corners (with regard to the visualization in fig. \@ref(fig:ch2-stimuli)). In terms of feature similarity that is to say, stimuli that are closer to members of other categories than to their most distinctive class members.
